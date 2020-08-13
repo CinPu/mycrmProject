@@ -12,9 +12,9 @@
 
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade {{$unassign}}" id="unassigned" role="tabpanel" aria-labelledby="home-tab">
+        <div class="tab-pane fade {{$unassign}} card col-12 col-md-12" id="unassigned" role="tabpanel" aria-labelledby="home-tab" style="overflow-x:auto;">
             <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Unassign Tickets</h3>
-            <table class="table col-12 col-md-12" id="unassign">
+            <table class="table " id="unassign">
                 <div class=" col-md-12">
                     <div class="row">
                         <label class="col-md-3 ">Search By</label>
@@ -73,7 +73,7 @@
                         </td>
                         <td>{!!substr($ticket->message,0,150)!!}....</td>
                         <td>{{$ticket->status}}</td>
-                        <td>{{$ticket->priority_type->priority}}</td>
+                        <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                         <td>
                             {{$ticket->cases->name}}
                         </td>
@@ -117,9 +117,9 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade {{$assign}}" id="assigned" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade {{$assign}} card col-12 col-md-12" id="assigned" role="tabpanel" aria-labelledby="profile-tab" style="overflow-x:auto;">
             <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Assigned Tickets</h3>
-            <table class="table col-12 col-md-12" id="assign">
+            <table class="table " id="assign">
                 <div class=" col-md-12">
                     <div class="row">
                         <label class="col-md-3 ">Search By</label>
@@ -174,7 +174,7 @@
                         </td>
                         <td>{!!substr($ticket->message,0,150)!!}....</td>
                         <td>{{$ticket->status}}</td>
-                        <td>{{$ticket->priority_type->priority}}</td>
+                        <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}"></button>{{$ticket->priority_type->priority}}</td>
                         <td>
                             {{$ticket->cases->name}}
                         </td>

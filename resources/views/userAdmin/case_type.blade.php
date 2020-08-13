@@ -29,20 +29,21 @@
     </div>
     <div class="card">
         <h3 class="ml-3"><i class="fa fa-user mr-2"></i>Cases</h3>
-        <div class="col-md-12">
-            <table class="table" id="case">
+        <table class="table col-12" id="case">
             <thead>
             <tr>
-                <th scope="col">Case Name
-                </th>
+                <th scope="col">Case Name</th>
+                <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
             @foreach($case_types as $case)
                 <tr>
-                    <td><i class="fa fa-bars mr-3"></i> {{$case->name}}
-                        <a href="{{url("case_type/delete/$case->id")}}" class="btn btn-danger float-right ml-3"><i class="fa fa-trash"></i></a>
-                        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#{{$case->id}}" data-whatever="@getbootstrap"><i class="fa fa-edit"></i></button>
+                    <td><i class="fa fa-bars mr-3"></i>{{$case->name}}
+                    </td>
+                    <td>
+                        <a href="{{url("case_type/delete/$case->id")}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        <a href="" class="btn btn-success " data-toggle="modal" data-target="#{{$case->id}}" data-whatever="@getbootstrap"><i class="fa fa-edit"></i></a>
 
                         <div class="modal fade" id="{{$case->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered ">
@@ -68,12 +69,10 @@
                                 </div>
                             </div>
                         </div>
-
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
-        </div>
     </div>
 @endsection

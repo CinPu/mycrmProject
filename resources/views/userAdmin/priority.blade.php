@@ -1,5 +1,22 @@
 @extends("layouts.app")
 @section("title","Priority")
+@section("csscode")
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even){background-color: #f2f2f2}
+    </style>
+@endsection
 @section("content")
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#priority" data-whatever="@getbootstrap"><i class="fa fa-plus mr-3"></i>New Priority</button>
 
@@ -59,23 +76,22 @@
             </div>
         </div>
     </div>
-    <div class="card">
-        <h3 class="ml-3"><i class="fa fa-user mr-2"></i>Cases</h3>
-        <div class="col-md-12">
-            <table class="table">
+    <div class="card" style="overflow-x:auto;">
+        <h3 class="ml-3"><i class="fa fa-user mr-2"></i>Prioirity</h3>
         <table class="table my-3">
             <thead>
             <tr>
                 <th scope="col">Priority Name</th>
                 <th scope="col">Color</th>
                 <th scope="col">Duration Time</th>
+                <th scope="col">Action</th>
 
             </tr>
             </thead>
             <tbody>
             @foreach($priorities as $priority)
                 <tr>
-                    <td><i class="fa fa-bars mr-3"></i> {{$priority->priority}}</td>
+                    <th scope="row"><i class="fa fa-bars mr-3"></i> {{$priority->priority}}</th>
                     <td>@if($priority->color=="success")
                             <a href=""class="btn btn-success">Green</a>
                         @elseif($priority->color=="danger")
@@ -88,8 +104,10 @@
                     </td>
                     <td>
                         <span>{{$priority->hours}} Hour {{$priority->minutes}} Minutes {{$priority->seconds}} Seconds</span>
-                        <a href="{{url("priority/delete/$priority->id")}}" class="btn btn-danger float-right ml-3"><i class="fa fa-trash"></i></a>
-                        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#{{$priority->id}}" data-whatever="@getbootstrap"><i class="fa fa-edit"></i></button>
+                    </td>
+                    <td>
+                        <a href="{{url("priority/delete/$priority->id")}}" class="btn btn-danger "><i class="fa fa-trash"></i></a>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#{{$priority->id}}" data-whatever="@getbootstrap"><i class="fa fa-edit"></i></button>
 
                         <div class="modal fade" id="{{$priority->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered ">
@@ -121,10 +139,10 @@
                                             <div class="form-group ">
                                                 <label for="duration_time" class="my-2">Select New Duration Time : </label><br>
                                                 <select class="custom-select col-3 " name="hour" style="margin-left: 0px;">
-                                                        @for($i=0;$i<24;$i++)
-                                                            <option>{{$i}}</option>
-                                                        @endfor
-                                                    </select>
+                                                    @for($i=0;$i<24;$i++)
+                                                        <option>{{$i}}</option>
+                                                    @endfor
+                                                </select>
                                                 <span>h</span>
                                                 <select name="min" class="custom-select col-3">
                                                     @for($i=0;$i<60;$i++)
@@ -151,7 +169,5 @@
             @endforeach
             </tbody>
         </table>
-            </table>
-        </div>
     </div>
 @endsection

@@ -30,7 +30,7 @@
     </div>
     <div class="card">
     <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active col-md-12 " id="pills-home" role="presentation" aria-labelledby="pills-home-tab">
+        <div class="tab-pane fade show active col-md-12 " id="pills-home" role="presentation" aria-labelledby="pills-home-tab" style="overflow-x:auto;">
             <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>My Ticket</h3>
                 <table class="table col-12 col-md-12 " id="myticket">
                     <thead>
@@ -134,7 +134,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade col-md-12" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <div class="tab-pane fade col-md-12" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
             <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Assign Tickets</h3>
             <table class="table" id="assignticket">
                 <thead>
@@ -197,7 +197,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-pane fade col-md-12" id="assigndept" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <div class="tab-pane fade col-md-12" id="assigndept" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
             <div>
                 <h4 class="ml-5 mt-5">Asigned With Dept</h4>
                 <table class="table" id="dept">

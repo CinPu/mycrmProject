@@ -54,10 +54,10 @@
                 </div>
 
                 <div class="container-login100-form-btn">
-                    <button type="submit" class="mr-5 login100-form-btn">
+                    <button type="submit" class="mr-5 my-2 col-12 col-md-5 login100-form-btn">
                         Login
                     </button>
-                    <a href="{{url("/register")}}" style="text-decoration: none;background-color: red;"class="login100-form-btn" >Sing Up<i class="fa fa-arrow-right"></i></a>
+                    <a href="{{url("/register")}}" style="text-decoration: none;background-color: red;"class="col-12 col-md-5 my-2 login100-form-btn" >Sing Up<i class="fa fa-arrow-right"></i></a>
                 </div>
 
             </form>

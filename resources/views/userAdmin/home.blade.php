@@ -127,8 +127,9 @@
             <a href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}" class="nav-link float-right"  ><i class="fa fa-plus float-left mr-2 mt-1" ></i>New Ticket</a>
         </li>
     </ul>
-        <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active col-md-12" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-profile-tab">
+
+        <div class="tab-content" id="pills-tabContent"  >
+            <div class="tab-pane fade show active col-md-12 card" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>All Tickets</h3>
                 <table class="table" id="allticket">
                     <div class=" col-md-12">
@@ -165,14 +166,14 @@
                     {{--                            <i class="fa fa-hand-o-right mr-2" aria-hidden="true"></i>Assign--}}
                     {{--                        </button>--}}
                     <tr>
-                        <th scope="col">Ticket Title</th>
-                        <th scope="col">Ticket ID</th>
-                        <th scope="col">Message</th>
-                        <th scope="col">Assign/Unassign</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Created at</th>
+                        <th scope="col" class="col-2 col-md-2">Ticket Title</th>
+                        <th scope="col" class="col-2 col-md-1">Ticket ID</th>
+                        <th scope="col" class="col-2 col-md-2">Message</th>
+                        <th scope="col" class="col-1 col-md-1">Assign/Unassign</th>
+                        <th scope="col" class="col-1 col-md-1">Status</th>
+                        <th scope="col" class="col-1 col-md-1">Priority</th>
+                        <th scope="col" class="col-2 col-md-2">Category</th>
+                        <th scope="col" class="col-1 col-md-1">Created at</th>
                     </tr>
                     </thead>
                     <tbody >
@@ -192,7 +193,7 @@
                                     <a href="" class="btn btn-facebook">Unassigned </a> @endif
                             </td>
                             <td>{{$ticket->status}}</td>
-                            <td>{{$ticket->priority_type->priority}}</td>
+                            <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                             <td>
                                 {{$ticket->cases->name}}
                             </td>
@@ -237,7 +238,7 @@
                 {{--                </div>--}}
 
             </div>
-            <div class="tab-pane fade col-md-12" id="pills-new" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane fade col-md-12 card" id="pills-new" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>New Tickets</h3>
                 <table class="table" id="new">
                     <thead>
@@ -291,7 +292,7 @@
                                 </td>
                                 <td>{!!substr($ticket->message,0,150)!!}...</td>
                                 <td>{{$ticket->status}}</td>
-                                <td>{{$ticket->priority_type->priority}}</td>
+                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                                 {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
                                 <td>
                                     {{$ticket->cases->name}}
@@ -304,7 +305,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade col-md-12" id="pills-open" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane fade col-md-12 card" id="pills-open" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Open Tickets</h3>
                 <table class="table" id="open">
                     <thead>
@@ -358,7 +359,7 @@
                                 </td>
                                 <td>{!!substr($ticket->message,0,150)!!}...</td>
                                 <td>{{$ticket->status}}</td>
-                                <td>{{$ticket->priority_type->priority}}</td>
+                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                                 {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
                                 <td>
                                     {{$ticket->cases->name}}
@@ -371,7 +372,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade col-md-12" id="pills-close" role="tabpanel" aria-labelledby="pills-contact-tab">
+            <div class="tab-pane fade col-md-12 card" id="pills-close" role="tabpanel" aria-labelledby="pills-contact-tab"style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Closed Tickets</h3>
                 <table class="table " id="close">
                     <thead>
@@ -425,7 +426,7 @@
                                 </td>
                                 <td>{!!substr($ticket->message,0,150)!!}...</td>
                                 <td>{{$ticket->status}}</td>
-                                <td>{{$ticket->priority_type->priority}}</td>
+                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
 
                                 <td>
                                     {{$ticket->cases->name}}
@@ -438,7 +439,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade col-md-12" id="pills-complete" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane fade col-md-12 card" id="pills-complete" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Completed Tickets</h3>
                 <table class="table" id="complete">
                     <thead>
@@ -493,7 +494,7 @@
                                 </td>
                                 <td>{!!substr($ticket->message,0,150)!!}...</td>
                                 <td>{{$ticket->status}}</td>
-                                <td>{{$ticket->priority_type->priority}}</td>
+                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
 
                                 <td>
                                     {{$ticket->cases->name}}
@@ -506,7 +507,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade col-md-12" id="pills-pending" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane fade col-md-12 card" id="pills-pending" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Pending Tickets</h3>
                 <table class="table" id="pending">
                     <thead>
@@ -559,7 +560,7 @@
                                 </td>
                                 <td>{!!substr($ticket->message,0,150)!!}...</td>
                                 <td>{{$ticket->status}}</td>
-                                <td>{{$ticket->priority_type->priority}}</td>
+                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                                 {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
                                 <td>
                                     {{$ticket->cases->name}}
@@ -573,7 +574,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade col-md-12" id="pills-progress" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane fade col-md-12 card" id="pills-progress" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Progress Tickets</h3>
                 <table class="table" id="progress">
                     <thead>
@@ -627,7 +628,7 @@
                                 </td>
                                 <td>{!!substr($ticket->message,0,150)!!}...</td>
                                 <td>{{$ticket->status}}</td>
-                                <td>{{$ticket->priority_type->priority}}</td>
+                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                                 {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
                                 <td>{{$ticket->cases->name}}</td>
                                 <td>{{$ticket->created_at->toFormattedDateString()}}</td>

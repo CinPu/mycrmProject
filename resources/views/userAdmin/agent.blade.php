@@ -65,7 +65,7 @@
                     </td>
                     <td>
                         <a href="{{url("/delete/agent/$agent->id")}}"class="btn btn-danger "><i class="fa fa-trash"></i></a>
-                        <a href="{{url("/agent/detail/$agent->id")}}" class="btn btn-success  mr-2"><i class="fa fa-eye mr-2"></i></a>
+                        <a href="{{url("/agent/detail/$agent->id")}}" class="btn btn-success"><i class="fa fa-eye"></i></a>
                     </td>
                 </tr>
                 <div class="modal fade" id="{{$agent->user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >

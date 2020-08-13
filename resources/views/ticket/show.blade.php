@@ -3,12 +3,12 @@
 @section("csscode")
     <style>
         .photos{
-            max-width: 400px;
+            max-width: 220px;
             max-height: 500px;
         }
-        #label{
-            padding-left: 50px;
-        }
+        /*#label{*/
+        /*    padding-left: 50px;*/
+        /*}*/
     </style>
 @endsection
 @section("content")
@@ -31,7 +31,6 @@
             {{--            @endif--}}
             <span id="clock-placeholder"></span>
         </div>
-
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -67,17 +66,45 @@
             </div>
         </div>
         <div class="card-body">
-            <span class="ml-5">Ticket Information </span><span class="ticketid float-right"> Ticket ID : <b class="text-warning">{{$ticket_info->ticket_id}}</b>
+            <h4>Ticket Information </h4><span class="ticketid float-right"> Ticket ID : <b class="text-warning">{{$ticket_info->ticket_id}}</b>
             </span><br>
-            <label class="col-3 offset-1">Ticket  Title</label> :
-            <span>{{$ticket_info->title}}</span><br>
-            <label class="col-3 offset-1">Category</label> : <span >{{$cat->name}}</span><br>
-            <label class="col-3 offset-1">Status</label> :  <!-- Button trigger modal -->
-            <span>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#2020">{{$ticket_info->status}}</button>
-            </span><br>
-            <label class="col-3 offset-1"> Last Changed Status</label> : {{$ticket_info->updated_at->diffForHumans()}}
-            </span><br>
+            <div class="row">
+                <div class="col-md-5 offset-md-1 col-12">
+                        <label >Ticket  Title :</label>
+                        <span>{{$ticket_info->title}}</span>
+                </div>
+                <div class="col-md-6 col-12">
+                    <label >Category :</label>
+                    <span >{{$cat->name}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 offset-md-1 col-12">
+                    <label>Status :</label>   <!-- Button trigger modal -->
+                    <span>
+                        {{$ticket_info->status}}
+                        <a href=""  data-toggle="modal" data-target="#2020"><i class="fa fa-edit"></i></a>
+                    </span>
+                </div>
+                <div class="col-md-6 col-12">
+                    <label> Last Changed Status</label> : {{$ticket_info->updated_at->diffForHumans()}}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 offset-md-1 col-12">
+                    <label> Priority :</label>
+                    <span>
+                        <button type="button" class="btn btn-{{$ticket_info->priority_type->color}}">
+                        </button>
+                        {{$ticket_info->priority_type->priority}}
+                    </span>
+                </div>
+                <div class="col-md-6 col-12">
+                    <label> Complaint Product :</label>
+                    <span> {{$ticket_info->product}}</span>
+                </div>
+            </div>
             <!-- Modal  for status change-->
             <div class="modal fade" id="2020" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                 <div class="modal-dialog" role="document" style="padding-left: 200px;">
@@ -103,23 +130,47 @@
                     </div>
                 </div>
             </div>
-            <label class="col-3 offset-1"> Priority</label> : <span><button type="button" class="btn btn-{{$ticket_info->priority_type->color}}"></button></a> {{$ticket_info->priority_type->priority}}</span><br>
-            <label class="col-3 offset-1"> Complaint Product</label> : <span> {{$ticket_info->product}}</span><br>
+
+
         </div>
     </div>
     <div class="card">
             <div class="card-body">
-            <br><h4 class="ml-5">User Contact Information </h4>
-            <label class="col-3 offset-1">User Name</label> : <span><i class="fa fa-user mr-2"></i> {{$ticket_info->userinfo->name}}</span><br>
-            <label class="col-3 offset-1">Email</label> : <span><a href="mailto:{{$ticket_info->userinfo->email}}"><i class="fa fa-envelope mr-2"></i> {{$ticket_info->userinfo->email}}</a></span><br>
-            <label class="col-3 offset-1">Phone</label> : <span><i class="fa fa-phone mr-2"></i> <a href="tel:+95{{$ticket_info->phone}}">+95{{$ticket_info->phone}}</a></span><br>
-            <label class="col-3 offset-1">Source</label> : <span> {{$ticket_info->source}}</span><br><br>
-                <h4 class="ml-5">Description :</h4>
-                <div class="offset-md-2">
-                    <i>{!!$ticket_info->message!!}</i>
+            <h4>User Contact Information </h4>
+                <div class="row">
+                    <div class="col-12 offset-md-1">
+                        <label>User Name :</label>
+                        <span> <i class="fa fa-user mr-2"></i> {{$ticket_info->userinfo->name}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 offset-md-1">
+                      <label>Email : </label>
+                        <span><a href="mailto:{{$ticket_info->userinfo->email}}"><i class="fa fa-envelope mr-2"></i> {{$ticket_info->userinfo->email}}</a></span><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 offset-md-1">
+                        <label>Phone : </label>
+                        <span>
+                            <i class="fa fa-phone mr-2"></i>
+                            <a href="tel:+95{{$ticket_info->phone}}">+95{{$ticket_info->phone}}</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 offset-md-1">
+                        <label>Source : </label>
+                        <span> {{$ticket_info->source}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 offset-md-1">
+                        <label>Description :</label>
+                            <i>{!!$ticket_info->message!!}</i>
+                    </div>
                 </div>
             </div>
-
     </div>
     <div class="card">
             <div class="card-header">
@@ -128,7 +179,7 @@
            <div class="card-body">
             <div class="row">
                     @for($i=0;$i<$numberOfphotos;$i++)
-                        <div class="ml-5"style="padding: 8px;">
+                        <div class="ml-4"style="padding: 8px;">
                             <img src="{{asset("/imgs/$photos[$i]")}}"  alt="" class="photos">
                         </div>
                     @endfor
@@ -141,9 +192,9 @@
                 <h4 class="ml-5 my-3">Comments:</h4>
                 @foreach ($comments as $comment)
                     <div>
-                        <div class="text-dark">
-                            <strong class="offset-1">{{ $comment->user->name }} : </strong>
-                            <div class="offset-2 col-md-6 card bg-rose">
+                        <div class="text-dark col-md-12 col-12">
+                            <div class="offset-md-2 col-md-6 card bg-rose">
+                                <b style="margin-bottom: 5px;">{{ $comment->user->name }} : </b>
                                 {!!$comment->comment !!}
                                 <span class="float-right">{{ $comment->created_at->diffForHumans()}}</span>
                             </div>
@@ -218,12 +269,12 @@
                     document.getElementById("hours").innerHTML = ""
                     document.getElementById("mins").innerHTML = ""
                     document.getElementById("secs").innerHTML = ""
-                    document.getElementById("end").innerHTML = "Time Up";
+                    document.getElementById("end").innerHTML = "Time Up!";
                 }
             }, 1000);
 
         }else{
-            document.getElementById("end").innerHTML = "Time UP!";
+            document.getElementById("end").innerHTML ="";
 
         }
 
