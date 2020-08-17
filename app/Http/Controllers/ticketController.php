@@ -305,6 +305,7 @@ class ticketController extends Controller
                 array_push($isassigned,$ticket->ticket_id);
             }
 //            dd($request->all());
+
             for($i=0;$i<count($request->ticket_id);$i++) {
                 if (!in_array($request->ticket_id, $isassigned)) {
                     $assigntodept = new assignwithdept();

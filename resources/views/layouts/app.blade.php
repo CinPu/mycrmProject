@@ -124,6 +124,12 @@
                         <p>Prority</p>
                     </a>
                 </li>
+                    <li class="nav-item ">
+                        <a class="nav-link text-dark" href="{{url("/piechart")}}">
+                            <i class="fa fa-pie-chart"></i>
+                            <p>Pie Chart Report</p>
+                        </a>
+                    </li>
                 <li class="nav-item ">
                     <a class="nav-link text-dark" href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}">
                         <i class="fa fa-ticket text-dark"></i>
@@ -167,24 +173,8 @@
                     <span class="navbar-toggler-icon icon-bar"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end">
-                    <form class="navbar-form">
-                        <div class="input-group no-border">
-                            <input type="text" value="" class="form-control" placeholder="Search...">
-                            <button type="submit" class="btn btn-default btn-round btn-just-icon">
-                                <i class="material-icons">search</i>
-                                <div class="ripple-container"></div>
-                            </button>
-                        </div>
-                    </form>
+                    @yield("search")
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">
-                                <i class="material-icons">dashboard</i>
-                                <p class="d-lg-none d-md-block">
-                                    Stats
-                                </p>
-                            </a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @if(\Illuminate\Support\Facades\Auth::check())

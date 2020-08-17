@@ -47,13 +47,15 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("comment","ticketController@postcomment");
     Route::get("/agent/detail/{id}","admin_agentController@agentDetail");
     Route::get("/isassign/{name}","assignticketController@isassign");
+    Route::get("/piechart","piechartController@index");
+    Route::post("/search","piechartController@filterBy");
 
 
 });
 Route::post("/user_info/create/{id}","userinfoController@store");
 Route::get("/ticket/create/{id}","ticketController@create");
 Route::post("/ticket/create/{id}","ticketController@store");
-Route::get("/test",function (){
-    return view("test");
-});
+//Route::get("/test",function (){
+//    return view("userAdmin.chartReport");
+//});
 Route::post("/hello","userinfoController@test");
