@@ -14,7 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $alluser=\App\User::all();
+    $admins=[];
+    foreach ($alluser as $user){
+        if($user->hasAnyRole("Admin")){
+            array_push($admins,$user);
+
+        }
+    }
+    return view('welcome',compact("admins"));
 });
 
 Auth::routes();
@@ -49,6 +57,9 @@ Route::group(['middleware'=>'auth'],function () {
     Route::get("/isassign/{name}","assignticketController@isassign");
     Route::get("/piechart","piechartController@index");
     Route::post("/search","piechartController@filterBy");
+    Route::get("/dept/showmember/{id}","departmentController@showMember");
+    Route::get("/guestUser","userinfoController@index");
+    Route::get("/guestuser/sending/{id}","userinfoController@sendinghistory");
 
 
 });
@@ -58,4 +69,4 @@ Route::post("/ticket/create/{id}","ticketController@store");
 //Route::get("/test",function (){
 //    return view("userAdmin.chartReport");
 //});
-Route::post("/hello","userinfoController@test");
+Route::get("/hello","userinfoController@index");

@@ -42,7 +42,9 @@
                     <td>{{$dept->dept_name}}</td>
                     <td>
                         <a href="{{url("/dept/edit/$dept->id")}}" class="btn btn-success" data-toggle="modal" data-target="#{{$dept->dept_name}}" data-whatever="@getbootstrap"><i class="fa fa-edit"></i></a>
-                        <a href="{{url("/dept/delete/$dept->id")}}" CLASS="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        <a href="{{url("/dept/delete/$dept->id")}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        <a href="{{url("/dept/showmember/$dept->id")}}" class="btn btn-primary"><i class="fa fa-users mr-2"></i>Member</a>
+
                         <div class="modal fade" id="{{$dept->dept_name}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered ">
                                 <div class="modal-content">

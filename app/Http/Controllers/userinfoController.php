@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\agent;
+use App\ticket;
 use App\User;
 use App\user_information;
 use Illuminate\Http\Request;
@@ -17,7 +18,13 @@ class userinfoController extends Controller
      */
     public function index()
     {
-        //
+        $userinfo=user_information::where("admin_id",Auth::user()->uuid)->get();
+        return view("userAdmin.userinformation",compact("userinfo"));
+    }
+    public function sendinghistory($id)
+    {
+        $sentTickets=ticket::with("userinfo","cases")->where("userinfo_id",$id)->get();
+        return view("userAdmin.sentHistory",compact("sentTickets"));
     }
 
     /**

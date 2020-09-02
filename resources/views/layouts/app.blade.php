@@ -87,8 +87,8 @@
         <div class="sidebar-wrapper">
             <ul class="nav">
                 @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("SuperAdmin"))
-                    <li class="nav-item active ">
-                        <a class="nav-link text-dark" href="{{url("/home")}}">
+                    <li class="nav-item ">
+                        <a class="nav-link text-dark active" href="{{url("/home")}}">
                             <i class="material-icons text-dark">dashboard</i>
                             <p>User Management</p>
                         </a>
@@ -102,46 +102,46 @@
                     </li>
                 <li class="nav-item ">
                     <a class="nav-link text-dark" href="{{url("/department")}}">
-                        <i class="fa fa-users text-dark"></i>
+                        <i class="fa fa-users text-gray"></i>
                         <p>Department</p>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link text-dark" href="{{url("/agent")}}">
-                        <i class="material-icons text-dark">person</i>
-                        <p>Agent</p>
+                        <img src="{{url("assets/img/agentpp.png")}}" width="30px;" height="30px" alt="">
+                        <span class="ml-3">Agent</span>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link text-dark" href="{{url("/case_type")}}">
-                        <i class="material-icons text-dark">library_books</i>
+                        <i class="material-icons text-success">library_books</i>
                         <p>Case Type</p>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link text-dark" href="{{url("/priority")}}">
-                        <i class="material-icons text-dark">bubble_chart</i>
+                        <i class="material-icons text-primary">bubble_chart</i>
                         <p>Prority</p>
                     </a>
                 </li>
                     <li class="nav-item ">
                         <a class="nav-link text-dark" href="{{url("/piechart")}}">
-                            <i class="fa fa-pie-chart"></i>
+                            <i class="fa fa-pie-chart text-danger"></i>
                             <p>Pie Chart Report</p>
                         </a>
                     </li>
                 <li class="nav-item ">
                     <a class="nav-link text-dark" href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}">
-                        <i class="fa fa-ticket text-dark"></i>
+                        <i class="fa fa-paper-plane text-info"></i>
                         <p>Ticket Create</p>
                     </a>
                 </li>
-{{--                <li class="nav-item ">--}}
-{{--                    <a class="nav-link" href="./notifications.html">--}}
-{{--                        <i class="material-icons">notifications</i>--}}
-{{--                        <p>Notifications</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{url("/guestUser")}}">
+                        <img src="{{url(asset("/assets/img/guestuser.png"))}}" alt="" width="30px;" height="30px">
+                        <span class="ml-3">Guest User</span>
+                    </a>
+                </li>
                 @else
                     <li class="nav-item active  ">
                         <a class="nav-link" href="{{url("/home")}}">
@@ -151,8 +151,8 @@
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link" href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}">
-                            <i class="fa fa-ticket"></i>
-                            <p>Ticket Create</p>
+                            <i class="fa fa-paper-plane text-info"></i>
+                            <p>Create Ticket</p>
                         </a>
                     </li>
                     @endif
@@ -246,8 +246,12 @@
         </script>
     </div>
     @else
-        <div class="ml-5">
-            @yield("content")
+        <div class="content">
+            <div class=" container-fluid">
+                <div class="offset-md-1">
+                @yield("content")
+                </div>
+            </div>
         </div>
     @endif
 </div>

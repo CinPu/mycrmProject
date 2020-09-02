@@ -29,13 +29,16 @@
             color: black;
         }
     </style>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5Jrp9PtHe0WapppUzxbIpMDWMAcV3qE4"></script>
+    <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
 @endsection
 @section("content")
-    <h3>Ticket Create</h3>
+    <h3>Create New Ticket</h3>
     <form id="ticket_create" method="post" action="{{url("/ticket/create/$id")}}" enctype="multipart/form-data">
        {{csrf_field()}}
         <div class="row">
-            <div class="col-md-4 card">
+            <div class="col-md-4 card ml-1 ">
                 <div class="form-group  mt-3">
                     <label for="Email1">Email Address</label><br>
                     <select name="user_info_id" class="form-control">
@@ -74,21 +77,35 @@
                             <option value="{{$priority->id}}">{{$priority->priority}}</option>
                         @endforeach
                     </select>
+                    @foreach($statuses as $status)
+                        @if($status->status=="New")
+                    <input type="hidden" name="status" value="{{$status->id}}">
+                        @endif
+                    @endforeach
                 </div>
                 <div class="form-group mt-3">
                     <label for="source">Source</label><br>
                     <select name="source" id="" class="form-control">
-                        <option>Web</option>
-                        <option>Mobile</option>
-                        <option>Phone Call</option>
+                        @foreach($sources as $source)
+                        <option value="{{$source->id}}">{{$source->sources}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <input type="hidden" class="form-control" name="uuid" value="{{$id}}" id="exampleInputEmail1" aria-describedby="emailHelp">
                 </div>
+                <label for="">Location</label>
+                <div class="form-group">
+                    <label for="">Latitude</label>
+                    <input type="text" id="lat" name="lat" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Longitude</label>
+                    <input type="text" id="lng" name="lng" class="form-control">
+                </div>
             </div>
 
-            <div class="col-md-7 ml-3 card">
+            <div class="col-md-7 card ml-1">
                 <label for="exampleInputEmail1" class="mt-3">Content</label>
                 <div class="form-group">
                     <textarea class="form-control" id="summary-ckeditor" name="message"></textarea>
@@ -99,10 +116,12 @@
                     <div class="field my-5 " align="center">
                             <span>
                                 <h4 align="center">Upload your images</h4>
+                                <i>You Can Choose Multiple Image</i>
                                 <input type="file"  id="files" name="files[]" multiple />
                             </span>
                     </div>
                 </div>
+                <div id="map"></div>
                 <div class="form-group">
                 <button type="submit" id="submit-all" class="btn btn-primary float-right"><i class="fa fa-paper-plane mr-3"></i>Send</button>
                 </div>
@@ -176,5 +195,21 @@
     <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
     <script>
         CKEDITOR.replace( 'summary-ckeditor' );
+        // Get element references
+        var map = document.getElementById('map');
+        // Initialize LocationPicker plugin
+        var lp = new locationPicker(map, {
+            setCurrentPosition: true, // You can omit this, defaults to true
+        }, {
+            zoom: 15 // You can set any google map options here, zoom defaults to 15
+        });
+
+        // Listen to map idle event, listening to idle event more accurate than listening to ondrag event
+        google.maps.event.addListener(lp.map, 'idle', function (event) {
+            // Get current location and show it in HTML
+            var location = lp.getMarkerPosition();
+           document.getElementById("lat").value=location.lat;
+           document.getElementById("lng").value=location.lng;
+        });
     </script>
 @endsection

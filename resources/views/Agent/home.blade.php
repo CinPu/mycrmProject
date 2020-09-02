@@ -90,7 +90,7 @@
                                 </a>
                             </td>
                             <td>{!!$ticket->message!!}</td>
-                            <td>{{$ticket->status}}</td>
+                            <td>{{$ticket->status_type->status}}</td>
                             <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                             <td>
                                {{$ticket->cases->name}}
@@ -185,7 +185,7 @@
                             </a>
                         </td>
                         <td>{!!$aticket->message!!}</td>
-                        <td >{{$aticket->status}}</td>
+                        <td >{{$aticket->status_type->status}}</td>
                         <td ><button type="button" class="btn btn-{{$aticket->priority_type->color}}">{{$aticket->priority_type->priority}}</button></td>
                         <td >
                             {{$aticket->cases->name}}
@@ -250,7 +250,7 @@
                                 </a>
                             </td>
                             <td>{!!$assignwithdept->ticket->message!!}</td>
-                            <td>{{$assignwithdept->ticket->status}}</td>
+                            <td>{{$assignwithdept->ticket->status_type->status}}</td>
                             <td><button type="button" class="btn btn-{{$assignwithdept->ticket->priority_type->color}}">{{$assignwithdept->ticket->priority_type->priority}}</button></td>
                             <td>
                                 {{$assignwithdept->ticket->cases->name}}

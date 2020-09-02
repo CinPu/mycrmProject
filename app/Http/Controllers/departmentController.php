@@ -59,9 +59,12 @@ class departmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showMember($id)
     {
-        //
+        $members=agent::with("user")->where("dept_id",$id)->get();
+        $dept=department::where("id",$id)->first();
+//        dd($members);
+        return view("userAdmin.deptMember",compact("members","dept"));
     }
 
     /**

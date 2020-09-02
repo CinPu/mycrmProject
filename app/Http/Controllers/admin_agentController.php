@@ -7,8 +7,10 @@ use App\assign_ticket;
 use App\assignwithdept;
 use App\case_type;
 use App\department;
+use App\solvedTime;
 use App\ticket;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -69,91 +71,117 @@ class admin_agentController extends Controller
      */
     public function agentDetail($id)
     {
-
-        $agent=agent::with("dept")->whereId($id)->first();
-        $allcases=case_type::all();
+        $agent = agent::with("dept")->whereId($id)->first();
+        $allcases = case_type::all();
 //        dd($complaint_type);
-        $alltickets=[];
-        $assigntickets=assign_ticket::with("ticket")->where("agent_id",$agent->agent_id)->get();
-//        dd($assigntickets);
-        foreach ($assigntickets as $assignticket){
-            array_push($alltickets,$assignticket);
+        $alltickets = [];
+        $assigntickets = [];
+        $assignagent = assign_ticket::where("agent_id", $agent->agent_id)->get();
+        foreach ($assignagent as $assign_agent) {
+            $assign_ticket = ticket::with("priority_type", "cases")->where("id", $assign_agent->ticket->id)->first();
+            array_push($assigntickets, $assign_ticket);
         }
-//        dd($assigntickets);
-        $assigndepts=[];
+        array_push($alltickets, $assigntickets);
+        $assigndepts = [];
 
-        $agentuser=User::whereId($agent->agent_id)->first();
-        $assign_by_depts=assignwithdept::with("ticket")->where("dept_id",$agent->dept_id)->get();
-        foreach($assign_by_depts as $ass_dept){
-            if($ass_dept->ticket->user_id !=$agentuser->uuid){
-                array_push($assigndepts,$ass_dept);
-            }
+        $agentuser = User::whereId($agent->agent_id)->first();
+        $assign_by_depts = assignwithdept::where("dept_id", $agent->dept_id)->get();
+        foreach ($assign_by_depts as $assign_by_dept) {
+            $assign_dept = ticket::with("priority_type", "cases")->where("id", $assign_by_dept->ticket_id)->first();
+            array_push($assigndepts, $assign_dept);
         }
-        foreach ($assigndepts as $assigndept){
-            if ($assigndept->user_id!=$agentuser->uuid) {
+//       dd($assigndepts);
+//        foreach($assign_by_depts as $ass_dept){
+//            if($ass_dept->ticket->user_id !=$agentuser->uuid){
+//                array_push($assigndepts,$ass_dept);
+//            }
+//        }
+        foreach ($assigndepts as $assigndept) {
+            if ($assigndept->user_id != $agentuser->uuid) {
                 array_push($alltickets, $assigndept);
             }
         }
-        $agenttickets=ticket::with("cases")->where("user_id",$agentuser->uuid)->get();
-        foreach ($agenttickets as $agentticket){
-            array_push($alltickets,$agentticket);
+        $agenttickets = ticket::with("cases", "priority_type")->where("user_id", $agentuser->uuid)->get();
+        foreach ($agenttickets as $agentticket) {
+            array_push($alltickets, $agentticket);
         }
-        $closeticket=0;
-        $complete=0;
-        $openticket=0;
-        $pending=0;
-        $progress=0;
-        $new=0;
+        $closeticket = 0;
+        $complete = 0;
+        $openticket = 0;
+        $pending = 0;
+        $progress = 0;
+        $new = 0;
         foreach ($agenttickets as $t) {
 //            dd($t);
-            if($t->status=="Close"){
-                $closeticket ++;
-            }elseif($t->status=="Complete"){
-                $complete ++;
-            }elseif($t->status=="Open"){
-                $openticket ++;
-            }elseif($t->status=="Pending"){
-                $pending ++;
-            }elseif($t->status=="Inprogress"){
-                $progress ++;
-            }elseif($t->status=="New"){
-                $new ++;
+            if ($t->status == "Close") {
+                $closeticket++;
+            } elseif ($t->status == "Complete") {
+                $complete++;
+            } elseif ($t->status == "Open") {
+                $openticket++;
+            } elseif ($t->status == "Pending") {
+                $pending++;
+            } elseif ($t->status == "Inprogress") {
+                $progress++;
+            } elseif ($t->status == "New") {
+                $new++;
             }
         }
         foreach ($assigntickets as $ass_ticket) {
 //            dd($t);
-            if($ass_ticket->ticket->status=="Close"){
-                $closeticket ++;
-            }elseif($ass_ticket->ticket->status=="Complete"){
-                $complete ++;
-            }elseif($ass_ticket->ticket->status=="Open"){
-                $openticket ++;
-            }elseif($ass_ticket->ticket->status=="Pending"){
-                $pending ++;
-            }elseif($ass_ticket->ticket->status=="Inprogress"){
-                $progress ++;
-            }elseif($ass_ticket->ticket->status=="New"){
-                $new ++;
+            if ($ass_ticket->status == "Close") {
+                $closeticket++;
+            } elseif ($ass_ticket->status == "Complete") {
+                $complete++;
+            } elseif ($ass_ticket->status == "Open") {
+                $openticket++;
+            } elseif ($ass_ticket->status == "Pending") {
+                $pending++;
+            } elseif ($ass_ticket->status == "Inprogress") {
+                $progress++;
+            } elseif ($ass_ticket->status == "New") {
+                $new++;
             }
 
         }
         foreach ($assigndepts as $dept_ticket) {
-            if ($assigndept->ticket->user_id != $agentuser->uuid) {
-                if ($dept_ticket->ticket->status == "Close") {
-                    $closeticket++;
-                } elseif ($dept_ticket->ticket->status == "Complete") {
-                    $complete++;
-                } elseif ($dept_ticket->ticket->status == "Open") {
-                    $openticket++;
-                } elseif ($dept_ticket->ticket->status == "Pending") {
-                    $pending++;
-                } elseif ($dept_ticket->ticket->status == "Inprogress") {
-                    $progress++;
+            if ($dept_ticket->status == "Close") {
+                $closeticket++;
+            } elseif ($dept_ticket->status == "Complete") {
+                $complete++;
+            } elseif ($dept_ticket->status == "Open") {
+                $openticket++;
+            } elseif ($dept_ticket->status == "Pending") {
+                $pending++;
+            } elseif ($dept_ticket->status == "Inprogress") {
+                $progress++;
+            }
+        }
+        $solved_time = solvedTime::with("priority_type")->where("agent_id", $agentuser->id)->get();
+        $twenty_fivepercent=0;
+        $fifty_percent=0;
+        $seventy_fivepercent=0;
+        $hundred_percent=0;
+        $overtimeuse=0;
+        foreach ($solved_time as $solvetime) {
+            $limit_time=$solvetime->priority_type->hours*60+$solvetime->priority_type->minutes;
+            if($solvetime->endTime!=null) {
+                $spend_time = Carbon::parse($solvetime->endTime)->diffInMinutes(Carbon::parse($solvetime->startedTime));
+                $percentage = ($spend_time / $limit_time) * 100;
+                if ($percentage <= 25) {
+                    $twenty_fivepercent++;
+                } elseif ($percentage > 25 && $percentage <= 50) {
+                    $fifty_percent++;
+                } elseif ($percentage > 50 && $percentage <= 75) {
+                    $seventy_fivepercent++;
+                } elseif ($percentage > 75 && $percentage <= 100) {
+                    $hundred_percent++;
+                } else {
+                    $overtimeuse++;
                 }
             }
         }
-//        dd($openticket);
-        return view("Agent.agentdetail",compact("agentuser","assigntickets","assigndepts","agenttickets","agent","complete","closeticket","openticket","progress","pending","new","allcases"));
+        return view("Agent.agentdetail",compact("openticket","pending","progress","new","complete","closeticket","agenttickets","assigndepts","assigntickets","agentuser","agent","allcases","twenty_fivepercent","fifty_percent","seventy_fivepercent","hundred_percent","overtimeuse"));
     }
 
     /**

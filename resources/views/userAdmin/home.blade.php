@@ -82,54 +82,55 @@
                 </div>
                 <div class="card-footer">
                     <div class="stats">
-                        <a href="{{url("isassign/2")}}"><i class="fa fa-ticket"></i>Assign Ticket Detail...</a>
+                        <a href="{{url("isassign/2")}}"><i class="fa fa-ticket"></i>Unassign Ticket Detail...</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <ul class="nav nav-tabs bg-primary col-md-12 " id="myTab" role="tablist">
+        <div class="card">
+    <ul class="nav nav-tabs bg-danger col-md-12 " id="myTab" role="tablist">
         <li class="nav-item my-2 ">
             <a class="nav-link active" id="pills-dashboard-tab" data-toggle="pill" href="#pills-dashboard" role="tab" aria-controls="pills-home" aria-selected="false">All Tickets
             </a>
         </li>
         <li class="nav-item my-2">
             <a class="nav-link" id="pills-new-tab" data-toggle="pill" href="#pills-new" role="tab" aria-controls="pills-profile" aria-selected="false">New
-                <span class="badge badge-pill bg-danger">{{$new}}</span>
+                <span class="badge badge-pill bg-white text-dark">{{$new}}</span>
             </a>
         </li>
         <li class="nav-item my-2">
             <a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-open" role="tab" aria-controls="pills-profile" aria-selected="false">Open Ticket
-                <span class="badge badge-pill badge-danger">{{$openticket}}</span>
+                <span class="badge badge-pill bg-white text-dark">{{$openticket}}</span>
             </a>
         </li>
         <li class="nav-item my-2">
             <a class="nav-link" id="pills-close-tab" data-toggle="pill" href="#pills-close" role="tab" aria-controls="pills-contact" aria-selected="false">Closed Ticket
-                <span class="badge badge-pill badge-danger ">{{$closeticket}}</span>
+                <span class="badge badge-pill bg-white text-dark ">{{$closeticket}}</span>
             </a>
         </li>
         <li class="nav-item my-2">
             <a class="nav-link" id="pills-complete-tab" data-toggle="pill" href="#pills-complete" role="tab" aria-controls="pills-contact" aria-selected="false">Completed Ticket
-                <span class="badge badge-pill badge-danger ">{{$complete}}</span>
+                <span class="badge badge-pill bg-white text-dark ">{{$complete}}</span>
             </a>
         </li>
         <li class="nav-item my-2">
             <a class="nav-link" id="pills-pending-tab" data-toggle="pill" href="#pills-pending" role="tab" aria-controls="pills-profile" aria-selected="false">Pending
-                <span class="badge badge-pill badge-danger ">{{$pending}}</span>
+                <span class="badge badge-pill bg-white text-dark">{{$pending}}</span>
             </a>
         </li>
         <li class="nav-item my-2">
             <a class="nav-link" id="pills-progress-tab" data-toggle="pill" href="#pills-progress" role="tab" aria-controls="pills-profile" aria-selected="false">Progress
-                <span class="badge badge-pill badge-danger ">{{$progress}}</span>
+                <span class="badge badge-pill bg-white text-dark">{{$progress}}</span>
             </a>
         </li>
-        <li class="nav-item my-2">
-            <a href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}" class="nav-link float-right"  ><i class="fa fa-plus float-left mr-2 mt-1" ></i>New Ticket</a>
-        </li>
+{{--        <li class="nav-item my-2">--}}
+{{--            <a href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}" class="nav-link float-right"  ><i class="fa fa-plus float-left mr-2 mt-1" ></i>New Ticket</a>--}}
+{{--        </li>--}}
     </ul>
 
         <div class="tab-content" id="pills-tabContent"  >
-            <div class="tab-pane fade show active col-md-12 card" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+            <div class="tab-pane fade show active col-md-12" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>All Tickets</h3>
                 <table class="table" id="allticket">
                     <div class=" col-md-12">
@@ -166,14 +167,14 @@
                     {{--                            <i class="fa fa-hand-o-right mr-2" aria-hidden="true"></i>Assign--}}
                     {{--                        </button>--}}
                     <tr>
-                        <th scope="col" class="col-2 col-md-2">Ticket Title</th>
-                        <th scope="col" class="col-2 col-md-1">Ticket ID</th>
-                        <th scope="col" class="col-2 col-md-2">Message</th>
-                        <th scope="col" class="col-1 col-md-1">Assign/Unassign</th>
-                        <th scope="col" class="col-1 col-md-1">Status</th>
-                        <th scope="col" class="col-1 col-md-1">Priority</th>
-                        <th scope="col" class="col-2 col-md-2">Category</th>
-                        <th scope="col" class="col-1 col-md-1">Created at</th>
+                        <th scope="col">Ticket Title</th>
+                        <th scope="col">Ticket ID</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Assign/Unassign</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Created at</th>
                     </tr>
                     </thead>
                     <tbody >
@@ -192,7 +193,7 @@
                                 @elseif($ticket->isassign==0)
                                     <a href="" class="btn btn-facebook">Unassigned </a> @endif
                             </td>
-                            <td>{{$ticket->status}}</td>
+                            <td>{{$ticket->status_type->status}}</td>
                             <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                             <td>
                                 {{$ticket->cases->name}}
@@ -238,7 +239,7 @@
                 {{--                </div>--}}
 
             </div>
-            <div class="tab-pane fade col-md-12 card" id="pills-new" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+            <div class="tab-pane fade col-md-12 " id="pills-new" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>New Tickets</h3>
                 <table class="table" id="new">
                     <thead>
@@ -282,7 +283,7 @@
                     </thead>
                     <tbody>
                     @foreach($tickets as $ticket)
-                        @if($ticket->status=="New")
+                        @if($ticket->status_type->status=="New")
                             <tr>
                                 <th scope="row" >{{$ticket->title}}</th>
                                 <td>
@@ -291,7 +292,7 @@
                                     </a>
                                 </td>
                                 <td>{!!substr($ticket->message,0,150)!!}...</td>
-                                <td>{{$ticket->status}}</td>
+                                <td>{{$ticket->status_type->status}}</td>
                                 <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                                 {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
                                 <td>
@@ -305,7 +306,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade col-md-12 card" id="pills-open" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+            <div class="tab-pane fade col-md-12" id="pills-open" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Open Tickets</h3>
                 <table class="table" id="open">
                     <thead>
@@ -349,7 +350,7 @@
                     </thead>
                     <tbody>
                     @foreach($tickets as $ticket)
-                        @if($ticket->status=="Open")
+                        @if($ticket->status_type->status=="Open")
                             <tr>
                                 <th scope="row" >{{$ticket->title}}</th>
                                 <td>
@@ -372,7 +373,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade col-md-12 card" id="pills-close" role="tabpanel" aria-labelledby="pills-contact-tab"style="overflow-x:auto;">
+            <div class="tab-pane fade col-md-12" id="pills-close" role="tabpanel" aria-labelledby="pills-contact-tab"style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Closed Tickets</h3>
                 <table class="table " id="close">
                     <thead>
@@ -416,7 +417,7 @@
                     </thead>
                     <tbody>
                     @foreach($tickets as $ticket)
-                        @if($ticket->status=="Close")
+                        @if($ticket->status_type->status=="Close")
                             <tr>
                                 <th scope="row">{{$ticket->title}}</th>
                                 <td>
@@ -439,7 +440,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade col-md-12 card" id="pills-complete" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+            <div class="tab-pane fade col-md-12" id="pills-complete" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Completed Tickets</h3>
                 <table class="table" id="complete">
                     <thead>
@@ -484,7 +485,7 @@
                     </thead>
                     <tbody>
                     @foreach($tickets as $ticket)
-                        @if($ticket->status=="Complete")
+                        @if($ticket->status_type->status=="Complete")
                             <tr>
                                 <th scope="row">{{$ticket->title}}</th>
                                 <td>
@@ -507,7 +508,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade col-md-12 card" id="pills-pending" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+            <div class="tab-pane fade col-md-12" id="pills-pending" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Pending Tickets</h3>
                 <table class="table" id="pending">
                     <thead>
@@ -551,9 +552,9 @@
                     </thead>
                     <tbody>
                     @foreach($tickets as $ticket)
-                        @if($ticket->status=="Pending")
+                        @if($ticket->status_type->status=="Pending")
                             <tr>
-                                <th scope="row">{{$ticket->title}}</th>
+                                <th>{{$ticket->title}}</th>
                                 <td>
                                     <a href="{{ url("tickets/$ticket->ticket_id") }}">#{{$ticket->ticket_id}}
                                     </a>
@@ -574,7 +575,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade col-md-12 card" id="pills-progress" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+            <div class="tab-pane fade col-md-12" id="pills-progress" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                 <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Progress Tickets</h3>
                 <table class="table" id="progress">
                     <thead>
@@ -618,7 +619,7 @@
                     </thead>
                     <tbody>
                     @foreach($tickets as $ticket)
-                        @if($ticket->status=="Inprogress")
+                        @if($ticket->status_type->status=="Inprogress")
                             <tr>
                                 <th scope="row">{{$ticket->title}}</th>
                                 <td>
@@ -642,6 +643,7 @@
 
             </div>
         </div>
+    </div>
     </div>
 {{--    <script>--}}
 {{--        // $('#select-all').click(function(event) {--}}

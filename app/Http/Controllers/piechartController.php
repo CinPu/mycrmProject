@@ -17,7 +17,7 @@ class piechartController extends Controller
         $agents = agent::with("user")->where("admin_id", Auth::user()->id)->get();
 //                dd($agents);
         foreach ($agents as $agent){
-            $agents_tickets=ticket::with("priority_type","cases")->where("user_id",$agent->user->uuid)->get();
+            $agents_tickets=ticket::with("priority_type","cases","status_type")->where("user_id",$agent->user->uuid)->get();
             //all agents' ticket add to tickets[]
             foreach ($agents_tickets as $agent_ticket) {
                 array_push($tickets, $agent_ticket);
@@ -25,7 +25,7 @@ class piechartController extends Controller
 //                }
         }
         //ticket for admin from user to admin
-        $user_tickets=ticket::with("priority_type","cases")->where("user_id",Auth::user()->uuid)->get();
+        $user_tickets=ticket::with("priority_type","cases","status_type")->where("user_id",Auth::user()->uuid)->get();
         foreach($user_tickets as $user_ticket){
             array_push($tickets,$user_ticket);
         }
@@ -43,17 +43,17 @@ class piechartController extends Controller
         $low=0;
 
         foreach ($tickets as $t) {
-            if($t->status=="Close"){
+            if($t->status_type->status=="Close"){
                 $closeticket ++;
-            }elseif($t->status=="Complete"){
+            }elseif($t->status_type->status=="Complete"){
                 $complete ++;
-            }elseif($t->status=="Open"){
+            }elseif($t->status_type->status=="Open"){
                 $openticket ++;
-            }elseif($t->status=="Pending"){
+            }elseif($t->status_type->status=="Pending"){
                 $pending ++;
-            }elseif($t->status=="Inprogress"){
+            }elseif($t->status_type->status=="Inprogress"){
                 $progress ++;
-            }elseif($t->status=="New"){
+            }elseif($t->status_type->status=="New"){
                 $new ++;
             }
             if($t->priority_type->priority=="Urgent"){
@@ -72,9 +72,9 @@ class piechartController extends Controller
     }
     public function filterBy(Request $request){
         $filterResults=[];
-        $startDate=Carbon::create($request->start_date);
-        $endDate=Carbon::create($request->end_date);
-        $tickets=ticket::with("priority_type")->where("user_id",Auth::user()->uuid)->get();
+        $startDate=Carbon::create($request->start_date)->startOfDay();
+        $endDate=Carbon::create($request->end_date)->endOfDay();
+        $tickets=ticket::with("priority_type","status_type")->where("user_id",Auth::user()->uuid)->get();
         foreach ($tickets as $ticket){
            if($startDate<$ticket->created_at&&$endDate>$ticket->created_at){
                array_push($filterResults,$ticket);
@@ -82,7 +82,7 @@ class piechartController extends Controller
         }
         $auth_adminAgents=agent::with("user")->where("admin_id",Auth::user()->id)->get();
         foreach ($auth_adminAgents as  $agent){
-            $agent_tickets=ticket::with("priority_type")->where("user_id",$agent->user->uuid)->get();
+            $agent_tickets=ticket::with("priority_type","status_type")->where("user_id",$agent->user->uuid)->get();
             foreach ($agent_tickets as $agent_ticket){
                 if($startDate<$agent_ticket->created_at&&$endDate>$agent_ticket->created_at){
                     array_push($filterResults,$agent_ticket);
@@ -99,19 +99,18 @@ class piechartController extends Controller
         $urgent=0;
         $medium=0;
         $low=0;
-
         foreach ($filterResults as $ticket) {
-            if($ticket->status=="Close"){
+            if($ticket->status_type->status=="Close"){
                 $closeticket ++;
-            }elseif($ticket->status=="Complete"){
+            }elseif($ticket->status_type->status=="Complete"){
                 $complete ++;
-            }elseif($ticket->status=="Open"){
+            }elseif($ticket->status_type->status=="Open"){
                 $openticket ++;
-            }elseif($ticket->status=="Pending"){
+            }elseif($ticket->status_type->status=="Pending"){
                 $pending ++;
-            }elseif($ticket->status=="Inprogress"){
+            }elseif($ticket->status_type->status=="Inprogress"){
                 $progress ++;
-            }elseif($ticket->status=="New"){
+            }elseif($ticket->status_type->status=="New"){
                 $new ++;
             }
             if($ticket->priority_type->priority=="Urgent"){

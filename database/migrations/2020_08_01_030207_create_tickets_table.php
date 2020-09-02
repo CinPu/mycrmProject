@@ -22,15 +22,19 @@ class CreateTicketsTable extends Migration
             $table->double("phone");
             $table->text("message");
             $table->string("title");
-            $table->string("status");
+            $table->bigInteger("status")->unsigned();
+            $table->foreign("status")->references('id')->on('statuses')->onDelete('cascade');
             $table->bigInteger("case_type")->unsigned();
             $table->foreign("case_type")->references('id')->on('case_types')->onDelete('cascade');
             $table->text("product");
             $table->bigInteger("priority")->unsigned();
             $table->foreign("priority")->references('id')->on('priorities')->onDelete('cascade');
             $table->text("photo");
-            $table->string("source");
+            $table->bigInteger("source")->unsigned();
+            $table->foreign("source")->references('id')->on('sources')->onDelete('cascade');
             $table->tinyInteger("isassign");
+            $table->double("lat");
+            $table->double("lng");
             $table->timestamps();
         });
     }

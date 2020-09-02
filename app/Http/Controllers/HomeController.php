@@ -45,7 +45,7 @@ class HomeController extends Controller
                 $agents = agent::with("user")->where("admin_id", Auth::user()->id)->get();
 //                dd($agents);
                 foreach ($agents as $agent){
-                    $agents_tickets=ticket::with("priority_type","cases")->where("user_id",$agent->user->uuid)->get();
+                    $agents_tickets=ticket::with("priority_type","cases","status_type")->where("user_id",$agent->user->uuid)->get();
                     //all agents' ticket add to tickets[]
                     foreach ($agents_tickets as $agent_ticket) {
                         array_push($tickets, $agent_ticket);
@@ -53,7 +53,7 @@ class HomeController extends Controller
 //                }
                 }
                 //ticket for admin from user to admin
-                $user_tickets=ticket::with("priority_type","cases")->where("user_id",Auth::user()->uuid)->get();
+                $user_tickets=ticket::with("priority_type","cases","status_type")->where("user_id",Auth::user()->uuid)->get();
                 foreach($user_tickets as $user_ticket){
                     array_push($tickets,$user_ticket);
                 }
@@ -69,17 +69,17 @@ class HomeController extends Controller
                 $assigned=[];
                 $unassigned=[];
                 foreach ($tickets as $t) {
-                    if($t->status=="Close"){
+                    if($t->status_type->status=="Close"){
                         $closeticket ++;
-                    }elseif($t->status=="Complete"){
+                    }elseif($t->status_type->status=="Complete"){
                         $complete ++;
-                    }elseif($t->status=="Open"){
+                    }elseif($t->status_type->status=="Open"){
                         $openticket ++;
-                    }elseif($t->status=="Pending"){
+                    }elseif($t->status_type->status=="Pending"){
                         $pending ++;
-                    }elseif($t->status=="Inprogress"){
+                    }elseif($t->status_type->status=="Inprogress"){
                         $progress ++;
-                    }elseif($t->status=="New"){
+                    }elseif($t->status_type->status=="New"){
                         $new ++;
                     }
                     if($t->isassign==0){
@@ -96,14 +96,14 @@ class HomeController extends Controller
                 //end for admin user
             } elseif (Auth::user()->hasAnyRole("Agent")) {
 
-                $tickets=ticket::with("priority_type","cases")->where("user_id",Auth::user()->uuid)->get();
+                $tickets=ticket::with("priority_type","cases","status_type","sources_type")->where("user_id",Auth::user()->uuid)->get();
 //            dd($tickets);
                 $noOfmyticket=count($tickets);
 
                 $assign=assign_ticket::with("ticket")->where("agent_id",Auth::user()->id)->get();
                 $assignticket=[];
                 foreach ($assign as $sign){
-                    $ticket=ticket::with("priority_type","cases")->where("id",$sign->ticket_id)->first();
+                    $ticket=ticket::with("priority_type","cases","status_type","sources_type")->where("id",$sign->ticket_id)->first();
                     array_push($assignticket,$ticket);
                 }
                 $noOfassign=count($assignticket);

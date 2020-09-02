@@ -10,6 +10,9 @@ use App\comment;
 use App\countdown;
 use App\department;
 use App\priority;
+use App\solvedTime;
+use App\sources;
+use App\status;
 use App\ticket;
 use App\User;
 use App\user_information;
@@ -75,6 +78,8 @@ class ticketController extends Controller
     {
 
 //        dd($id);
+        $statuses=status::all();
+        $sources=sources::all();
 
         if(Auth::check()) {
             if (Auth::user()->hasAnyRole("Agent")) {
@@ -87,18 +92,18 @@ class ticketController extends Controller
                     $user_infos=user_information::where("admin_id",$admins->uuid)->get();
 //                    }
                 }
-                return view("ticket.create", compact("cats", "id","priorities","user_infos"));
+                return view("ticket.create", compact("cats", "statuses","sources", "id","priorities","user_infos"));
             }elseif(Auth::user()->hasAnyRole("Admin")) {
                 $priorities = priority::where("admin_uuid", $id)->get();
                 $cats = case_type::where("admin_uuid", $id)->get();
                 $user_infos = user_information::where("admin_id", $id)->get();
-                return view("ticket.create", compact("cats", "id", "priorities", "user_infos"));
+                return view("ticket.create", compact("cats", "statuses","sources", "id", "priorities", "user_infos"));
             }
         }else {
             $priorities=priority::where("admin_uuid",$id)->get();
             $cats = case_type::where("admin_uuid", $id)->get();
             $user_infos=user_information::where("admin_id",$id)->get();
-            return view("ticket.create", compact("cats", "id","priorities","user_infos"));
+            return view("ticket.create", compact("cats", "statuses","sources","id","priorities","user_infos"));
         }
     }
 
@@ -110,7 +115,6 @@ class ticketController extends Controller
      */
     public function store(Request $request,$id)
     {
-
         $this->validate($request, [
 
             'files' => 'required',
@@ -127,12 +131,14 @@ class ticketController extends Controller
         $ticket->user_id =$request->uuid;;
         $ticket->case_type = $request->case_type;
         $ticket->ticket_id =$name->name." - ". strtoupper(Str::random(12));
-        $ticket->status = "New";
+        $ticket->status = $request->status;
         $ticket->product=$request->product;
         $ticket->userinfo_id=$request->user_info_id;
         $ticket->phone=$request->phone;
         $ticket->priority = $request->priority;
         $ticket->source=$request->source;
+        $ticket->lat=$request->lat;
+        $ticket->lng=$request->lng;
         $ticket->isassign=0;
         if($request->hasfile('files'))
         {
@@ -167,9 +173,10 @@ class ticketController extends Controller
      */
     public function show($ticket_id)
     {
+        $statuses=status::all();
 
 //        $ticket_info=ticket::all();
-        $ticket_info=ticket::with("priority_type","userinfo")->where('ticket_id',$ticket_id)->firstOrFail();
+        $ticket_info=ticket::with("priority_type","userinfo","cases","status_type","sources_type")->where('ticket_id',$ticket_id)->firstOrFail();
 //        dd($ticket_info);
         $countdown=countdown::where("ticket_id",$ticket_id)->first();
         if($countdown==null){
@@ -183,7 +190,7 @@ class ticketController extends Controller
         $numberOfphotos=count($photos);
         $comments=$ticket_info->comment;
 //        dd($ticket_info);
-        $cat=$ticket_info->cases;
+//        $cat=$ticket_info->cases;
 //        dd($ticket_info);
         $assigned_tickets=assign_ticket::where("ticket_id",$ticket_info->id)->first();
 //        $assigned_dept=assigntodepartment::where("ticket_id",$ticket_info->id)->first();
@@ -206,7 +213,7 @@ class ticketController extends Controller
 //            $user=ticket::with("user")->where("ticket_id",$ticket_id)->get();
 //            dd($user);
 //            dd($assigned_user);
-            return view("ticket.show", compact("photos","numberOfphotos","ticket_info", "comments", "cat", "admin","depts","end"));
+            return view("ticket.show", compact("photos","numberOfphotos","ticket_info", "comments", "admin","depts","end","statuses"));
         }else{
 
             $priority=priority::where("priority",$ticket_info->priority)->first();
@@ -219,7 +226,7 @@ class ticketController extends Controller
                 $depts=department::where("admin_uuid",$admin_user->uuid)->get();
             }
 
-            return view("ticket.show",compact("photos","numberOfphotos","ticket_info","comments","cat","admin","depts","end"));
+            return view("ticket.show",compact("photos","numberOfphotos","ticket_info","comments","admin","depts","end","statuses"));
         }
     }
 
@@ -257,7 +264,6 @@ class ticketController extends Controller
         //
     }
     public function countdown($ticket_id){
-
         $ticket_info=ticket::with("priority_type")->where('ticket_id',$ticket_id)->firstOrFail();
         $countdown=countdown::where("ticket_id",$ticket_id)->first();
         if($countdown==null) {
@@ -265,15 +271,29 @@ class ticketController extends Controller
             $countdownCreate->ticket_id = $ticket_id;
             $countdownCreate->endtime = \Carbon\Carbon::now("Asia/Yangon")->addHour($ticket_info->priority_type->hours)->addMinutes($ticket_info->priority_type->minutes)->addSeconds($ticket_info->priority_type->seconds);
             $countdownCreate->save();
+            $solveTime=new solvedTime();
+            $solveTime->ticket_id=$ticket_info->id;
+            $solveTime->startedTime=Carbon::now();
+            $solveTime->agent_id=Auth::user()->id;
+            $solveTime->priority=$ticket_info->priority;
+            $solveTime->save();
         }
         return redirect("/tickets/$ticket_id");
     }
     public function statusChange(Request $request,$ticket_id){
+        $status=status::where("id",$request->status_change)->first();
         $statusOn = ticket::where("ticket_id", $ticket_id)->first();
-//        dd($statusOn);
         $statusOn->status = $request->status_change;
         $statusOn->updated_at=Carbon::now();
         $statusOn->update();
+        if($status->status=="Complete") {
+            $solveEndtime = solvedTime::where("ticket_id", $statusOn->id)->first();
+            if($solveEndtime->endTime==null) {
+                $solveEndtime->endTime = Carbon::now();
+                $solveEndtime->agent_id = Auth::user()->id;
+                $solveEndtime->update();
+            }
+        }
         return redirect()->back();
     }
     public function assigned(Request $request){

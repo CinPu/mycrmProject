@@ -1,6 +1,15 @@
 @extends("layouts.app")
 @section("title","Agent Detail")
+@section("csscode")
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+@endsection
 @section("content")
+
+    <div style="width:300px;height:300px" class="offset-md-4">
+        <canvas id="timespend"></canvas>
+    </div>
+
     <div class="row">
         <div class="col-md-8">
             <div class="card">
@@ -8,20 +17,6 @@
                     <h4 class="card-title">Overview</h4>
                 </div>
                 <div class="card-body">
-{{--                    <ul class="nav nav-tabs bg-primary" id="nav-tab" role="tablist">--}}
-{{--                        <li class="nav-item active my-1" role="presentation">--}}
-{{--                            <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-summary" role="presentation" aria-controls="nav-home" aria-selected="true">Overview</a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item my-1" role="presentation">--}}
-{{--                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-assignByname" role="tab" aria-controls="nav-profile" aria-selected="false">Assign By Name</a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item my-1" role="presentation">--}}
-{{--                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-assignBydept" role="tab" aria-controls="nav-contact" aria-selected="false">Assign With Department</a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item my-1" role="presentation">--}}
-{{--                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-created" role="tab" aria-controls="nav-contact" aria-selected="false">Created Ticket</a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-summary" role="presentation" aria-labelledby="nav-home-tab">
                             <div class="row">
@@ -64,193 +59,6 @@
                             </div>
                             </div>
                         </div>
-{{--                        <div class="tab-pane fade my-3" id="nav-assignByname" role="tabpanel" aria-labelledby="nav-profile-tab">--}}
-{{--                            <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Assign By Name</h3>--}}
-{{--                            <table class="table" id="assign_by_name">--}}
-{{--                                <div class=" col-md-12">--}}
-{{--                                        <label>Search By</label>--}}
-{{--                                    <div class=" mb-3">--}}
-{{--                                        <div class="col-md-5  text-white">--}}
-{{--                                            <select class="custom-select"  id="byname_casetype">--}}
-{{--                                                <option value=""> All</option>--}}
-{{--                                                @foreach($allcases as $case)--}}
-{{--                                                    <option value="{{$case->name}}"> {{$case->name}} </option>--}}
-{{--                                                @endforeach--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="row my-3">--}}
-{{--                                            <label class="mr-3">Start Date</label>--}}
-{{--                                        <div class="text-white">--}}
-{{--                                            <input type="text" class="form-control" id="byname_min" name="byname_min" >--}}
-{{--                                        </div>--}}
-{{--                                            <label class=" mr-3">End Date</label>--}}
-{{--                                        <div class="text-white">--}}
-{{--                                            <input type="text" class="form-control" id="byname_max" name="byname_max" >--}}
-{{--                                        </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <thead>--}}
-{{--                                <tr>--}}
-{{--                                    <th scope="col">Title</th>--}}
-{{--                                    <th scope="col">Ticket ID</th>--}}
-{{--                                    <th scope="col">Status</th>--}}
-{{--                                    <th scope="col">Priority</th>--}}
-{{--                                    <th scope="col">Case Type</th>--}}
-{{--                                    <th scope="col">Assigned Date</th>--}}
-{{--                                </tr>--}}
-{{--                                </thead>--}}
-{{--                                <tbody>--}}
-
-{{--                                @foreach($assigntickets as $aticket)--}}
-{{--                                    <tr>--}}
-{{--                                        <th scope="row">{{$aticket->ticket->title}}</th>--}}
-{{--                                        <td>--}}
-{{--                                            <a href="{{ url('tickets/'.$aticket->ticket->ticket_id) }}">--}}
-{{--                                                {{ $aticket->ticket->ticket_id }}--}}
-{{--                                            </a>--}}
-{{--                                        </td>--}}
-{{--                                        <td>{{$aticket->ticket->status}}</td>--}}
-{{--                                        <td>--}}
-{{--                                            <a class="btn btn-{{$aticket->ticket->priority_type->color}} text-white">{{$aticket->ticket->priority_type->priority}}</a>--}}
-{{--                                        </td>--}}
-{{--                                        <td>--}}
-{{--                                            @foreach($allcases as $case)--}}
-{{--                                                @if($aticket->ticket->case_type==$case->id)--}}
-{{--                                                    {{$case->name}}--}}
-{{--                                                @endif--}}
-{{--                                            @endforeach--}}
-{{--                                        </td>--}}
-{{--                                        <td>{{$aticket->created_at->toFormattedDateString()}}</td>--}}
-
-{{--                                    </tr>--}}
-{{--                                @endforeach--}}
-{{--                                </tbody>--}}
-{{--                            </table>--}}
-{{--                        </div>--}}
-{{--                        <div class="tab-pane fade my-3" id="nav-assignBydept" role="tabpanel" aria-labelledby="nav-contact-tab">--}}
-{{--                            <table class="table" id="assign_by_dept">--}}
-{{--                                <thead>--}}
-{{--                                <div class=" col-md-12">--}}
-{{--                                    <label>Search By</label>--}}
-{{--                                    <div class=" mb-3">--}}
-{{--                                        <div class="col-md-5  text-white">--}}
-{{--                                            <select class="custom-select"  id="dept_casetype">--}}
-{{--                                                <option value=""> All</option>--}}
-{{--                                                @foreach($allcases as $case)--}}
-{{--                                                    <option value="{{$case->name}}"> {{$case->name}} </option>--}}
-{{--                                                @endforeach--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="row my-3">--}}
-{{--                                            <label class="mr-3">Start Date</label>--}}
-{{--                                            <div class="text-white">--}}
-{{--                                                <input type="text" class="form-control" id="bydept_min" name="bydept_min" >--}}
-{{--                                            </div>--}}
-{{--                                            <label class=" mr-3">End Date</label>--}}
-{{--                                            <div class="text-white">--}}
-{{--                                                <input type="text" class="form-control" id="bydept_max" name="bydept_max" >--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <tr>--}}
-{{--                                    <th scope="col" class="border">Title</th>--}}
-{{--                                    <th scope="col" class="border">Ticket ID</th>--}}
-{{--                                    <th scope="col" class="border">Message</th>--}}
-{{--                                    <th scope="col" class="border">Status</th>--}}
-{{--                                    <th scope="col" class="border">Priority</th>--}}
-{{--                                    <th scope="col" class="border">Category</th>--}}
-{{--                                    <th scope="col" class="border">Last Updated</th>--}}
-{{--                                </tr>--}}
-{{--                                </thead>--}}
-{{--                                <tbody>--}}
-{{--                                --}}{{--@dd($assignwithDepts)--}}
-{{--                                @foreach($assigndepts as $assignwithdept)--}}
-{{--                                    <tr>--}}
-{{--                                        <th scope="row" class="border">{{$assignwithdept->ticket->title}}</th>--}}
-{{--                                        <td class="border">--}}
-{{--                                            <a href="{{ url('tickets/'.$assignwithdept->ticket->ticket_id) }}">--}}
-{{--                                                {{ $assignwithdept->ticket->ticket_id }}--}}
-{{--                                            </a>--}}
-{{--                                        </td>--}}
-{{--                                        <td class="border">{!!$assignwithdept->ticket->message!!}</td>--}}
-{{--                                        <td class="border">{{$assignwithdept->ticket->status}}</td>--}}
-{{--                                        <td class="border">{{$assignwithdept->ticket->priority_type->priority}}</td>--}}
-{{--                                        <td class="border">--}}
-{{--                                            @foreach($complaint_type as $case)--}}
-{{--                                                @if($assignwithdept->ticket->complain_type==$case->id)--}}
-{{--                                                    {{$case->name}}--}}
-{{--                                                @endif--}}
-{{--                                            @endforeach--}}
-{{--                                        </td>--}}
-{{--                                        <td class="border">{{$assignwithdept->ticket->created_at->toFormattedDateString()}}</td>--}}
-
-{{--                                    </tr>--}}
-{{--                                @endforeach--}}
-{{--                                </tbody>--}}
-{{--                            </table>--}}
-{{--                        </div>--}}
-{{--                        <div class="tab-pane fade my-3" id="nav-created" role="tabpanel" aria-labelledby="nav-contact-tab">--}}
-{{--                            <table class="table border my-3" id="created_ticket">--}}
-{{--                                <thead>--}}
-{{--                                <div class=" col-md-12">--}}
-{{--                                    <label>Search By</label>--}}
-{{--                                    <div class=" mb-3">--}}
-{{--                                        <div class="col-md-5  text-white">--}}
-{{--                                            <select class="custom-select"  id="created_casetype">--}}
-{{--                                                <option value=""> All</option>--}}
-{{--                                                @foreach($allcases as $case)--}}
-{{--                                                    <option value="{{$case->name}}"> {{$case->name}} </option>--}}
-{{--                                                @endforeach--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="row my-3">--}}
-{{--                                            <label class="mr-3">Start Date</label>--}}
-{{--                                            <div class="text-white">--}}
-{{--                                                <input type="text" class="form-control" id="created_min" name="created_min" >--}}
-{{--                                            </div>--}}
-{{--                                            <label class=" mr-3">End Date</label>--}}
-{{--                                            <div class="text-white">--}}
-{{--                                                <input type="text" class="form-control" id="created_max" name="created_max" >--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <tr>--}}
-{{--                                    <th scope="col" class="border">Title</th>--}}
-{{--                                    <th scope="col" class="border">Ticket ID</th>--}}
-{{--                                    <th scope="col" class="border">Message</th>--}}
-{{--                                    <th scope="col" class="border">Status</th>--}}
-{{--                                    <th scope="col" class="border">Priority</th>--}}
-{{--                                    <th scope="col" class="border">Category</th>--}}
-{{--                                    <th scope="col" class="border">Last Updated</th>--}}
-{{--                                </tr>--}}
-{{--                                </thead>--}}
-{{--                                <tbody>--}}
-
-{{--                                @foreach($agenttickets as $ticket)--}}
-{{--                                    <tr>--}}
-{{--                                        <th scope="row" class="border">{{$ticket->title}}</th>--}}
-{{--                                        <td class="border">--}}
-{{--                                            <a href="{{ url("tickets/$ticket->ticket_id") }}">--}}
-{{--                                                #{{ $ticket->ticket_id }}--}}
-{{--                                            </a>--}}
-{{--                                        </td>--}}
-{{--                                        <td class="border">{!!$ticket->message!!}</td>--}}
-{{--                                        <td class="border">{{$ticket->status}}</td>--}}
-{{--                                        <td class="border">{{$ticket->priority_type->priority}}</td>--}}
-
-{{--                                        <td class="border">--}}
-{{--                                            {{$ticket->cases->name}}--}}
-{{--                                        </td>--}}
-{{--                                        <td class="border">{{$ticket->created_at->toFormattedDateString()}}</td>--}}
-
-{{--                                    </tr>--}}
-{{--                                @endforeach--}}
-{{--                                </tbody>--}}
-{{--                            </table>--}}
-{{--                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -274,112 +82,363 @@
             </div>
         </div>
     </div>
+    <div class="card">
+    <ul class="nav nav-tabs bg-primary" id="myTab" role="tablist">
+        <li class="nav-item my-1">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Created Ticket</a>
+        </li>
+        <li class="nav-item my-1">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Assign By Name </a>
+        </li>
+        <li class="nav-item my-1">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Assign By Department</a>
+        </li>
+    </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active col-md-12 col-12" id="home" role="tabpanel" aria-labelledby="home-tab" style="overflow-x:auto;">
+                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Created Tickets</h3>
+                <table class="table" id="created_ticket">
+                    <thead>
+                    <div class=" col-md-12">
+                        <div class="row">
+                            <label class="col-md-3 ">Search By</label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3 offset-md-1">
+                                <select class="custom-select"  id="created_casetype">
+                                    <option value=""> All</option>
+                                    @foreach($allcases as $case)
+                                        <option value="{{$case->name}}"> {{$case->name}} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="offset-md-0">
+                                <span class=" mr-3 ">Start Date</span>
+                            </div>
+                            <div>
+                                <input type="text" class="form-control" id="created_min" name="created_min" >
+                            </div>
+                            <div class=" offset-md-1">
+                                <span class=" mr-3 ">End Date</span>
+                            </div>
+                            <div class="text-white">
+                                <input type="text" class="form-control" id="created_max" name="created_max" >
+                            </div>
+
+                        </div>
+                    </div>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Ticket ID</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Last Updated</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($agenttickets as $ticket)
+                            <tr>
+                                <th scope="row">{{$ticket->title}}</th>
+                                <td>
+                                    <a href="{{ url("tickets/$ticket->ticket_id") }}">
+                                        #{{ $ticket->ticket_id }}
+                                    </a>
+                                </td>
+                                <td>{!!substr($ticket->message,0,150)!!}...</td>
+                                <td>{{$ticket->status}}</td>
+                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
+                                {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
+                                <td>{{$ticket->cases->name}}</td>
+                                <td>{{$ticket->created_at->toFormattedDateString()}}</td>
+
+                            </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade col-md-12 col-12" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="overflow-x:auto;">
+                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Assign By Name Tickets</h3>
+                <table class="table" id="assign_by_name">
+                    <thead>
+                    <div class=" col-md-12">
+                        <div class="row">
+                            <label class="col-md-3 ">Search By</label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3 offset-md-1">
+                                <select class="custom-select"  id="byname_casetype">
+                                    <option value=""> All</option>
+                                    @foreach($allcases as $case)
+                                        <option value="{{$case->name}}"> {{$case->name}} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="offset-md-0">
+                                <span class=" mr-3 ">Start Date</span>
+                            </div>
+                            <div>
+                                <input type="text" class="form-control" id="byname_min" name="byname_min" >
+                            </div>
+                            <div class=" offset-md-1">
+                                <span class=" mr-3 ">End Date</span>
+                            </div>
+                            <div class="text-white">
+                                <input type="text" class="form-control" id="byname_max" name="byname_max" >
+                            </div>
+
+                        </div>
+                    </div>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Ticket ID</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Last Updated</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($assigntickets as $ticket)
+                        <tr>
+                            <th scope="row">{{$ticket->title}}</th>
+                            <td>
+                                <a href="{{ url("tickets/$ticket->ticket_id") }}">
+                                    #{{ $ticket->ticket_id }}
+                                </a>
+                            </td>
+                            <td>{!!substr($ticket->message,0,150)!!}...</td>
+                            <td>{{$ticket->status}}</td>
+                            <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
+                            {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
+                            <td>{{$ticket->cases->name}}</td>
+                            <td>{{$ticket->created_at->toFormattedDateString()}}</td>
+
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade col-12 col-md-12" id="contact" role="tabpanel" aria-labelledby="contact-tab" style="overflow-x:auto;">
+                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Assign By Department Tickets</h3>
+                <table class="table" id="assign_by_dept">
+                    <thead>
+                    <div class=" col-md-12">
+                        <div class="row">
+                            <label class="col-md-3 ">Search By</label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3 offset-md-1">
+                                <select class="custom-select"  id="dept_casetype">
+                                    <option value=""> All</option>
+                                    @foreach($allcases as $case)
+                                        <option value="{{$case->name}}"> {{$case->name}} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="offset-md-0">
+                                <span class=" mr-3 ">Start Date</span>
+                            </div>
+                            <div>
+                                <input type="text" class="form-control" id="bydept_min" name="bydept_min" >
+                            </div>
+                            <div class=" offset-md-1">
+                                <span class=" mr-3 ">End Date</span>
+                            </div>
+                            <div class="text-white">
+                                <input type="text" class="form-control" id="bydept_max" name="bydept_max" >
+                            </div>
+
+                        </div>
+                    </div>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Ticket ID</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Last Updated</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($assigndepts as $ticket)
+                        <tr>
+                            <th scope="row">{{$ticket->title}}</th>
+                            <td>
+                                <a href="{{ url("tickets/$ticket->ticket_id") }}">
+                                    #{{ $ticket->ticket_id }}
+                                </a>
+                            </td>
+                            <td>{!!substr($ticket->message,0,150)!!}...</td>
+                            <td>{{$ticket->status}}</td>
+                            <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
+                            {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
+                            <td>{{$ticket->cases->name}}</td>
+                            <td>{{$ticket->created_at->toFormattedDateString()}}</td>
+
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 @endsection
-{{--@section("scriptcode")--}}
-{{--    <script>--}}
-{{--        $(document).ready(function() {--}}
-{{--            $('#assign_by_name').DataTable( {--}}
-{{--                dom: 'Bfrtip',--}}
-{{--                buttons: [--}}
-{{--                    'copy', 'csv', 'excel', 'pdf', 'print'--}}
-{{--                ]--}}
-{{--            } );--}}
-{{--        } );--}}
-{{--        $('#byname_casetype').on('change', function() {--}}
-{{--            var table = $('#assign_by_name').DataTable();--}}
-{{--            table.column(4).search($(this).val()).draw();--}}
-{{--        });--}}
-{{--        $(document).ready(function(){--}}
-{{--            $.fn.dataTable.ext.search.push(--}}
-{{--                function (settings, data, dataIndex) {--}}
-{{--                    var min = $('#byname_min').datepicker("getDate");--}}
-{{--                    var max = $('#byname_max').datepicker("getDate");--}}
-{{--                    var startDate = new Date(data[5]);--}}
-{{--                    if (min == null && max == null) { return true; }--}}
-{{--                    if (min == null && startDate <= max) { return true;}--}}
-{{--                    if(max == null && startDate >= min) {return true;}--}}
-{{--                    if (startDate <= max && startDate >= min) { return true; }--}}
-{{--                    return false;--}}
-{{--                }--}}
-{{--            );--}}
+@section("scriptcode")
+    <script>
+        $(function () {
+            var ctx = document.getElementById("timespend").getContext('2d');
+            var data = {
+                datasets: [{
+                    data: [
+                        {{$twenty_fivepercent}},
+                        {{$fifty_percent}},
+                        {{$seventy_fivepercent}},
+                        {{$hundred_percent}},
+                        {{$overtimeuse}}
+                    ],
+                    backgroundColor: [
+                        '#ef0636',
+                        '#9605a0',
+                        '#4642ea',
+                        "#6fe00b",
+                        "#000"
+                    ],
+                }],
+                labels: [
+                    '25%',
+                    '50%',
+                    '75%',
+                    '100%',
+                    "OverTime"
+                ]
+            };
+            var myDoughnutChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: {
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: "Solved Time Spend for each ticket"
+                    },
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            boxWidth: 15
+                        }
+                    }
+                }
+            });
+        });
 
-{{--            $("#byname_min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });--}}
-{{--            $("#byname_max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });--}}
-{{--            var table = $('#assign_by_name').DataTable();--}}
-{{--            // Event listener to the two range filtering inputs to redraw on input--}}
-{{--            $('#byname_min, #byname_max').change(function () {--}}
-{{--                table.draw();--}}
-{{--            });--}}
-{{--        });--}}
-{{--        //dept assign--}}
-{{--        $(document).ready(function() {--}}
-{{--            $('#assig_by_dept').DataTable( {--}}
-{{--                dom: 'Bfrtip',--}}
-{{--                buttons: [--}}
-{{--                    'copy', 'csv', 'excel', 'pdf', 'print'--}}
-{{--                ]--}}
-{{--            } );--}}
-{{--        } );--}}
-{{--        $('#dept_casetype').on('change', function() {--}}
-{{--            var table = $("#assign_by_dept").DataTable();--}}
-{{--            table.column(5).search($(this).val()).draw();--}}
-{{--        });--}}
-{{--        $(document).ready(function(){--}}
-{{--            $.fn.dataTable.ext.search.push(--}}
-{{--                function (settings, data, dataIndex) {--}}
-{{--                    var min = $('#bydept_min').datepicker("getDate");--}}
-{{--                    var max = $('#bydept_max').datepicker("getDate");--}}
-{{--                    var startDate = new Date(data[6]);--}}
-{{--                    if (min == null && max == null) { return true; }--}}
-{{--                    if (min == null && startDate <= max) { return true;}--}}
-{{--                    if(max == null && startDate >= min) {return true;}--}}
-{{--                    if (startDate <= max && startDate >= min) { return true; }--}}
-{{--                    return false;--}}
-{{--                }--}}
-{{--            );--}}
+        $(document).ready(function() {
+            $('#assign_by_name').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            } );
+        } );
+        $('#byname_casetype').on('change', function() {
+            var table = $('#assign_by_name').DataTable();
+            table.column(5).search($(this).val()).draw();
+        });
+        $(document).ready(function(){
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var min = $('#byname_min').datepicker("getDate");
+                    var max = $('#byname_max').datepicker("getDate");
+                    var startDate = new Date(data[6]);
+                    if (min == null && max == null) { return true; }
+                    if (min == null && startDate <= max) { return true;}
+                    if(max == null && startDate >= min) {return true;}
+                    if (startDate <= max && startDate >= min) { return true; }
+                    return false;
+                }
+            );
 
-{{--            $("#bydept_min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });--}}
-{{--            $("#bydept_max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });--}}
-{{--            var table = $('#assign_by_dept').DataTable();--}}
-{{--            // Event listener to the two range filtering inputs to redraw on input--}}
-{{--            $('#bydept_min, #bydept_max').change(function () {--}}
-{{--                table.draw();--}}
-{{--            });--}}
-{{--        });--}}
-{{--        //created_tickets--}}
-{{--        $(document).ready(function() {--}}
-{{--            $('#created_ticket').DataTable( {--}}
-{{--                dom: 'Bfrtip',--}}
-{{--                buttons: [--}}
-{{--                    'copy', 'csv', 'excel', 'pdf', 'print'--}}
-{{--                ]--}}
-{{--            } );--}}
-{{--        } );--}}
-{{--        $('#created_casetype').on('change', function() {--}}
-{{--            var table = $("#created_ticket").DataTable();--}}
-{{--            table.column(5).search($(this).val()).draw();--}}
-{{--        });--}}
-{{--        $(document).ready(function(){--}}
-{{--            $.fn.dataTable.ext.search.push(--}}
-{{--                function (settings, data, dataIndex) {--}}
-{{--                    var min = $('#created_min').datepicker("getDate");--}}
-{{--                    var max = $('#created_max').datepicker("getDate");--}}
-{{--                    var startDate = new Date(data[6]);--}}
-{{--                    if (min == null && max == null) { return true; }--}}
-{{--                    if (min == null && startDate <= max) { return true;}--}}
-{{--                    if(max == null && startDate >= min) {return true;}--}}
-{{--                    if (startDate <= max && startDate >= min) { return true; }--}}
-{{--                    return false;--}}
-{{--                }--}}
-{{--            );--}}
+            $("#byname_min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+            $("#byname_max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+            var table = $('#assign_by_name').DataTable();
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#byname_min, #byname_max').change(function () {
+                table.draw();
+            });
+        });
+        //dept assign
+        $(document).ready(function() {
+            $('#assign_by_dept').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            } );
+        } );
+        $('#dept_casetype').on('change', function() {
+            var table = $("#assign_by_dept").DataTable();
+            table.column(5).search($(this).val()).draw();
+        });
+        $(document).ready(function(){
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var min = $('#bydept_min').datepicker("getDate");
+                    var max = $('#bydept_max').datepicker("getDate");
+                    var startDate = new Date(data[6]);
+                    if (min == null && max == null) { return true; }
+                    if (min == null && startDate <= max) { return true;}
+                    if(max == null && startDate >= min) {return true;}
+                    if (startDate <= max && startDate >= min) { return true; }
+                    return false;
+                }
+            );
 
-{{--            $("#created_min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });--}}
-{{--            $("#created_max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });--}}
-{{--            var table = $('#created_ticket').DataTable();--}}
-{{--            // Event listener to the two range filtering inputs to redraw on input--}}
-{{--            $('#created_min, #created_max').change(function () {--}}
-{{--                table.draw();--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
-{{--@endsection--}}
+            $("#bydept_min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+            $("#bydept_max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+            var table = $('#assign_by_dept').DataTable();
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#bydept_min, #bydept_max').change(function () {
+                table.draw();
+            });
+        });
+        //created_tickets
+        $(document).ready(function() {
+            $('#created_ticket').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            } );
+        } );
+        $('#created_casetype').on('change', function() {
+            var table = $("#created_ticket").DataTable();
+            table.column(5).search($(this).val()).draw();
+        });
+        $(document).ready(function(){
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var min = $('#created_min').datepicker("getDate");
+                    var max = $('#created_max').datepicker("getDate");
+                    var startDate = new Date(data[6]);
+                    if (min == null && max == null) { return true; }
+                    if (min == null && startDate <= max) { return true;}
+                    if(max == null && startDate >= min) {return true;}
+                    if (startDate <= max && startDate >= min) { return true; }
+                    return false;
+                }
+            );
+
+            $("#created_min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+            $("#created_max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+            var table = $('#created_ticket').DataTable();
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#created_min, #created_max').change(function () {
+                table.draw();
+            });
+        });
+    </script>
+@endsection

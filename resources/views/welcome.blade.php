@@ -6,11 +6,17 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Welcome</title>
+    <style>
+        .home_body{
+            background-image: url("{{asset("/assets/img/welcomebg.png")}}");
+        }
+    </style>
 </head>
 <body>
-<div class="card">
-<nav class="navbar navbar-expand-lg navbar-light bg-light float-right">
+<div class="bg-primary">
+<nav class="navbar navbar-expand-lg navbar-light ">
         <a class="navbar-brand float-right" href="#">Support Ticket</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,7 +33,7 @@
         </div>
     </nav>
 </div>
-<div class="home_body" style="height: 250px;background-color: #0091ea">
+<div class="home_body" style="height: 250px;">
     <br>
 <div>
     <h3 align="center" class="my-5">
@@ -35,13 +41,13 @@
     </h3>
     <!-- Default dropright button -->
     <div class="btn-group offset-md-5 offset-3 dropright">
-        <button type="button" class="btn btn-primary  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-white  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Send Report Ticket
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+            @foreach($admins as $admin)
+            <a class="dropdown-item" href="{{url("/ticket/create/$admin->uuid")}}"><i class="fa fa-building-o mr-2"></i> {{$admin->name}}</a>
+            @endforeach
         </div>
     </div>
 </div>

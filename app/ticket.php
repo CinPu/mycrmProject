@@ -16,6 +16,12 @@ class ticket extends Model
     public function cases(){
         return $this->belongsTo(case_type::class,'case_type','id');
     }
+    public function status_type(){
+        return $this->belongsTo(status::class,'status','id');
+    }
+    public function sources_type(){
+        return $this->belongsTo(sources::class,'source','id');
+    }
     public function assingticket(){
         return $this->hasMany(assign_ticket::class);
     }
@@ -27,5 +33,8 @@ class ticket extends Model
     }
     public function userinfo(){
         return $this->belongsTo(user_information::class,"userinfo_id","id");
+    }
+    public function solveTime(){
+        return $this->hasMany(solvedTime::class);
     }
 }

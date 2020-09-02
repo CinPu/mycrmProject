@@ -2,6 +2,7 @@
 @section("title","Assign Or Unassign Ticket")
 @section("content")
     <div class="container-fluid">
+        <div class="card">
     <ul class="nav nav-tabs bg-secondary" id="myTab" role="tablist">
         <li class="nav-item my-1">
             <a class="nav-link {{$unassign}}" id="home-tab" data-toggle="tab" href="#unassigned" role="tab" aria-controls="home" aria-selected="true">Unassigned Ticket</a>
@@ -12,7 +13,7 @@
 
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade {{$unassign}} card col-12 col-md-12" id="unassigned" role="tabpanel" aria-labelledby="home-tab" style="overflow-x:auto;">
+        <div class="tab-pane fade {{$unassign}}  col-12 col-md-12" id="unassigned" role="tabpanel" aria-labelledby="home-tab" style="overflow-x:auto;">
             <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Unassign Tickets</h3>
             <table class="table " id="unassign">
                 <div class=" col-md-12">
@@ -117,7 +118,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade {{$assign}} card col-12 col-md-12" id="assigned" role="tabpanel" aria-labelledby="profile-tab" style="overflow-x:auto;">
+        <div class="tab-pane fade {{$assign}}  col-12 col-md-12" id="assigned" role="tabpanel" aria-labelledby="profile-tab" style="overflow-x:auto;">
             <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Assigned Tickets</h3>
             <table class="table " id="assign">
                 <div class=" col-md-12">
@@ -186,6 +187,7 @@
             </table>
         </div>
     </div>
+        </div>
     </div>
 @endsection
 @section("scriptcode")

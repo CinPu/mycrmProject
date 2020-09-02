@@ -8,10 +8,10 @@
     <form action="{{url("/search")}}" method="POST" class="navbar-form my-3 mx-3">
         {{csrf_field()}}
         <div class="row">
-            <div class="form-group">
+            <div class="form-group ml-3">
                 <input type="text" name="start_date" id="start_date" autocomplete="off" class="form-control" placeholder="Enter Start Date">
             </div>
-            <div class="form-group ml-3" >
+            <div class="form-group ml-3 " >
                 <input type="text" name="end_date" id="end_date" autocomplete="off" class="form-control" placeholder="Enter End Date">
             </div>
 
@@ -24,12 +24,11 @@
 @endsection
 @section("content")
     <div class="row">
-    <div style="width:240px;height:240px" class="offset-md-2">
+    <div style="width:250px;height:250px" class="offset-md-2">
         <canvas id="status"></canvas>
     </div>
-    <div style="width:240px;height:240px" class="offset-md-2">
+    <div style="width:250px;height:250px" class="offset-md-2">
         <canvas id="priority" ></canvas>
-    </div>
     </div>
     </div>
 @endsection
