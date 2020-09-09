@@ -118,9 +118,11 @@ class HomeController extends Controller
                 $admin_agents=agent::with("user")->where("admin_id",$admin->id)->get();
                 return view("Agent.home", compact("noOfassign","noOfassign_withdept","assingwithDepts","admin_agents","depts","noOfmyticket","tickets", "allcases","assignticket"));
 
+            }else{
+                return view("home");
             }
         }else{
-            dd("fail");
+
         }
 
     }

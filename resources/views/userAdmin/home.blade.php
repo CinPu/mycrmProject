@@ -34,7 +34,7 @@
         </div>
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
+                <div class="card-header card-header-primary card-header-icon">
                     <div class="card-icon">
                         <i class="fa fa-th"></i>
                     </div>
@@ -53,7 +53,7 @@
         </div>
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
+                <div class="card-header card-header-success card-header-icon">
                     <div class="card-icon">
                         <i class="fa fa-ticket"></i>
                     </div>
@@ -64,14 +64,14 @@
                 </div>
                 <div class="card-footer">
                     <div class="stats">
-                        <a href="{{url("isassign/1")}}"><i class="fa fa-ticket"></i>Assign Ticket Detail...</a>
+                        <a href="{{url("isassign/1")}}"><i class="fa fa-ticket mr-2"></i>Assign Ticket Detail...</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
+                <div class="card-header card-header-rose card-header-icon">
                     <div class="card-icon">
                         <i class="material-icons">info_outline</i>
                     </div>
@@ -82,14 +82,14 @@
                 </div>
                 <div class="card-footer">
                     <div class="stats">
-                        <a href="{{url("isassign/2")}}"><i class="fa fa-ticket"></i>Unassign Ticket Detail...</a>
+                        <a href="{{url("isassign/2")}}"><i class="fa fa-ticket mr-2"></i>Unassign Ticket Detail...</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
         <div class="card">
-    <ul class="nav nav-tabs bg-danger col-md-12 " id="myTab" role="tablist">
+    <ul class="nav nav-tabs bg-primary col-md-12 " id="myTab" role="tablist">
         <li class="nav-item my-2 ">
             <a class="nav-link active" id="pills-dashboard-tab" data-toggle="pill" href="#pills-dashboard" role="tab" aria-controls="pills-home" aria-selected="false">All Tickets
             </a>

@@ -72,9 +72,10 @@
     </style>
 </head>
 
-<body class="">
+<body >
 <div class="wrapper ">
     @if(\Illuminate\Support\Facades\Auth::check())
+        @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("SuperAdmin")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Admin")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent"))
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="{{url(asset("/assets/img/sidebar-1.jpg"))}}">
         <!--
           Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
@@ -245,6 +246,62 @@
             date.innerHTML = '&copy; ' + x + date.innerHTML;
         </script>
     </div>
+        @else
+            <div class="main-panel">
+                <!-- Navbar -->
+                <nav class="navbar navbar-expand-lg navbar-transparent  fixed-top " id="navigation-example">
+                    <div class="container-fluid">
+                        <div class="navbar-wrapper">
+                            <a class="navbar-brand" href="javascript:void(0)">Support Ticket</a>
+                        </div>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="navbar-toggler-icon icon-bar"></span>
+                            <span class="navbar-toggler-icon icon-bar"></span>
+                            <span class="navbar-toggler-icon icon-bar"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-end">
+                            @yield("search")
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @if(\Illuminate\Support\Facades\Auth::check())
+                                            {{\Illuminate\Support\Facades\Auth::user()->name}}
+                                        @endif
+                                        <i class="material-icons">person</i>
+                                        <p class="d-lg-none d-md-block">
+                                        </p>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                        @if(Auth::check())
+                                            <div>
+
+                                                <h5 align="center" class="my-3"><img src="{{asset("assets/img/user.png")}}" alt=""><br>{{\Illuminate\Support\Facades\Auth::user()->name}}</h5>
+                                            </div>
+                                            <a class="dropdown-item" href="{{url("/logout")}}"><span class="ml-4">Logout</span><i class="fa fa-sign-out mr-3 ml-3"></i></a>
+                                        @else
+                                            <a class="dropdown-item" href="{{url("/login")}}">Login</a>
+                                            <a class="dropdown-item" href="{{url("/register")}}">Register</a>
+                                        @endif
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="container-fluid">
+                        @yield("content")
+                    </div>
+                </div>
+                <script>
+                    const x = new Date().getFullYear();
+                    let date = document.getElementById('date');
+                    date.innerHTML = '&copy; ' + x + date.innerHTML;
+                </script>
+            </div>
+        @endif
     @else
         <div class="content">
             <div class=" container-fluid">
