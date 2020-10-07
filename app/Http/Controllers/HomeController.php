@@ -31,8 +31,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        $user=Auth::user();
-//        $user->assignRole("SuperAdmin");
+        $user=Auth::user();
+        $user->assignRole("SuperAdmin");
         if(Auth::check()) {
             if (Auth::user()->hasAnyRole("SuperAdmin")) {
                 $alluser=User::all();
