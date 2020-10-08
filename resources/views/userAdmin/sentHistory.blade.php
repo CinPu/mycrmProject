@@ -28,7 +28,8 @@
                     <td>{{$user->userinfo->name}}</td>
                     <td>{{$user->userinfo->email}}</td>
                     <td>{{$user->phone}}</td>
-                    <td>{{$user->ticket_id}}</td>
+                    <td><a href="{{ url("tickets/$ticket->ticket_id") }}" class="text-primary">
+                            {{$user->ticket_id}}</a></td>
                     <td>{{$user->cases->name}}</td>
                     <td>{{$user->created_at->toFormattedDateString()}}</td>
                 </tr>
