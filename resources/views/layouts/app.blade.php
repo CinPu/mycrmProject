@@ -40,6 +40,23 @@
     <script src="{{url(asset("/assets/js/core/jquery.min.js"))}}"></script>
     @yield("csscode")
     <style>
+        @font-face {
+            font-family: 'Zawgyi-One';
+            src: url('https://cdn.rawgit.com/LeonarAung/MyanmarFont/6cf1262f/zawgyi.ttf') format('woff'), url('https://cdn.rawgit.com/LeonarAung/MyanmarFont/6cf1262f/zawgyi.ttf') format('ttf');
+        }
+
+        @font-face {
+            font-family: 'Unicode';
+            src: url('https://cdn.rawgit.com/LeonarAung/MyanmarFont/6cf1262f/mon3.woff') format('woff'), url('https://cdn.rawgit.com/LeonarAung/MyanmarFont/6cf1262f/mon3.ttf') format('ttf');
+        }
+        input[type="radio"] {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            transform: scale(1.5);
+        }
+        .mm-font {
+            font-family: Unicode;
+        }
         .buttons-copy{
             margin-left: 20px;
             border-radius: 5px;
