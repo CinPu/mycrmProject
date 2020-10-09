@@ -170,9 +170,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 offset-md-1">
-                    <label>Description :</label>
-                    <i>{!!$ticket_info->message!!}</i>
+                <div class="col-12 offset-md-1 mm-font">
+                    <b>{!!$ticket_info->message!!}</b>
                 </div>
             </div>
         </div>
@@ -197,7 +196,7 @@
             @foreach ($comments as $comment)
                 <div>
                     <div class="text-dark col-md-12 col-12">
-                        <div class="offset-md-2 col-md-6 card bg-rose">
+                        <div class="offset-md-2 col-md-6 card bg-rose mm-font">
                             <b style="margin-bottom: 5px;">{{ $comment->user->name }} : </b>
                             {!!$comment->comment !!}
                             <span class="float-right">{{ $comment->created_at->diffForHumans()}}</span>
