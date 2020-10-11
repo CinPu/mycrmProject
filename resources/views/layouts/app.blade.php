@@ -88,7 +88,7 @@
         }
     </style>
 </head>
-{!! Zawuni::includeFiles() !!}
+{{--{!! Zawuni::includeFiles() !!}--}}
 <body >
 <div class="wrapper ">
     @if(\Illuminate\Support\Facades\Auth::check())
