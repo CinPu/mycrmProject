@@ -60,6 +60,7 @@ Route::group(['middleware'=>'auth'],function () {
     Route::get("/dept/showmember/{id}","departmentController@showMember");
     Route::get("/guestUser","userinfoController@index");
     Route::get("/guestuser/sending/{id}","userinfoController@sendinghistory");
+    Route::get("/comment/delete/{id}","ticketController@cmtDelete");
 
 
 });

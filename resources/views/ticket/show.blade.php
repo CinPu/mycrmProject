@@ -197,8 +197,11 @@
                 <div>
                     <div class="text-dark col-md-12 col-12">
                         <div class="offset-md-2 col-md-6 card bg-rose mm-font">
+                            <div>
+                                <a href="{{url("/comment/delete/$comment->id")}}" class="float-right"><i class="fa fa-close text-white"></i></a>
+                            </div>
                             <b style="margin-bottom: 5px;">{{ $comment->user->name }} : </b>
-                            {!!$comment->comment !!}
+                            {!!$comment->comment!!}
                             <span class="float-right">{{ $comment->created_at->diffForHumans()}}</span>
                         </div>
                     </div>

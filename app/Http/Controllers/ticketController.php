@@ -382,8 +382,13 @@ class ticketController extends Controller
         $comments=new comment();
         $comments->ticket_id=$request->ticket_id;
         $comments->user_id=Auth::user()->id;
-        $comments->comment=$request->comment;
+        $comments->comment=zawuni($request->comment);
         $comments->save();
         return redirect()->back();
+    }
+    public function cmtDelete($id){
+        $comment=comment::where("id",$id)->first();
+        $comment->delete();
+        return redirect()->back()->with("delete","Comment Delete Successful");
     }
 }
