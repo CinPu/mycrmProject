@@ -1,7 +1,7 @@
 @extends("layouts.app")
 @section("title","Department")
 @section("content")
-    <div class="container-fluid">
+    <div>
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa fa-plus mr-3"></i>New Department</button>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -41,9 +41,9 @@
                 <tr>
                     <td>{{$dept->dept_name}}</td>
                     <td>
-                        <a href="{{url("/dept/edit/$dept->id")}}" class="btn btn-success" data-toggle="modal" data-target="#{{$dept->dept_name}}" data-whatever="@getbootstrap"><i class="fa fa-edit"></i></a>
-                        <a href="{{url("/dept/delete/$dept->id")}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                        <a href="{{url("/dept/showmember/$dept->id")}}" class="btn btn-primary"><i class="fa fa-users mr-2"></i>Member</a>
+                        <a href="{{url("/dept/edit/$dept->id")}}" class="mr-2" data-toggle="modal" data-target="#{{$dept->dept_name}}" data-whatever="@getbootstrap"><i class="fa fa-edit" style="font-size: 18px;"></i></a>
+                        <a href="{{url("/dept/delete/$dept->id")}} "class="mr-2" ><i class="fa fa-trash"style="font-size: 18px;"></i></a>
+                        <a href="{{url("/dept/showmember/$dept->id")}}" class="mr-2"><i class="fa fa-users mr-2" style="font-size: 18px;"></i></a>
 
                         <div class="modal fade" id="{{$dept->dept_name}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered ">

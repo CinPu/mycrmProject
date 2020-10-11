@@ -10,7 +10,7 @@
             <div class="card-body">
                 @foreach($members as $member)
                     <div class="card card-header bg-info">
-                        <span><img class="img rounded-circle" src="{{url("assets/img/agentpp.png")}}" height="40px;" width="40px;" /><b class="ml-3 my-3">{{$member->user->name}}</b></span>
+                        <span><img class="img rounded-circle" src="{{url("assets/img/agentpp.png")}}" height="40px;" width="40px;" /><a href="{{url("/agent/detail/$member->id")}}"> <b class="ml-3 my-3">{{$member->user->name}}</b></a></span>
                         <span><i class="fa fa-envelope offset-md-1"></i> {{$member->user->email}}</span>
                     </div>
                 @endforeach

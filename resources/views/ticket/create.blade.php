@@ -34,6 +34,7 @@
     <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
 @endsection
 @section("content")
+    <div class="container-fluid">
     <h3>Create New Ticket</h3>
     <form id="ticket_create" method="post" action="{{url("/ticket/create/$id")}}" enctype="multipart/form-data">
        {{csrf_field()}}
@@ -128,6 +129,7 @@
             </div>
         </div>
     </form>
+    </div>
     <div class="modal fade" id="email" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content ">

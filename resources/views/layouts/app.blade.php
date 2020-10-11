@@ -55,7 +55,7 @@
             transform: scale(1.5);
         }
         .mm-font {
-            font-family: Unicode;
+            font-family:Unicode;
         }
         .buttons-copy{
             margin-left: 20px;
@@ -88,7 +88,7 @@
         }
     </style>
 </head>
-
+{!! Zawuni::includeFiles() !!}
 <body >
 <div class="wrapper ">
     @if(\Illuminate\Support\Facades\Auth::check())
@@ -221,7 +221,7 @@
         </nav>
         <!-- End Navbar -->
         <div class="content">
-            <div class="container-fluid">
+            <div >
                 @yield("content")
             </div>
         </div>

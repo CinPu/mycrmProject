@@ -59,13 +59,14 @@
                 <tr>
                     <td> <i class="fa fa-user mr-3"></i><span class="col-6"> {{$agent->user->name}}</span></td>
                     <td>
-                        <a href="#"  data-toggle="modal" data-target="#{{$agent->user->id}}">
-                           <i class="fa fa-users"></i> {{$agent->dept->dept_name}}
+                        <a href="{{url("/department")}}">{{$agent->dept->dept_name}}</a>
+                        <a href="#" data-toggle="modal" data-target="#{{$agent->user->id}}">
+                           <i class="fa fa-edit ml-3">Change</i>
                         </a>
                     </td>
                     <td>
-                        <a href="{{url("/delete/agent/$agent->id")}}"class="btn btn-danger "><i class="fa fa-trash"></i></a>
-                        <a href="{{url("/agent/detail/$agent->id")}}" class="btn btn-success"><i class="fa fa-eye"></i></a>
+                        <a href="{{url("/delete/agent/$agent->id")}}"class="mr-2"><i class="fa fa-trash" style="font-size: 18px;"></i></a>
+                        <a href="{{url("/agent/detail/$agent->id")}}" class="mr-2"><i class="fa fa-eye" style="font-size: 18px;"></i></a>
                     </td>
                 </tr>
                 <div class="modal fade" id="{{$agent->user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >

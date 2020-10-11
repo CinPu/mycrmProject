@@ -73,39 +73,37 @@
             </span><br>
             <div class="row">
                 <div class="col-md-5 offset-md-1 col-12">
-                    <label >Ticket  Title :</label>
-                    <span>{{$ticket_info->title}}</span>
+                    <label class="col-6">Ticket  Title </label>
+                    <span class="col-6">: {{$ticket_info->title}}</span>
                 </div>
                 <div class="col-md-6 col-12">
-                    <label >Case Type :</label>
-                    <span >{{$ticket_info->cases->name}}</span>
+                    <label class="col-6">Case Type </label>
+                    <span class="col-6">: {{$ticket_info->cases->name}}</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-5 offset-md-1 col-12">
-                    <label>Status :</label>   <!-- Button trigger modal -->
-                    <span>
-                        {{$ticket_info->status_type->status}}
+                    <label class="col-6">Status </label>   <!-- Button trigger modal -->
+                    <span class="col-6">
+                        : {{$ticket_info->status_type->status}}
                         <a href=""  data-toggle="modal" data-target="#2020"><i class="fa fa-edit"></i></a>
                     </span>
                 </div>
                 <div class="col-md-6 col-12">
-                    <label> Last Changed Status</label> : {{$ticket_info->updated_at->diffForHumans()}}
+                    <label class="col-6"> Last Changed Status </label><span class="col-6"> : {{$ticket_info->updated_at->diffForHumans()}}
                     </span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-5 offset-md-1 col-12">
-                    <label> Priority :</label>
-                    <span>
-                        <button type="button" class="btn btn-{{$ticket_info->priority_type->color}}">
-                        </button>
-                        {{$ticket_info->priority_type->priority}}
+                    <label class="col-6"> Priority </label>
+                    <span class="col-6">
+                        : {{$ticket_info->priority_type->priority}}
                     </span>
                 </div>
                 <div class="col-md-6 col-12">
-                    <label> Complaint Product :</label>
-                    <span> {{$ticket_info->product}}</span>
+                    <label class="col-6"> Complaint Product </label>
+                    <span class="col-6"> : {{$ticket_info->product}}</span>
                 </div>
             </div>
             <!-- Modal  for status change-->
@@ -144,29 +142,27 @@
             <h4>User Contact Information </h4>
             <div class="row">
                 <div class="col-md-11 offset-md-1">
-                    <label>User Name :</label>
-                    <span> <i class="fa fa-user mr-2"></i> {{$ticket_info->userinfo->name}}</span>
+                    <label class="col-4 col-md-2">User Name </label>
+                    <span class="col-8 col-md-3"> : {{$ticket_info->userinfo->name}}</span>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 offset-md-1">
-                    <label>Email : </label>
-                    <span><a href="mailto:{{$ticket_info->userinfo->email}}"><i class="fa fa-envelope mr-2"></i> {{$ticket_info->userinfo->email}}</a></span><br>
+                <div class="col-md-11 offset-md-1">
+                    <label class="col-4 col-md-2">Email</label>
+                    <span class="col-8 col-md-3">: <a href="mailto:{{$ticket_info->userinfo->email}}">{{$ticket_info->userinfo->email}}</a></span><br>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 offset-md-1">
-                    <label>Phone : </label>
-                    <span>
-                            <i class="fa fa-phone mr-2"></i>
-                            <a href="tel:+95{{$ticket_info->phone}}">+95{{$ticket_info->phone}}</a>
-                        </span>
+                <div class="col-md-11 offset-md-1">
+                    <label class="col-4 col-md-2">Phone </label>
+                    <span class="col-8 col-md-3">: <a href="tel:+95{{$ticket_info->phone}}">+95{{$ticket_info->phone}}</a>
+                    </span>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 offset-md-1">
-                    <label>Source : </label>
-                    <span> {{$ticket_info->sources_type->sources}}</span>
+                <div class="col-md-11 offset-md-1">
+                    <label class="col-4 col-md-2">Source</label>
+                    <span class="col-8 col-md-3">: {{$ticket_info->sources_type->sources}}</span>
                 </div>
             </div>
             <div class="row">
@@ -213,21 +209,24 @@
                 {!! csrf_field() !!}
                 <input type="hidden" name="ticket_id" value="{{ $ticket_info->id }}">
                 <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }} col-md-12">
-                    <textarea row="2" class="form-control" id="summary-ckeditor" name="comment"></textarea>
+                    <input type="text" name="comment" class="form-control offset-md-2 col-md-6" placeholder="Comment Here ..">
+{{--                    <textarea row="2" class="form-control" id="summary-ckeditor" name="comment"></textarea>--}}
+                    <div class="offset-md-6 offset-sm-8 offset-5"><button type="submit" class="btn btn-info ml-4"><i class="fa fa-send mr-2"></i>Comment</button></div>
                     @if ($errors->has('comment'))
                         <span class="help-block">
                                             <strong>{{ $errors->first('comment') }}</strong>
                                         </span>
                     @endif
+
                 </div>
-                <button type="submit" class="btn btn-info float-right mr-3">Send</button>
+
             </form>
         </div>
     </div>
     <div id="map"></div>
-    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+{{--    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>--}}
     <script>
-        CKEDITOR.replace( 'summary-ckeditor' );
+        // CKEDITOR.replace( 'summary-ckeditor' );
         // Get element references
         var map = document.getElementById('map');
 
