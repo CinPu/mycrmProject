@@ -86,7 +86,7 @@
                     <label class="col-6">Status </label>   <!-- Button trigger modal -->
                     <span class="col-6">
                         : {{$ticket_info->status_type->status}}
-                        <a href=""  data-toggle="modal" data-target="#2020"><i class="fa fa-edit"></i></a>
+                        <a href=""  data-toggle="modal" data-target="#2020"><i class="fa fa-edit"></i>Status Change</a>
                     </span>
                 </div>
                 <div class="col-md-6 col-12">

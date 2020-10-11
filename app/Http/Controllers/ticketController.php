@@ -382,7 +382,7 @@ class ticketController extends Controller
         $comments=new comment();
         $comments->ticket_id=$request->ticket_id;
         $comments->user_id=Auth::user()->id;
-        $comments->comment=zawuni($request->comment);
+        $comments->comment=$request->comment;
         $comments->save();
         return redirect()->back();
     }
