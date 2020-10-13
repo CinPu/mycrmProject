@@ -99,7 +99,7 @@
 
           Tip 2: you can also add an image using data-image tag
       -->
-        <div class="logo"><a href="{{url("/home")}}" class="simple-text text-dark logo-normal">
+        <div class="logo">
                 @php
                     if (Auth::user()->hasAnyRole("Admin"))
                     $company=\App\company::where("admin_id",Auth::user()->id)->first();
@@ -109,15 +109,20 @@
                     }
                     $profile=\App\userprofile::where("user_id",\Illuminate\Support\Facades\Auth::user()->id)->first();
                 @endphp
-                    @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("SuperAdmin"))
+                @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("SuperAdmin"))
+                <a href="{{url("/home")}}" class="simple-text text-dark logo-normal">
                     Support Ticket
+                </a>
+                @else
+                    @if($company!=null)
+                        <a href="{{url("/home")}}" class="simple-text text-dark logo-normal">
+                        <img src="{{asset("/companylogo/$company->company_logo")}}" alt="Logo" width="40px" height="40px;" class="rounded-circle mr-2">{{$company->company_name}}
+                        </a>
+                    @else
+                        <a href="{{url("/home")}}" class="simple-text text-dark logo-normal">
+                         Support Ticket
+                        </a>
                     @endif
-                @if($company!=null)
-                <img src="{{asset("/companylogo/$company->company_logo")}}" alt="Logo" width="40px" height="40px;" class="rounded-circle mr-2">{{$company->company_name}}
-            </a>
-            @else
-                Support Ticket
-                @endif
             @endif
         </div>
         <div class="sidebar-wrapper">
