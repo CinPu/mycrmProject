@@ -191,7 +191,7 @@
                                 @if($ticket->isassign==1)
                                     <a href="" class="btn btn-success"> Assigned <i class="fa fa-check-circle-o"></i></a>
                                 @elseif($ticket->isassign==0)
-                                    <a href="" class="btn btn-facebook">Unassigned </a> @endif
+                                    <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
                             </td>
                             <td>{{$ticket->status_type->status}}</td>
                             <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>

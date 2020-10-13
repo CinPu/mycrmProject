@@ -7,6 +7,7 @@ use App\assign_ticket;
 use App\assignwithdept;
 use App\case_type;
 use App\comment;
+use App\company;
 use App\countdown;
 use App\department;
 use App\priority;
@@ -118,22 +119,55 @@ class ticketController extends Controller
         $this->validate($request, [
 
             'files' => 'required',
-            'files.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'files.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title'=>'required',
+            'message'=>'required',
 
         ]);
 //        dd(public_path().'/imgs/');
 //        dd($request->all());
 //        var_dump($request->uuid);
+        //user info store
+        $user=user_information::all();
+                $users=[];
+                foreach ($user as $u) {
+                    array_push($users,$u->email);
+        //
+                }
+                if(!in_array($request->email, $users)) {
+                    $user_info=new user_information();
+                    $user_info->name=$request->user_name;
+                    $user_info->email=$request->email;
+                    if(Auth::check()){
+                        if(Auth::user()->hasAnyRole("Agent")) {
+                            $agent_user = agent::where("agent_id", Auth::user()->id)->first();
+                            $admin = User::where("id", $agent_user->admin_id)->first();
+                            $user_info->admin_id = $admin->uuid;
+                        }elseif(Auth::user()->hasAnyRole("Admin")){
+                            $user_info->admin_id=Auth::user()->uuid;
+                        }
+                    }else {
+                        $user_info->admin_id = $request->id;
+                    }
+                    $user_info->save();
+                }
         $name=User::where("uuid",$request->uuid)->first();
+        $user_info_id=user_information::where("email",$request->email)->first();
+        if(Auth::user()->hasAnyRole("Agent")){
+            $agent_admin=agent::where("agent_id",$name->id)->first();
+            $company_name = company::where("admin_id", $agent_admin->admin_id)->first();
+        }else {
+            $company_name = company::where("admin_id", $name->id)->first();
+        }
         $ticket = new ticket();
         $ticket->title = $request->title;
         $ticket->message = $request->message;
-        $ticket->user_id =$request->uuid;;
+        $ticket->user_id =$request->uuid;
         $ticket->case_type = $request->case_type;
-        $ticket->ticket_id =$name->name." - ". strtoupper(Str::random(12));
+        $ticket->ticket_id =$company_name->company_name." - ". strtoupper(Str::random(12));
         $ticket->status = $request->status;
         $ticket->product=$request->product;
-        $ticket->userinfo_id=$request->user_info_id;
+        $ticket->userinfo_id=$user_info_id->id;
         $ticket->phone=$request->phone;
         $ticket->priority = $request->priority;
         $ticket->source=$request->source;
@@ -286,12 +320,15 @@ class ticketController extends Controller
         $statusOn->status = $request->status_change;
         $statusOn->updated_at=Carbon::now();
         $statusOn->update();
-        if($status->status=="Complete") {
-            $solveEndtime = solvedTime::where("ticket_id", $statusOn->id)->first();
-            if($solveEndtime->endTime==null) {
-                $solveEndtime->endTime = Carbon::now();
-                $solveEndtime->agent_id = Auth::user()->id;
-                $solveEndtime->update();
+        $count=countdown::where("ticket_id",$ticket_id)->first();
+        if($count!=null) {
+            if ($status->status == "Complete") {
+                $solveEndtime = solvedTime::where("ticket_id", $statusOn->id)->first();
+                if ($solveEndtime->endTime == null) {
+                    $solveEndtime->endTime = Carbon::now();
+                    $solveEndtime->agent_id = Auth::user()->id;
+                    $solveEndtime->update();
+                }
             }
         }
         return redirect()->back();

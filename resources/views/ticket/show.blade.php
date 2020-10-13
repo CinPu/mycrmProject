@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 offset-md-1 mm-font">
+                <div class="col-md-11 offset-md-1 mm-font">
                     <b>{!!$ticket_info->message!!}</b>
                 </div>
             </div>

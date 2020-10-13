@@ -100,8 +100,26 @@
           Tip 2: you can also add an image using data-image tag
       -->
         <div class="logo"><a href="{{url("/home")}}" class="simple-text text-dark logo-normal">
+                @php
+                    if (Auth::user()->hasAnyRole("Admin"))
+                    $company=\App\company::where("admin_id",Auth::user()->id)->first();
+                    elseif (Auth::user()->hasAnyRole("Agent")){
+                    $admin=\App\agent::where("agent_id",\Illuminate\Support\Facades\Auth::user()->id)->first();
+                    $company=\App\company::where("admin_id",$admin->admin_id)->first();
+                    }
+                    $profile=\App\userprofile::where("user_id",\Illuminate\Support\Facades\Auth::user()->id)->first();
+                @endphp
+                @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("SuperAdmin"))
+                    Support Ticket
+                    @else
+                @if($company!=null)
+                <img src="{{asset("/companylogo/$company->company_logo")}}" alt="Logo" width="40px" height="40px;" class="rounded-circle mr-2">{{$company->company_name}}
+            </a>
+            @else
                 Support Ticket
-            </a></div>
+                @endif
+            @endif
+        </div>
         <div class="sidebar-wrapper">
             <ul class="nav">
                 @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("SuperAdmin"))
@@ -157,7 +175,7 @@
                 <li class="nav-item ">
                     <a class="nav-link" href="{{url("/guestUser")}}">
                         <img src="{{url(asset("/assets/img/guestuser.png"))}}" alt="" width="30px;" height="30px">
-                        <span class="ml-3">Guest User</span>
+                        <span class="ml-3">User</span>
                     </a>
                 </li>
                 @else
@@ -206,9 +224,17 @@
                                 @if(Auth::check())
                                     <div>
 
-                                        <h5 align="center" class="my-3"><img src="{{asset("assets/img/user.png")}}" alt=""><br>{{\Illuminate\Support\Facades\Auth::user()->name}}</h5>
+                                        <h5 align="center" class="my-3">
+                                            @if($profile==null)
+                                            <img src="{{asset("assets/img/user.png")}}" alt="">
+                                                <a href="{{url("/pp/change")}}" style="text-decoration: none"><i class="fa fa-edit"></i></a><br>{{\Illuminate\Support\Facades\Auth::user()->name}}</h5>
+                                            @else
+                                                <img src="{{asset("/profile/$profile->profile")}}" width="80px;" height="80px" class="rounded-circle">
+                                            <a href="{{url("/pp/change")}}" style="text-decoration: none"><i class="fa fa-edit"></i></a><br>{{\Illuminate\Support\Facades\Auth::user()->name}}</h5>
+                                        @endif
                                     </div>
                                 <a class="dropdown-item" href="{{url("/logout")}}"><span class="ml-4">Logout</span><i class="fa fa-sign-out mr-3 ml-3"></i></a>
+                                    <a class="dropdown-item" href="{{url("/user/setting")}}"><span class="ml-4">Change Password</span><i class="fa fa-cog mr-3 ml-3"></i></a>
                                 @else
                                 <a class="dropdown-item" href="{{url("/login")}}">Login</a>
                                 <a class="dropdown-item" href="{{url("/register")}}">Register</a>

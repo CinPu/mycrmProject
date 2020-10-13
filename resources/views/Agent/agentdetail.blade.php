@@ -11,6 +11,30 @@
     </div>
 
     <div class="row">
+        <div class="col-md-4">
+            <div class="card card-profile">
+                <div class="card-avatar">
+
+{{--                    <a href="javascript:;">--}}
+                        @if($profile_picture==null)
+                        <img class="img" src="{{url("assets/img/agentpp.png")}}" />
+                        @else
+                        <img class="img" src="{{url(asset("profile/$profile_picture->profile"))}} " style="width: 300px" height="300px;" />
+{{--                            <img class=" rounded-circle" src="{{url(asset("profile/$profile_picture->profile"))}}" />--}}
+                            @endif
+{{--                    </a>--}}
+                </div>
+                <div class="card-body">
+                    <h6 class="card-category text-gray">Agent</h6>
+                    <h4 class="card-title">{{$agentuser->name}}</h4>
+                    <h5 class="card-title"><i class="fa fa-envelope"></i> {{$agentuser->email}}</h5>
+                    <p class="card-description">
+                        <i class="fa fa-users"></i>  {{$agent->dept->dept_name}}
+                    </p>
+                    <a href="javascript:;" class="btn btn-primary btn-round">Follow</a>
+                </div>
+            </div>
+        </div>
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header card-header-primary">
@@ -63,24 +87,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card card-profile">
-                <div class="card-avatar">
-                    <a href="javascript:;">
-                        <img class="img" src="{{url("assets/img/agentpp.png")}}" />
-                    </a>
-                </div>
-                <div class="card-body">
-                    <h6 class="card-category text-gray">Agent</h6>
-                    <h4 class="card-title">{{$agentuser->name}}</h4>
-                    <h5 class="card-title"><i class="fa fa-envelope"></i> {{$agentuser->email}}</h5>
-                    <p class="card-description">
-                      <i class="fa fa-users"></i>  {{$agent->dept->dept_name}}
-                    </p>
-                    <a href="javascript:;" class="btn btn-primary btn-round">Follow</a>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="card">
     <ul class="nav nav-tabs bg-primary" id="myTab" role="tablist">
@@ -92,6 +98,9 @@
         </li>
         <li class="nav-item my-1">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Assign By Department</a>
+        </li>
+        <li class="nav-item my-1">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#ot_spend" role="tab" aria-controls="contact" aria-selected="false">Over Time Spend</a>
         </li>
     </ul>
 
@@ -148,7 +157,7 @@
                                     </a>
                                 </td>
                                 <td>{!!substr($ticket->message,0,150)!!}...</td>
-                                <td>{{$ticket->status}}</td>
+                                <td>{{$ticket->status_type->status}}</td>
                                 <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                                 {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
                                 <td>{{$ticket->cases->name}}</td>
@@ -211,7 +220,7 @@
                                 </a>
                             </td>
                             <td>{!!substr($ticket->message,0,150)!!}...</td>
-                            <td>{{$ticket->status}}</td>
+                            <td>{{$ticket->status_type->status}}</td>
                             <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                             {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
                             <td>{{$ticket->cases->name}}</td>
@@ -274,7 +283,70 @@
                                 </a>
                             </td>
                             <td>{!!substr($ticket->message,0,150)!!}...</td>
-                            <td>{{$ticket->status}}</td>
+                            <td>{{$ticket->status_type->status}}</td>
+                            <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
+                            {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
+                            <td>{{$ticket->cases->name}}</td>
+                            <td>{{$ticket->created_at->toFormattedDateString()}}</td>
+
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade col-12 col-md-12" id="ot_spend" role="tabpanel" aria-labelledby="contact-tab" style="overflow-x:auto;">
+                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Assign By Department Tickets</h3>
+                <table class="table" id="overtime_spend">
+                    <thead>
+                    <div class=" col-md-12">
+                        <div class="row">
+                            <label class="col-md-3 ">Search By</label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3 offset-md-1">
+                                <select class="custom-select"  id="ot_casetype">
+                                    <option value=""> All</option>
+                                    @foreach($allcases as $case)
+                                        <option value="{{$case->name}}"> {{$case->name}} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="offset-md-0">
+                                <span class=" mr-3 ">Start Date</span>
+                            </div>
+                            <div>
+                                <input type="text" class="form-control" id="ot_min" name="ot_min" >
+                            </div>
+                            <div class=" offset-md-1">
+                                <span class=" mr-3 ">End Date</span>
+                            </div>
+                            <div class="text-white">
+                                <input type="text" class="form-control" id="ot_max" name="ot_max" >
+                            </div>
+
+                        </div>
+                    </div>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Ticket ID</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Last Updated</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($overtimeuse_ticket as $ticket)
+                        <tr>
+                            <th scope="row">{{$ticket->title}}</th>
+                            <td>
+                                <a href="{{ url("tickets/$ticket->ticket_id") }}">
+                                    #{{ $ticket->ticket_id }}
+                                </a>
+                            </td>
+                            <td>{!!substr($ticket->message,0,150)!!}...</td>
+                            <td>{{$ticket->status_type->status}}</td>
                             <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                             {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
                             <td>{{$ticket->cases->name}}</td>
@@ -437,6 +509,41 @@
             var table = $('#created_ticket').DataTable();
             // Event listener to the two range filtering inputs to redraw on input
             $('#created_min, #created_max').change(function () {
+                table.draw();
+            });
+        });
+        //over time spend
+        $(document).ready(function() {
+            $('#overtime_spend').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            } );
+        } );
+        $('#ot_casetype').on('change', function() {
+            var table = $("#overtime_spend").DataTable();
+            table.column(5).search($(this).val()).draw();
+        });
+        $(document).ready(function(){
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var min = $('#ot_min').datepicker("getDate");
+                    var max = $('#ot_max').datepicker("getDate");
+                    var startDate = new Date(data[6]);
+                    if (min == null && max == null) { return true; }
+                    if (min == null && startDate <= max) { return true;}
+                    if(max == null && startDate >= min) {return true;}
+                    if (startDate <= max && startDate >= min) { return true; }
+                    return false;
+                }
+            );
+
+            $("#ot_min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+            $("#ot_max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+            var table = $('#overtime_spend').DataTable();
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#ot_min, #ot_max').change(function () {
                 table.draw();
             });
         });

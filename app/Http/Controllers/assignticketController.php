@@ -24,7 +24,7 @@ class assignticketController extends Controller
         //admin's agent all ticket select
         $agents = agent::with("user")->where("admin_id", Auth::user()->id)->get();
         foreach ($agents as $agent){
-            $agents_tickets=ticket::with("priority_type","cases")->where("user_id",$agent->user->uuid)->get();
+            $agents_tickets=ticket::with("priority_type","cases","status_type")->where("user_id",$agent->user->uuid)->get();
             //all agents' ticket add to tickets[]
             foreach ($agents_tickets as $agent_ticket) {
                 array_push($tickets, $agent_ticket);
@@ -32,7 +32,7 @@ class assignticketController extends Controller
 //                }
         }
         //ticket for admin from user to admin
-        $user_tickets=ticket::with("priority_type","cases")->where("user_id",Auth::user()->uuid)->get();
+        $user_tickets=ticket::with("priority_type","cases","status_type")->where("user_id",Auth::user()->uuid)->get();
         foreach($user_tickets as $user_ticket){
             array_push($tickets,$user_ticket);
         }

@@ -31,7 +31,7 @@
                     <td><a href="{{ url("tickets/$user->ticket_id") }}" class="text-primary">
                             {{$user->ticket_id}}</a></td>
                     <td>{{$user->cases->name}}</td>
-                    <td>{{$user->created_at->toFormattedDateString()}}</td>
+                    <td>{{$user->created_at->format('Y/m/d')}}</td>
                 </tr>
 
             @endforeach

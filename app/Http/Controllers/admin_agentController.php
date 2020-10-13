@@ -10,9 +10,11 @@ use App\department;
 use App\solvedTime;
 use App\ticket;
 use App\User;
+use App\userprofile;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 
 class admin_agentController extends Controller
@@ -163,6 +165,7 @@ class admin_agentController extends Controller
         $seventy_fivepercent=0;
         $hundred_percent=0;
         $overtimeuse=0;
+        $overtimeuse_ticket=[];
         foreach ($solved_time as $solvetime) {
             $limit_time=$solvetime->priority_type->hours*60+$solvetime->priority_type->minutes;
             if($solvetime->endTime!=null) {
@@ -178,10 +181,13 @@ class admin_agentController extends Controller
                     $hundred_percent++;
                 } else {
                     $overtimeuse++;
+                    $solve_timerover=ticket::with("cases","status_type","sources_type","priority_type")->where("id",$solvetime->ticket_id)->first();
+                    array_push($overtimeuse_ticket,$solve_timerover);
                 }
             }
         }
-        return view("Agent.agentdetail",compact("openticket","pending","progress","new","complete","closeticket","agenttickets","assigndepts","assigntickets","agentuser","agent","allcases","twenty_fivepercent","fifty_percent","seventy_fivepercent","hundred_percent","overtimeuse"));
+        $profile_picture=userprofile::where("user_id",$agentuser->id)->first();
+        return view("Agent.agentdetail",compact("openticket","pending","progress","new","complete","closeticket","agenttickets","assigndepts","assigntickets","agentuser","agent","allcases","twenty_fivepercent","fifty_percent","seventy_fivepercent","hundred_percent","overtimeuse","profile_picture","overtimeuse_ticket"));
     }
 
     /**
@@ -206,7 +212,52 @@ class admin_agentController extends Controller
     {
         //
     }
+ public function setting(){
+        $userInfo=User::where("id",Auth::user()->id)->first();
+        return view("Agent.setting",compact("userInfo"));
+ }
+ public function agentInfo_update(Request $request){
+        $user=User::where("id",Auth::user()->id)->first();
+        $current_pas=Hash::make($request->current_password);
+        if(password_verify($request->current_password,$user->password))
+            {
+            $user->name = Auth::user()->name;
+            $user->email = Auth::user()->email;
+            $user->password = Hash::make($request->new_password);
+            $user->update();
+        }else{
+            return redirect()->back()->with("delete","Current Password Incorrect");
+        }
+        return redirect("/home")->with("message","Successful!");
+ }
+ public function ppchange(){
+        return view("Agent.ppchange");
+ }
+ public function profileChange(Request $request){
+         $ishasprofile = userprofile::all();
+         $user=[];
+         foreach ($ishasprofile as $pp) {
+             array_push($user,$pp->user_id);
+         }
+         if (!in_array(Auth::user()->id,$user)) {
+             $profile = new userprofile();
+             $image = $request->file("profile");
+             $name = $image->getClientOriginalName();
+             $request->profile->move(public_path() . '/profile/', $name);
+             $profile->profile= $name;
+             $profile->user_id=Auth::user()->id;
+             $profile->save();
+         }else{
+             $user_pp=userprofile::where("user_id",Auth::user()->id)->first();
+             $image = $request->file("profile");
+             $name = $image->getClientOriginalName();
+             $request->profile->move(public_path() . '/profile/', $name);
+             $user_pp->profile=$name;
+             $user_pp->update();
+         }
+         return redirect("/home")->with("message","Profile Change Successful");
 
+ }
     /**
      * Remove the specified resource from storage.
      *

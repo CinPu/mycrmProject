@@ -73,7 +73,7 @@
                             </a>
                         </td>
                         <td>{!!substr($ticket->message,0,150)!!}....</td>
-                        <td>{{$ticket->status}}</td>
+                        <td>{{$ticket->status_type->status}}</td>
                         <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                         <td>
                             {{$ticket->cases->name}}
@@ -174,7 +174,7 @@
                             </a>
                         </td>
                         <td>{!!substr($ticket->message,0,150)!!}....</td>
-                        <td>{{$ticket->status}}</td>
+                        <td>{{$ticket->status_type->status}}</td>
                         <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}"></button>{{$ticket->priority_type->priority}}</td>
                         <td>
                             {{$ticket->cases->name}}

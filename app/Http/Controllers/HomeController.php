@@ -5,6 +5,7 @@ use App\agent;
 use App\assign_ticket;
 use App\assignwithdept;
 use App\case_type;
+use App\company;
 use App\department;
 use App\ticket;
 use App\User;
