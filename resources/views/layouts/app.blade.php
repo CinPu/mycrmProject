@@ -109,9 +109,9 @@
                     }
                     $profile=\App\userprofile::where("user_id",\Illuminate\Support\Facades\Auth::user()->id)->first();
                 @endphp
-                @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("SuperAdmin"))
+                    @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("SuperAdmin"))
                     Support Ticket
-                    @else
+                    @endif
                 @if($company!=null)
                 <img src="{{asset("/companylogo/$company->company_logo")}}" alt="Logo" width="40px" height="40px;" class="rounded-circle mr-2">{{$company->company_name}}
             </a>
