@@ -45,7 +45,7 @@
             <div class="col-md-4 card ml-1 ">
 
                 <div class="form-group mt-3">
-                    <label for="name" class="mt-3">Name</label><br>
+                    <label for="name" class="mt-3">Customer Name</label><br>
                     <input type="text" id="name" class="form-control" name="user_name">
                 </div>
             <div class="form-group mt-3">
@@ -125,7 +125,7 @@
                 </div>
                 <div id="map"></div>
                 <div class="form-group">
-                <button type="submit" id="submit-all" class="btn btn-primary float-right"><i class="fa fa-paper-plane mr-3"></i>Send</button>
+                <button type="submit" id="submit-all" class="btn btn-primary float-right"><i class="fa fa-paper-plane mr-3"></i>Submit</button>
                 </div>
             </div>
         </div>

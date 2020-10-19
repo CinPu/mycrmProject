@@ -49,19 +49,19 @@ class admin_agentController extends Controller
      */
     public function store(Request $request)
     {
-       $agent=new User();
-       $agent->name=$request->name;
-       $agent->email=$request->email;
-       $agent->password=Hash::make($request->password);
-       $agent->uuid=$request->uuid;
-       $agent->save();
-       $agent->assignRole("Agent");
-       $agent_dept=new agent();
-       $agent_dept->agent_id=$agent->id;
-       $agent_dept->admin_id=Auth::user()->id;
-       $agent_dept->dept_id=$request->dept;
-       $agent_dept->save();
-       return redirect()->back()->with("message","New Agent Create Successful");
+        $agent=new User();
+        $agent->name=$request->name;
+        $agent->email=$request->email;
+        $agent->password=Hash::make($request->password);
+        $agent->uuid=$request->uuid;
+        $agent->save();
+        $agent->assignRole("Agent");
+        $agent_dept=new agent();
+        $agent_dept->agent_id=$agent->id;
+        $agent_dept->admin_id=Auth::user()->id;
+        $agent_dept->dept_id=$request->dept;
+        $agent_dept->save();
+        return redirect()->back()->with("message","New Agent Create Successful");
 
     }
 
@@ -212,15 +212,15 @@ class admin_agentController extends Controller
     {
         //
     }
- public function setting(){
+    public function setting(){
         $userInfo=User::where("id",Auth::user()->id)->first();
         return view("Agent.setting",compact("userInfo"));
- }
- public function agentInfo_update(Request $request){
+    }
+    public function agentInfo_update(Request $request){
         $user=User::where("id",Auth::user()->id)->first();
         $current_pas=Hash::make($request->current_password);
         if(password_verify($request->current_password,$user->password))
-            {
+        {
             $user->name = Auth::user()->name;
             $user->email = Auth::user()->email;
             $user->password = Hash::make($request->new_password);
@@ -229,35 +229,35 @@ class admin_agentController extends Controller
             return redirect()->back()->with("delete","Current Password Incorrect");
         }
         return redirect("/home")->with("message","Successful!");
- }
- public function ppchange(){
+    }
+    public function ppchange(){
         return view("Agent.ppchange");
- }
- public function profileChange(Request $request){
-         $ishasprofile = userprofile::all();
-         $user=[];
-         foreach ($ishasprofile as $pp) {
-             array_push($user,$pp->user_id);
-         }
-         if (!in_array(Auth::user()->id,$user)) {
-             $profile = new userprofile();
-             $image = $request->file("profile");
-             $name = $image->getClientOriginalName();
-             $request->profile->move(public_path() . '/profile/', $name);
-             $profile->profile= $name;
-             $profile->user_id=Auth::user()->id;
-             $profile->save();
-         }else{
-             $user_pp=userprofile::where("user_id",Auth::user()->id)->first();
-             $image = $request->file("profile");
-             $name = $image->getClientOriginalName();
-             $request->profile->move(public_path() . '/profile/', $name);
-             $user_pp->profile=$name;
-             $user_pp->update();
-         }
-         return redirect("/home")->with("message","Profile Change Successful");
+    }
+    public function profileChange(Request $request){
+        $ishasprofile = userprofile::all();
+        $user=[];
+        foreach ($ishasprofile as $pp) {
+            array_push($user,$pp->user_id);
+        }
+        if (!in_array(Auth::user()->id,$user)) {
+            $profile = new userprofile();
+            $image = $request->file("profile");
+            $name = $image->getClientOriginalName();
+            $request->profile->move(public_path() . '/profile/', $name);
+            $profile->profile= $name;
+            $profile->user_id=Auth::user()->id;
+            $profile->save();
+        }else{
+            $user_pp=userprofile::where("user_id",Auth::user()->id)->first();
+            $image = $request->file("profile");
+            $name = $image->getClientOriginalName();
+            $request->profile->move(public_path() . '/profile/', $name);
+            $user_pp->profile=$name;
+            $user_pp->update();
+        }
+        return redirect("/home")->with("message","Profile Change Successful");
 
- }
+    }
     /**
      * Remove the specified resource from storage.
      *
