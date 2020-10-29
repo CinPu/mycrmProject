@@ -1,5 +1,5 @@
 @extends("layouts.app")
-@section("title","Assign Or Unassign Ticket")
+@section("title","Assign And Unassign Ticket")
 @section("content")
     <div class="container-fluid">
         <div class="card">
@@ -9,6 +9,9 @@
         </li>
         <li class="nav-item my-1">
             <a class="nav-link {{$assign}}" id="profile-tab" data-toggle="tab" href="#assigned" role="tab" aria-controls="profile" aria-selected="false">Assigned Ticket</a>
+        </li>
+        <li class="nav-item my-1">
+            <a class="nav-link " id="profile-tab" data-toggle="tab" href="#assignTo" role="tab" aria-controls="profile" aria-selected="false">Ticket Assign To</a>
         </li>
 
     </ul>
@@ -186,8 +189,42 @@
                 </tbody>
             </table>
         </div>
-    </div>
+        <div class="tab-pane fade  col-12 col-md-12" id="assignTo" role="tabpanel" aria-labelledby="profile-tab" style="overflow-x:auto;">
+            <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Assigned Tickets</h3>
+            <table class="table" id="assign_to">
+                <thead>
+                <tr>
+                    <th scope="col">Ticket ID</th>
+                    <th scope="col">Ticket Title</th>
+                    <th scope="col">Assign To</th>
+                    <th scope="col">Assigned Date</th>
+                </tr>
+                </thead>
+                <tbody >
+                @foreach($assign_to as $assign)
+                   <tr>
+                       <td>
+                           <a href="{{ url("tickets/$ticket->ticket_id") }}" class="text-primary">
+                           {{$assign->ticket->ticket_id}}
+                           </a>
+                       </td>
+                       <td>{{$assign->ticket->title}}</td>
+                       <td>@if(@isset($assign["agent_id"]))
+                               {{$assign->agent->name}}
+                           @else
+                           {{$assign->dept->dept_name}}
+                               @endif
+                       </td>
+                       <td>
+                           {{$assign->created_at}}
+                       </td>
+                   </tr>
+                @endforeach
+                </tbody>
+            </table>
         </div>
+    </div>
+    </div>
     </div>
 @endsection
 @section("scriptcode")
@@ -316,5 +353,15 @@
                 table.draw();
             });
         });
+        $(document).ready(function() {
+            $('#assign_to').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+
+            } );
+
+        } );
     </script>
 @endsection

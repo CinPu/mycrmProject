@@ -24,11 +24,11 @@
 @endsection
 @section("content")
     <div class="row">
-        <div class="card col-md-4 offset-md-1 col-10 offset-1" style="background-color:#e0f2f1">
+        <div class="card col-md-4 offset-md-1 col-10 offset-1 text-center" style="background-color:#e0f2f1">
             <div class="card-header card-header-primary">
                 Doughnut Chart By Status
             </div>
-        <div style="width:250px;height:250px" class="offset-md-2 my-5">
+        <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 my-5">
             <canvas id="status"></canvas>
         </div>
         </div>
@@ -36,7 +36,7 @@
             <div class="card-header card-header-primary">
                 Doughnut Chart By Priority Type
             </div>
-        <div style="width:250px;height:250px" class="offset-md-2 my-5">
+        <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 my-5">
             <canvas id="priority" ></canvas>
         </div>
         </div>
@@ -78,7 +78,7 @@
                     //     text:"All Ticket's Priority Doughnut Chart"
                     // },
                     legend: {
-                        position: 'right',
+                        position: 'bottom',
                         labels: {
                             boxWidth: 12
                         }
@@ -125,7 +125,7 @@
                     //     text:"All Ticket's Status Doughnut Chart"
                     // },
                     legend: {
-                        position: 'right',
+                        position: 'bottom',
                         labels: {
                             boxWidth: 12
                         }

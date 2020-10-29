@@ -16,10 +16,10 @@ class CreateAgentsTable extends Migration
         Schema::create('agents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger("agent_id")->unsigned();
+            $table->foreign("agent_id")->references("id")->on("users")->onDelete('cascade');
             $table->integer("admin_id");
             $table->bigInteger("dept_id")->unsigned();
             $table->foreign("dept_id")->references("id")->on("departments")->onDelete('cascade');
-            $table->foreign("agent_id")->references("id")->on("users")->onDelete('cascade');
             $table->timestamps();
         });
     }

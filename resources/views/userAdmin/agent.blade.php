@@ -16,25 +16,19 @@
                             {{csrf_field()}}
                             <div class="form-group">
                                 <label for="agent_name">Agent Name:</label><br>
-                                <input type="text" id="agent_name" class="form-control mb-3"  name="name">
-                            </div>
-                            <div class="form-group">
-                                <label for="agent_email">Email:</label><br>
-                                <input type="email" id="agent_email" class="form-control mb-3"  name="email">
-                            </div>
-                            <div class="form-group">
-                                <label for="dept_name">Department</label><br>
-                                <select name="dept" class="form-control mb-3" id="" >
-                                    @foreach($depts as $dept)
-                                        <option value="{{$dept->id}}">{{$dept->dept_name}}</option>
+                                <select class="form-control" id="agent_name" name="agent_name">
+                                    <option value="item0">Choose Department</option>
+                                    @foreach($employees as $employee)
+                                        <option value="{{$employee->employee_user->id}}">{{$employee->employee_user->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="dept_name">Password:</label><br>
-                                <input type="Password" id="dept_name" class="form-control mb-3"  name="password">
+                                <label for="dept_id">Department</label><br>
+                                <select class="form-control " name="dept_id" id="dept_id">
+                                    <option></option>
+                                </select>
                             </div>
-                            <input type="hidden" name="uuid" value="{{Str::uuid()->toString()}}">
                             <button type="submit" class="btn btn-success float-right mr-2">Save</button>
                             <button type="button" class="btn btn-danger float-right mr-2" data-dismiss="modal">Close</button>
 
@@ -77,7 +71,7 @@
                                     <i class="fa fa-close"></i>
                                 </button>
                                 <h3 >Change Department</h3>
-                                <form id="change_dept" action="{{url("/department/change/$agent->id")}}" method="post">
+                                <form id="change_dept" action="{{url("/department/change/$agent->agent_id")}}" method="post">
                                     {{csrf_field()}}
                                     <div class="form-group">
                                     <select class="custom-select col-8" name="dept_change">
@@ -104,6 +98,18 @@
     <script>
         $(document).ready(function() {
             $('#agent').DataTable();
+        });
+        $(document).ready(function () {
+            $("#agent_name").change(function () {
+                var val = $(this).val();
+                @foreach($employees as $emp)
+                if (val =={{$emp->emp_id}} ) {
+                    $("#dept_id").html("<option value='{{$emp->dept_id}}'>{{$emp->department->dept_name}}</option>");
+                }else if(val=="item0") {
+                    $("#dept_id").html( "<option></option>");
+                }
+                @endforeach
+            });
         });
     </script>
 @endsection

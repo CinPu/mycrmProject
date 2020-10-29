@@ -7,6 +7,7 @@ use App\assign_ticket;
 use App\assignwithdept;
 use App\case_type;
 use App\department;
+use App\employee;
 use App\solvedTime;
 use App\ticket;
 use App\User;
@@ -28,7 +29,8 @@ class admin_agentController extends Controller
     {
         $agents=agent::with("user","dept")->where("admin_id",Auth::user()->id)->get();
         $depts=department::where("admin_uuid",Auth::user()->uuid)->get();
-        return view("userAdmin.agent",compact("agents","depts"));
+        $employees=employee::with("employee_user","department")->where("admin_id",Auth::user()->id)->get();
+        return view("userAdmin.agent",compact("agents","depts","employees"));
     }
 
     /**
@@ -49,19 +51,19 @@ class admin_agentController extends Controller
      */
     public function store(Request $request)
     {
-        $agent=new User();
-        $agent->name=$request->name;
-        $agent->email=$request->email;
-        $agent->password=Hash::make($request->password);
-        $agent->uuid=$request->uuid;
-        $agent->save();
-        $agent->assignRole("Agent");
-        $agent_dept=new agent();
-        $agent_dept->agent_id=$agent->id;
-        $agent_dept->admin_id=Auth::user()->id;
-        $agent_dept->dept_id=$request->dept;
-        $agent_dept->save();
-        return redirect()->back()->with("message","New Agent Create Successful");
+//            dd($request->all());
+        if($request->agent_name!="item0") {
+            $agent = new agent();
+            $agent->agent_id = $request->agent_name;
+            $agent->admin_id = Auth::user()->id;
+            $agent->dept_id = $request->dept_id;
+            $agent->save();
+            $agent_role = User::where("id", $request->agent_name)->first();
+            $agent_role->assignRole("Agent");
+            return redirect()->back()->with("message", "New Agent Create Successful !");
+        }else{
+            return redirect()->back()->with("delete","You need to create employee first !");
+        }
 
     }
 

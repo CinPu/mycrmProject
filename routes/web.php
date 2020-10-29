@@ -29,6 +29,7 @@ Auth::routes();
 Route::group(['middleware'=>'auth'],function () {
     Route::get("/logout", "Auth\LoginController@logout");
     Route::get('/home', 'HomeController@index');
+    Route::get("/company/create","companyController@index");
     Route::post("/company/profile","companyController@store");
     Route::post("/role/assign/{uid}", "RolemangeControllerController@insertRole");
     Route::post("/role/remove/{uid}", "RolemangeControllerController@removeRole");
@@ -66,6 +67,11 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("/user/setting","admin_agentController@agentInfo_update");
     Route::get("/pp/change","admin_agentController@ppchange");
     Route::post("pp/change","admin_agentController@profileChange");
+    Route::post("/ticket/search","searchController@ticket");
+    Route::get("/employee","employeeController@index");
+    Route::post("/employee/create","employeeController@store");
+    Route::post("/dept/head/{id}","departmentController@set_dept_head");
+    Route::get("/role","RolemangeControllerController@index");
 
 
 });

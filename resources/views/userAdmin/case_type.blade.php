@@ -1,5 +1,5 @@
 @extends("layouts.app")
-@section("title","Category")
+@section("title","Cases Type")
 @section("content")
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#case_type" data-whatever="@getbootstrap"><i class="fa fa-plus mr-3"></i>New Case</button>
 

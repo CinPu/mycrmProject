@@ -51,7 +51,7 @@ class piechartController extends Controller
                 $openticket ++;
             }elseif($t->status_type->status=="Pending"){
                 $pending ++;
-            }elseif($t->status_type->status=="Inprogress"){
+            }elseif($t->status_type->status=="Progress"){
                 $progress ++;
             }elseif($t->status_type->status=="New"){
                 $new ++;

@@ -1,7 +1,24 @@
 @extends("layouts.app")
-@section("title","Ticket")
+@section("title","Ticket Detail")
 @section("csscode")
     <style>
+        .scroll {
+            /*width: 300px;*/
+            height: 500px;
+            overflow: scroll;
+        }
+        .photo_div{
+            /*width: 300px;*/
+            height: 370px;
+            overflow: scroll;
+        }
+        .desc{
+            height: 300px;
+            overflow: scroll;
+        }
+        #comment{
+            height: 700px;
+        }
         .photos{
             max-width: 220px;
             max-height: 500px;
@@ -15,7 +32,8 @@
     <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
 @endsection
 @section("content")
-    <div class="card">
+
+        <div class="card">
         <div class="card-header"><h4><i class="fa fa-ticket " style="font-size: 35px"></i> Ticket </h4>
             @if(Auth::user()->hasAnyRole("Admin"))
                 @if($ticket_info->isassign==1)
@@ -137,7 +155,9 @@
 
         </div>
     </div>
-    <div class="card">
+        <div class="row">
+            <div class="col-md-8 ">
+        <div class="card desc">
         <div class="card-body">
             <h4>User Contact Information </h4>
             <div class="row">
@@ -166,13 +186,14 @@
                 </div>
             </div>
             <div class="row">
+                <h4 class="ml-3">Description </h4>
                 <div class="col-md-11 offset-md-1 mm-font">
                     <b>{!!$ticket_info->message!!}</b>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card">
+        <div class="card photo_div">
         <div class="card-header">
             <h4>Contains {{$numberOfphotos}} @if($numberOfphotos>1) Photos @else Photo @endif</h4>
         </div>
@@ -186,44 +207,63 @@
             </div>
         </div>
     </div>
-    <div class="card">
-        <div class="comments">
-            <h4 class="ml-5 my-3">Comments:</h4>
-            @foreach ($comments as $comment)
-                <div>
-                    <div class="text-dark col-md-12 col-12">
-                        <div class="offset-md-2 col-md-6 card bg-rose mm-font">
-                            <div>
-                                <a href="{{url("/comment/delete/$comment->id")}}" class="float-right"><i class="fa fa-close text-white"></i></a>
-                            </div>
-                            <b style="margin-bottom: 5px;">{{ $comment->user->name }} : </b>
-                            {!!$comment->comment!!}
-                            <span class="float-right">{{ $comment->created_at->diffForHumans()}}</span>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
         </div>
-        <div class="comment-form">
-            <form action="{{ url('comment') }}" method="POST" class="form my-3">
-                {!! csrf_field() !!}
-                <input type="hidden" name="ticket_id" value="{{ $ticket_info->id }}">
-                <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }} col-md-12">
-                    <input type="text" name="comment" class="form-control offset-md-2 col-md-6" placeholder="Comment Here ..">
-{{--                    <textarea row="2" class="form-control" id="summary-ckeditor" name="comment"></textarea>--}}
-                    <div class="offset-md-6 offset-sm-8 offset-5"><button type="submit" class="btn btn-info ml-4"><i class="fa fa-send mr-2"></i>Comment</button></div>
-                    @if ($errors->has('comment'))
-                        <span class="help-block">
+        <div class="col-md-4">
+        <div class="card" id="comment">
+            <h4 class="ml-3 my-3">Comments:</h4>
+            <div class="comments scroll">
+
+                @foreach ($comments as $comment)
+                    <span>
+                        <div class="text-dark col-md-12 col-12">
+                            <div class="card mm-font">
+                                <div>
+                                    <a href="{{url("/comment/delete/$comment->id")}}" class="float-right mr-2"><i class="fa fa-close text-dark"></i></a>
+                                </div>
+                                <div class="row ml-2">
+                                    <div class="col-md-2">
+                                    @foreach($profile as $pp)
+                                        @if($pp->user_id==$comment->user->id)
+                                            <img src="{{asset("/profile/$pp->profile")}}" alt="user_profile" width="40px;"height="40px;" class="rounded-circle mr-2">
+                                            @endif
+                                    @endforeach
+                                    </div>
+                                    <div class="col-md-10 mb-3">
+                                    <b style="margin-bottom: 5px;">{{ $comment->user->name }}</b>
+                                        <i style="font-size: 10px;">{{ $comment->created_at->toFormattedDateString()}}</i><br>
+                                    {!!$comment->comment!!}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                @endforeach
+            </div>
+            <hr>
+            <div class="comment-form">
+                <form action="{{ url('comment') }}" method="POST" class="form ">
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="ticket_id" value="{{ $ticket_info->id }}">
+                    <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }} col-md-12">
+                        <input type="text" name="comment" class="form-control" placeholder="Comment Here ..">
+                        {{--                    <textarea row="2" class="form-control" id="summary-ckeditor" name="comment"></textarea>--}}
+                        <div class="offset-md-6 offset-sm-8 offset-5"><button type="submit" class="btn btn-info"><i class="fa fa-send mr-2"></i>Comment</button></div>
+                        @if ($errors->has('comment'))
+                            <span class="help-block">
                                             <strong>{{ $errors->first('comment') }}</strong>
                                         </span>
-                    @endif
+                        @endif
 
-                </div>
+                    </div>
 
-            </form>
+                </form>
+            </div>
+        </div>
         </div>
     </div>
     <div id="map"></div>
+
 {{--    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>--}}
     <script>
         // CKEDITOR.replace( 'summary-ckeditor' );

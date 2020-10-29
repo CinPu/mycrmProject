@@ -86,6 +86,7 @@
             /*background-color:#ffffff;*/
             border-color:#ffffff;
         }
+
     </style>
 </head>
 {{--{!! Zawuni::includeFiles() !!}--}}
@@ -125,7 +126,7 @@
                     @endif
             @endif
         </div>
-        <div class="sidebar-wrapper">
+        <div class="sidebar-wrapper ">
             <ul class="nav">
                 @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("SuperAdmin"))
                     <li class="nav-item ">
@@ -137,52 +138,73 @@
                     @elseif(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Admin"))
                     <li class="nav-item ">
                         <a class="nav-link text-dark " href="{{url("/home")}}">
-                            <i class="material-icons text-dark">dashboard</i>
+                            <i class="fa fa-dashboard fa-lg"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                <li class="nav-item ">
-                    <a class="nav-link text-dark" href="{{url("/department")}}">
-                        <i class="fa fa-users text-gray"></i>
-                        <p>Department</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link text-dark" href="{{url("/agent")}}">
-                        <img src="{{url("assets/img/agentpp.png")}}" width="30px;" height="30px" alt="">
-                        <span class="ml-3">Agent</span>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link text-dark" href="{{url("/case_type")}}">
-                        <i class="material-icons text-success">library_books</i>
-                        <p>Case Type</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link text-dark" href="{{url("/priority")}}">
-                        <i class="material-icons text-primary">bubble_chart</i>
-                        <p>Prority</p>
-                    </a>
-                </li>
+                    <li  class=" nav-item">
+                        <a href="#" class="nav-link" data-toggle="collapse" data-target="#company"><i class="fa fa-building-o fa-lg"></i><p> Company<i class="fa fa-chevron-circle-down float-right" style="font-size: 18px;" ></i></p></a>
+                    </li>
+                    <ul class="sub-menu collapse" id="company">
+                        <li class="nav-item " style="list-style-type:none">
+                            <a class="nav-link text-dark" href="{{url("/department")}}">
+                                Department
+                            </a>
+                        </li>
+                        <li class="nav-item " style="list-style-type:none">
+                            <a class="nav-link text-dark" href="{{url("/employee")}}">
+                                Employee
+                            </a>
+                        </li>
+                        <li class="nav-item " style="list-style: none">
+                            <a class="nav-link text-dark" href="{{url("/agent")}}">
+                                Agent
+                            </a>
+                        </li>
+                    </ul>
+                    <li  data-toggle="collapse" data-target="#ticket" class="collapsed nav-item">
+                        <a href="#" class="nav-link"><i class="fa fa-ticket fa-lg"></i> Ticket <i class="fa fa-chevron-circle-down float-right" style="font-size: 18px;"></i></a>
+                    </li>
+                    <ul class="sub-menu collapse" id="ticket">
+                        <li class="nav-item " style="list-style: none">
+                            <a class="nav-link text-dark" href="{{url("/case_type")}}">
+                                <p>Case Type</p>
+                            </a>
+                        </li>
+                        <li class="nav-item " style="list-style: none">
+                            <a class="nav-link text-dark" href="{{url("/priority")}}">
+                                <p>Prority</p>
+                            </a>
+                        </li>
+                        <li class="nav-item " style="list-style: none">
+                            <a class="nav-link text-dark" href="{{url("/piechart")}}">
+                                <p>Chart Report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item " style="list-style: none">
+                            <a class="nav-link" href="{{url("/guestUser")}}">
+                                <p>Complainer Customer</p>
+                            </a>
+                        </li>
+                    </ul>
                     <li class="nav-item ">
-                        <a class="nav-link text-dark" href="{{url("/piechart")}}">
-                            <i class="fa fa-pie-chart text-danger"></i>
-                            <p>Pie Chart Report</p>
+                        <a class="nav-link text-dark" href="{{url("/role")}}">
+                            <i class="fa fa-lock text-gray"></i>
+                            <p>Role & Permission</p>
                         </a>
                     </li>
-                <li class="nav-item ">
-                    <a class="nav-link text-dark" href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}">
-                        <i class="fa fa-paper-plane text-info"></i>
-                        <p>Ticket Create</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="{{url("/guestUser")}}">
-                        <img src="{{url(asset("/assets/img/guestuser.png"))}}" alt="" width="30px;" height="30px">
-                        <span class="ml-3">User</span>
-                    </a>
-                </li>
+
+
+
+{{--                <li class="nav-item ">--}}
+{{--                    <a class="nav-link text-dark" href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}">--}}
+{{--                        <i class="fa fa-paper-plane text-info"></i>--}}
+{{--                        <p>Ticket Create</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+
+
+
                 @else
                     <li class="nav-item active  ">
                         <a class="nav-link" href="{{url("/home")}}">
@@ -252,9 +274,7 @@
         </nav>
         <!-- End Navbar -->
         <div class="content">
-            <div >
-                @yield("content")
-            </div>
+            @yield("content")
         </div>
         <footer class="footer">
             <div class="container-fluid">

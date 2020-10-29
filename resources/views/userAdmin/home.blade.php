@@ -1,5 +1,5 @@
 @extends("layouts.app")
-@section("title","Ticket Dashboard")
+@section("title","Dashboard")
 @section("csscode")
     <style>
         /*#allticket_info,#new_info,#open_info,#close_info,#complete_info,#pending_info,#progress_info{*/
@@ -13,125 +13,271 @@
 @endsection
 @section("content")
     <div>
-    <div class="row" >
-        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
-                    <div class="card-icon">
-                        <i class="fa fa-user"></i>
+        @php
+        if ($tickets!=null){
+        $all=count($tickets);
+        $percetnOfnew=round(($new/$all)*100);
+        $percentOfopen=round(($openticket/$all)*100);
+        $percentOfsolved=round(($complete/$all)*100);
+        $percentOfpending=round(($pending/$all)*100);
+        }else{
+         $percetnOfnew=0;
+        $percentOfopen=0;
+        $percentOfsolved=0;
+        $percentOfpending=0;
+        }
+        @endphp
+        <div class="offset-md-10">
+        <a href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}" class="btn btn-primary rounded "><i class="fa fa-plus mr-2"></i>Add Ticket </a>
+        </div>
+        <div class="col-md-12">
+        <div class="row" >
+            <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div>
+                            <span class="d-block">New Tickets</span>
+                        </div>
+                        <div>
+                            <span class="text-success">{{$percetnOfnew}}%</span>
+                        </div>
                     </div>
-                    <p class="card-category">All Agents</p>
-                    <h3 class="card-title">{{$countAgent}}
-                    </h3>
+                    <h3 class="mb-3">{{$new}}</h3>
+                    <div class="progress mb-2" style="height: 5px;">
+                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {{$percetnOfnew}}%;">
+
+                        </div>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="fa fa-info text-warning mt-1"></i>
-                        <a href="{{url("/agent")}}" class="warning-link ml-2">More Detail ....</a>
+            </div>
+            <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div>
+                            <span class="d-block">Solved Tickets</span>
+                        </div>
+                        <div>
+                            <span class="text-success">{{$percentOfsolved}}%</span>
+                        </div>
+                    </div>
+                    <h3 class="mb-3">{{$complete}}</h3>
+                    <div class="progress mb-2" style="height: 5px;">
+                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="{{$complete}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$percentOfsolved}}%;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div>
+                            <span class="d-block">Open Tickets</span>
+                        </div>
+                        <div>
+                            <span class="text-danger">{{$percentOfopen}}%</span>
+                        </div>
+                    </div>
+                    <h3 class="mb-3">{{$openticket}}</h3>
+                    <div class="progress mb-2" style="height: 5px;">
+                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:{{$percentOfopen}}%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div><span class="d-block">Pending Tickets</span>
+                        </div>
+                        <div>
+                            <span class="text-danger">{{$percentOfpending}}%</span>
+                        </div>
+                    </div>
+                    <h3 class="mb-3">{{$pending}}</h3>
+                    <div class="progress mb-2" style="height: 5px;">
+                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="{{$percentOfpending}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$percentOfpending}}%;"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-primary card-header-icon">
-                    <div class="card-icon">
-                        <i class="fa fa-th"></i>
-                    </div>
-                    <p class="card-category">Total</p>
-                    <h3 class="card-title">{{$countallticket}}
-                        <small>Tickets</small>
-                    </h3>
+        </div>
+{{--        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">--}}
+{{--            <div class="card card-stats">--}}
+{{--                <div class="card-body">--}}
+{{--                    <div class="d-flex justify-content-between mb-3">--}}
+{{--                        <div>--}}
+{{--                            <span class="d-block">New Tickets</span>--}}
+{{--                        </div>--}}
+{{--                        <div>--}}
+{{--                            <span class="text-success">+10%</span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <h3 class="mb-3">{{$countAgent}}</h3>--}}
+{{--                    <div class="progress mb-2" style="height: 5px;">--}}
+{{--                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">--}}
+
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="card-header card-header-info card-header-icon">--}}
+{{--                    <div class="card-icon">--}}
+{{--                        <i class="fa fa-user"></i>--}}
+{{--                    </div>--}}
+{{--                    <h3 class="card-title">{{$countAgent}}</h3>--}}
+{{--                    <p class="card-category float-left">--}}
+{{--                        New Ticket--}}
+{{--                    </p>--}}
+{{--                    <progress id="file" value="32" max="100" class="ml-2"> </progress>--}}
+{{--                </div>--}}
+
+{{--                <div class="card-footer">--}}
+{{--                        <i class="fa fa-info text-warning mt-1"></i>--}}
+{{--                        <a href="{{url("/agent")}}" class="warning-link ml-2">More Detail ....</a>--}}
+
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">--}}
+{{--            <div class="card card-stats">--}}
+{{--                <div class="card-header card-header-primary card-header-icon">--}}
+{{--                    <div class="card-icon">--}}
+{{--                        <i class="fa fa-th"></i>--}}
+{{--                    </div>--}}
+{{--                    <p class="card-category">Total</p>--}}
+{{--                    <h3 class="card-title">{{$countallticket}}--}}
+{{--                        <small>Tickets</small>--}}
+{{--                    </h3>--}}
+{{--                </div>--}}
+{{--                <div class="card-footer">--}}
+{{--                    <div class="stats">--}}
+{{--                        <i class="fa fa-th text-warning mt-1"></i>--}}
+{{--                        <a href="" class="warning-link ml-2">Total ticket ....</a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">--}}
+{{--            <div class="card card-stats">--}}
+{{--                <div class="card-header card-header-success card-header-icon">--}}
+{{--                    <div class="card-icon">--}}
+{{--                        <i class="fa fa-ticket"></i>--}}
+{{--                    </div>--}}
+{{--                    <p class="card-category">Assigned</p>--}}
+{{--                    <h3 class="card-title">{{count($assigned)}}--}}
+{{--                        <small>Tickets</small>--}}
+{{--                    </h3>--}}
+{{--                </div>--}}
+{{--                <div class="card-footer">--}}
+{{--                    <div class="stats">--}}
+{{--                        <a href="{{url("isassign/1")}}"><i class="fa fa-ticket mr-2"></i>Assign Ticket Detail...</a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">--}}
+{{--            <div class="card card-stats">--}}
+{{--                <div class="card-header card-header-rose card-header-icon">--}}
+{{--                    <div class="card-icon">--}}
+{{--                        <i class="material-icons">info_outline</i>--}}
+{{--                    </div>--}}
+{{--                    <p class="card-category">Unassigned</p>--}}
+{{--                    <h3 class="card-title">{{count($unassigned)}}--}}
+{{--                        <small>Tickets</small>--}}
+{{--                    </h3>--}}
+{{--                </div>--}}
+{{--                <div class="card-footer">--}}
+{{--                    <div class="stats">--}}
+{{--                        <a href="{{url("isassign/2")}}"><i class="fa fa-ticket mr-2"></i>Unassign Ticket Detail...</a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    </div>--}}
+
+    <div class="col-md-12">
+        <form action="{{url("/ticket/search")}}" id="search_ticket" method="POST">
+            {{csrf_field()}}
+            <div class="row">
+                <div class="col-md-2">
+                <div class="form-group">
+                    <select id="agent_name" name="agent_name" class="form-control text-center">
+                        <option> -- Select Agent --</option>
+                        @foreach($agents as $agent)
+                            <option value="{{$agent->agent_id}}">{{$agent->user->name}}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="fa fa-th text-warning mt-1"></i>
-                        <a href="" class="warning-link ml-2">Total ticket ....</a>
+            </div>
+                <div class="col-md-2">
+                <div class="form-group">
+                <select id="priority_search" name="priority" class="form-control">
+                    <option>---Select Priority---</option>
+                    @foreach($priorities as $priority)
+                        <option value="{{$priority->id}}">{{$priority->priority}}</option>
+                    @endforeach
+                </select>
+                </div>
+            </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <select name="status" id="status" class="form-control">
+                            <option>--Select Status--</option>
+                            @foreach($statuses as $status)
+                                <option value="{{$status->id}}">{{$status->status}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="from_date">From</label>
+                        <input type="date" id="from_date" name="from_date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="to_date">To</label>
+                        <input type="date" name="to_date" id="to_date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                       <button type="submit" class="btn btn-primary rounded">Search</button>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
-                    <div class="card-icon">
-                        <i class="fa fa-ticket"></i>
-                    </div>
-                    <p class="card-category">Assigned</p>
-                    <h3 class="card-title">{{count($assigned)}}
-                        <small>Tickets</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <a href="{{url("isassign/1")}}"><i class="fa fa-ticket mr-2"></i>Assign Ticket Detail...</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-rose card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">info_outline</i>
-                    </div>
-                    <p class="card-category">Unassigned</p>
-                    <h3 class="card-title">{{count($unassigned)}}
-                        <small>Tickets</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <a href="{{url("isassign/2")}}"><i class="fa fa-ticket mr-2"></i>Unassign Ticket Detail...</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
         <div class="card">
-    <ul class="nav nav-tabs bg-primary col-md-12 " id="myTab" role="tablist">
-        <li class="nav-item my-2 ">
-            <a class="nav-link active" id="pills-dashboard-tab" data-toggle="pill" href="#pills-dashboard" role="tab" aria-controls="pills-home" aria-selected="false">All Tickets
+        <nav style="background-color: #d1c9f0" class="mb-3">
+            <div class="nav nav-tabs mt-1" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active mr-2" id="pills-dashboard-tab" data-toggle="tab" href="#pills-dashboard" role="tab" aria-controls="pills-home" aria-selected="true" >All Tickets
             </a>
-        </li>
-        <li class="nav-item my-2">
-            <a class="nav-link" id="pills-new-tab" data-toggle="pill" href="#pills-new" role="tab" aria-controls="pills-profile" aria-selected="false">New
+            <a class="nav-item nav-link mr-2" id="pills-new-tab" data-toggle="tab" href="#pills-new" role="tab" aria-controls="pills-profile" aria-selected="false" >New
                 <span class="badge badge-pill bg-white text-dark">{{$new}}</span>
             </a>
-        </li>
-        <li class="nav-item my-2">
-            <a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-open" role="tab" aria-controls="pills-profile" aria-selected="false">Open Ticket
+            <a class="nav-item nav-link mr-2" id="pills-open-tab" data-toggle="tab" href="#pills-open" role="tab" aria-controls="pills-profile" aria-selected="false" >Open Ticket
                 <span class="badge badge-pill bg-white text-dark">{{$openticket}}</span>
             </a>
-        </li>
-        <li class="nav-item my-2">
-            <a class="nav-link" id="pills-close-tab" data-toggle="pill" href="#pills-close" role="tab" aria-controls="pills-contact" aria-selected="false">Closed Ticket
+            <a class="nav-item nav-link mr-2" id="pills-close-tab" data-toggle="tab" href="#pills-close" role="tab" aria-controls="pills-contact" aria-selected="false" >Closed Ticket
                 <span class="badge badge-pill bg-white text-dark ">{{$closeticket}}</span>
             </a>
-        </li>
-        <li class="nav-item my-2">
-            <a class="nav-link" id="pills-complete-tab" data-toggle="pill" href="#pills-complete" role="tab" aria-controls="pills-contact" aria-selected="false">Completed Ticket
+            <a class="nav-item nav-link mr-2" id="pills-complete-tab" data-toggle="tab" href="#pills-complete" role="tab" aria-controls="pills-contact" aria-selected="false" >Completed Ticket
                 <span class="badge badge-pill bg-white text-dark ">{{$complete}}</span>
             </a>
-        </li>
-        <li class="nav-item my-2">
-            <a class="nav-link" id="pills-pending-tab" data-toggle="pill" href="#pills-pending" role="tab" aria-controls="pills-profile" aria-selected="false">Pending
+            <a class="nav-item nav-link mr-2" id="pills-pending-tab" data-toggle="tab" href="#pills-pending" role="tab" aria-controls="pills-profile" aria-selected="false" >Pending
                 <span class="badge badge-pill bg-white text-dark">{{$pending}}</span>
             </a>
-        </li>
-        <li class="nav-item my-2">
-            <a class="nav-link" id="pills-progress-tab" data-toggle="pill" href="#pills-progress" role="tab" aria-controls="pills-profile" aria-selected="false">Progress
+
+            <a class="nav-item nav-link mr-2" id="pills-progress-tab" data-toggle="tab" href="#pills-progress" role="tab" aria-controls="pills-profile" aria-selected="false" >Progress
                 <span class="badge badge-pill bg-white text-dark">{{$progress}}</span>
             </a>
-        </li>
-{{--        <li class="nav-item my-2">--}}
-{{--            <a href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}" class="nav-link float-right"  ><i class="fa fa-plus float-left mr-2 mt-1" ></i>New Ticket</a>--}}
-{{--        </li>--}}
-    </ul>
-
-        <div class="tab-content" id="pills-tabContent"  >
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent" role="tablist"  >
             <div class="tab-pane fade show active col-md-12" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
-                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>All Tickets</h3>
+{{--                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>All Tickets</h3>--}}
                 <table class="table" id="allticket">
                     <div class=" col-md-12">
                         <div class="row">
@@ -167,33 +313,78 @@
                     {{--                            <i class="fa fa-hand-o-right mr-2" aria-hidden="true"></i>Assign--}}
                     {{--                        </button>--}}
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Ticket Title</th>
                         <th scope="col">Ticket ID</th>
-                        <th scope="col">Message</th>
-                        <th scope="col">Assign/Unassign</th>
+{{--                        <th scope="col">Description</th>--}}
+                        <th scope="col">Assign Agent</th>
                         <th scope="col">Status</th>
                         <th scope="col">Priority</th>
-                        <th scope="col">Category</th>
+                        <th scope="col">Case Type</th>
                         <th scope="col">Created at</th>
                     </tr>
                     </thead>
                     <tbody >
                     @foreach($tickets as $ticket)
                         <tr>
+                            <th>{{$ticket->id}}</th>
                             <td>{{$ticket->title}}</td>
                             <td>
                                 <a href="{{ url("tickets/$ticket->ticket_id") }}" class="text-primary">
                                     #{{ $ticket->ticket_id }}
                                 </a>
                             </td>
-                            <td>{!!substr($ticket->message,0,150)!!}....</td>
+{{--                            <td>{!!substr($ticket->message,0,150)!!}....</td>--}}
                             <td>
                                 @if($ticket->isassign==1)
-                                    <a href="" class="btn btn-success"> Assigned <i class="fa fa-check-circle-o"></i></a>
+                                    @foreach($assign_name as $assignName)
+                                        @if($assignName->ticket_id==$ticket->id)
+                                            @if($assignName->agent_pp!=null)
+                                            <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                {{$assignName->agent->name}}
+                                            @else
+                                                <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                {{$assignName->agent->name}}
+                                                @endif
+                                            @endif
+                                    @endforeach
+                                    @foreach($assign_dept_name as $dept_name)
+                                        @if($dept_name->ticket_id==$ticket->id)
+                                            <i class="fa fa-users"></i>
+                                            {{$dept_name->dept->dept_name}}
+                                            @endif
+                                        @endforeach
                                 @elseif($ticket->isassign==0)
                                     <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
                             </td>
-                            <td>{{$ticket->status_type->status}}</td>
+                            <td><a href=""  data-toggle="modal" data-target="#{{$ticket->id}}">{{$ticket->status_type->status}}</a>
+                                <div class="modal fade" id="{{$ticket->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                                    <div class="modal-dialog" role="document" style="padding-left: 200px;">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <i class="fa fa-close"></i>
+                                                </button>
+                                                <h3 class="text-dark">Change Status</h3>
+                                                <form action="{{ url("/status/change/".$ticket->ticket_id) }}" method="GET" class="form">
+                                                    <select class="custom-select" name="status_change">
+                                                        @foreach($statuses as $status)
+                                                            @if(Auth::user()->hasAnyRole("Admin"))
+                                                                <option value="{{$status->id}}">{{$status->status}}</option>
+                                                            @else
+                                                                @if($status->status!="Close")
+                                                                    <option value="{{$status->id}}">{{$status->status}}</option>
+                                                                @endif
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                    <button type="submit" class="btn btn-primary float-right form-group">Save changes</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
                             <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                             <td>
                                 {{$ticket->cases->name}}
@@ -240,7 +431,7 @@
 
             </div>
             <div class="tab-pane fade col-md-12 " id="pills-new" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
-                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>New Tickets</h3>
+{{--                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>New Tickets</h3>--}}
                 <table class="table" id="new">
                     <thead>
                     <div class=" col-md-12">
@@ -274,7 +465,7 @@
                     <tr>
                         <th scope="col">Title</th>
                         <th scope="col">Ticket ID</th>
-                        <th scope="col">Message</th>
+                        <th scope="col">Assign Staff</th>
                         <th scope="col">Status</th>
                         <th scope="col">Priority</th>
                         <th scope="col">Category</th>
@@ -291,7 +482,28 @@
                                         #{{ $ticket->ticket_id }}
                                     </a>
                                 </td>
-                                <td>{!!substr($ticket->message,0,150)!!}...</td>
+                                <td>
+                                    @if($ticket->isassign==1)
+                                        @foreach($assign_name as $assignName)
+                                            @if($assignName->ticket_id==$ticket->id)
+                                                @if($assignName->agent_pp!=null)
+                                                    <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                    {{$assignName->agent->name}}
+                                                @else
+                                                    <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                    {{$assignName->agent->name}}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        @foreach($assign_dept_name as $dept_name)
+                                            @if($dept_name->ticket_id==$ticket->id)
+                                                <i class="fa fa-users"></i>
+                                                {{$dept_name->dept->dept_name}}
+                                            @endif
+                                        @endforeach
+                                    @elseif($ticket->isassign==0)
+                                        <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                </td>
                                 <td>{{$ticket->status_type->status}}</td>
                                 <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                                 {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
@@ -305,9 +517,10 @@
                     @endforeach
                     </tbody>
                 </table>
+
             </div>
             <div class="tab-pane fade col-md-12" id="pills-open" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
-                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Open Tickets</h3>
+{{--                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Open Tickets</h3>--}}
                 <table class="table" id="open">
                     <thead>
                     <div class=" col-md-12">
@@ -341,7 +554,7 @@
                     <tr>
                         <th scope="col">Title</th>
                         <th scope="col">Ticket ID</th>
-                        <th scope="col">Message</th>
+                        <th scope="col">Assign Staff</th>
                         <th scope="col">Status</th>
                         <th scope="col">Priority</th>
                         <th scope="col">Category</th>
@@ -358,8 +571,29 @@
                                         #{{ $ticket->ticket_id }}
                                     </a>
                                 </td>
-                                <td>{!!substr($ticket->message,0,150)!!}...</td>
-                                <td>{{$ticket->status}}</td>
+                                <td>
+                                    @if($ticket->isassign==1)
+                                        @foreach($assign_name as $assignName)
+                                            @if($assignName->ticket_id==$ticket->id)
+                                                @if($assignName->agent_pp!=null)
+                                                    <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                    {{$assignName->agent->name}}
+                                                @else
+                                                    <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                    {{$assignName->agent->name}}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        @foreach($assign_dept_name as $dept_name)
+                                            @if($dept_name->ticket_id==$ticket->id)
+                                                <i class="fa fa-users"></i>
+                                                {{$dept_name->dept->dept_name}}
+                                            @endif
+                                        @endforeach
+                                    @elseif($ticket->isassign==0)
+                                        <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                </td>
+                                <td>{{$ticket->status_type->status}}</td>
                                 <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                                 {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
                                 <td>
@@ -374,7 +608,7 @@
                 </table>
             </div>
             <div class="tab-pane fade col-md-12" id="pills-close" role="tabpanel" aria-labelledby="pills-contact-tab"style="overflow-x:auto;">
-                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Closed Tickets</h3>
+{{--                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Closed Tickets</h3>--}}
                 <table class="table " id="close">
                     <thead>
                     <div class=" col-md-12">
@@ -408,7 +642,7 @@
                     <tr>
                         <th scope="col">Title</th>
                         <th scope="col">Ticket ID</th>
-                        <th scope="col">Message</th>
+                        <th scope="col">Assign Staff</th>
                         <th scope="col">Status</th>
                         <th scope="col">Priority</th>
                         <th scope="col">Category</th>
@@ -425,8 +659,29 @@
                                         #{{ $ticket->ticket_id }}
                                     </a>
                                 </td>
-                                <td>{!!substr($ticket->message,0,150)!!}...</td>
-                                <td>{{$ticket->status}}</td>
+                                <td>
+                                    @if($ticket->isassign==1)
+                                        @foreach($assign_name as $assignName)
+                                            @if($assignName->ticket_id==$ticket->id)
+                                                @if($assignName->agent_pp!=null)
+                                                    <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                    {{$assignName->agent->name}}
+                                                @else
+                                                    <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                    {{$assignName->agent->name}}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        @foreach($assign_dept_name as $dept_name)
+                                            @if($dept_name->ticket_id==$ticket->id)
+                                                <i class="fa fa-users"></i>
+                                                {{$dept_name->dept->dept_name}}
+                                            @endif
+                                        @endforeach
+                                    @elseif($ticket->isassign==0)
+                                        <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                </td>
+                                <td>{{$ticket->status_type->status}}</td>
                                 <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
 
                                 <td>
@@ -441,7 +696,7 @@
                 </table>
             </div>
             <div class="tab-pane fade col-md-12" id="pills-complete" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
-                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Completed Tickets</h3>
+{{--                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Completed Tickets</h3>--}}
                 <table class="table" id="complete">
                     <thead>
                     <div class=" col-md-12">
@@ -476,7 +731,7 @@
                     <tr>
                         <th scope="col">Title</th>
                         <th scope="col">Ticket ID</th>
-                        <th scope="col">Message</th>
+                        <th scope="col">Assign Staff</th>
                         <th scope="col">Status</th>
                         <th scope="col">Priority</th>
                         <th scope="col">Category</th>
@@ -493,8 +748,29 @@
                                         #{{ $ticket->ticket_id }}
                                     </a>
                                 </td>
-                                <td>{!!substr($ticket->message,0,150)!!}...</td>
-                                <td>{{$ticket->status}}</td>
+                                <td>
+                                    @if($ticket->isassign==1)
+                                        @foreach($assign_name as $assignName)
+                                            @if($assignName->ticket_id==$ticket->id)
+                                                @if($assignName->agent_pp!=null)
+                                                    <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                    {{$assignName->agent->name}}
+                                                @else
+                                                    <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                    {{$assignName->agent->name}}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        @foreach($assign_dept_name as $dept_name)
+                                            @if($dept_name->ticket_id==$ticket->id)
+                                                <i class="fa fa-users"></i>
+                                                {{$dept_name->dept->dept_name}}
+                                            @endif
+                                        @endforeach
+                                    @elseif($ticket->isassign==0)
+                                        <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                </td>
+                                <td>{{$ticket->status_type->status}}</td>
                                 <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
 
                                 <td>
@@ -509,7 +785,7 @@
                 </table>
             </div>
             <div class="tab-pane fade col-md-12" id="pills-pending" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
-                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Pending Tickets</h3>
+{{--                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Pending Tickets</h3>--}}
                 <table class="table" id="pending">
                     <thead>
                     <div class=" col-md-12">
@@ -543,7 +819,7 @@
                     <tr>
                         <th scope="col">Title</th>
                         <th scope="col">Ticket ID</th>
-                        <th scope="col">Message</th>
+                        <th scope="col">Assign Staff</th>
                         <th scope="col">Status</th>
                         <th scope="col">Priority</th>
                         <th scope="col">Category</th>
@@ -559,8 +835,29 @@
                                     <a href="{{ url("tickets/$ticket->ticket_id") }}">#{{$ticket->ticket_id}}
                                     </a>
                                 </td>
-                                <td>{!!substr($ticket->message,0,150)!!}...</td>
-                                <td>{{$ticket->status}}</td>
+                                <td>
+                                    @if($ticket->isassign==1)
+                                        @foreach($assign_name as $assignName)
+                                            @if($assignName->ticket_id==$ticket->id)
+                                                @if($assignName->agent_pp!=null)
+                                                    <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                    {{$assignName->agent->name}}
+                                                @else
+                                                    <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                    {{$assignName->agent->name}}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        @foreach($assign_dept_name as $dept_name)
+                                            @if($dept_name->ticket_id==$ticket->id)
+                                                <i class="fa fa-users"></i>
+                                                {{$dept_name->dept->dept_name}}
+                                            @endif
+                                        @endforeach
+                                    @elseif($ticket->isassign==0)
+                                        <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                </td>
+                                <td>{{$ticket->status_type->status}}</td>
                                 <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                                 {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
                                 <td>
@@ -576,7 +873,7 @@
                 </table>
             </div>
             <div class="tab-pane fade col-md-12" id="pills-progress" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
-                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Progress Tickets</h3>
+{{--                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Progress Tickets</h3>--}}
                 <table class="table" id="progress">
                     <thead>
                     <div class=" col-md-12">
@@ -610,7 +907,7 @@
                     <tr>
                         <th scope="col">Title</th>
                         <th scope="col">Ticket ID</th>
-                        <th scope="col">Message</th>
+                        <th scope="col">Assign Staff</th>
                         <th scope="col">Status</th>
                         <th scope="col">Priority</th>
                         <th scope="col">Category</th>
@@ -619,7 +916,7 @@
                     </thead>
                     <tbody>
                     @foreach($tickets as $ticket)
-                        @if($ticket->status_type->status=="Inprogress")
+                        @if($ticket->status_type->status=="Progress")
                             <tr>
                                 <th scope="row">{{$ticket->title}}</th>
                                 <td>
@@ -627,8 +924,29 @@
                                         #{{ $ticket->ticket_id }}
                                     </a>
                                 </td>
-                                <td>{!!substr($ticket->message,0,150)!!}...</td>
-                                <td>{{$ticket->status}}</td>
+                                <td>
+                                    @if($ticket->isassign==1)
+                                        @foreach($assign_name as $assignName)
+                                            @if($assignName->ticket_id==$ticket->id)
+                                                @if($assignName->agent_pp!=null)
+                                                    <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                    {{$assignName->agent->name}}
+                                                @else
+                                                    <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                    {{$assignName->agent->name}}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        @foreach($assign_dept_name as $dept_name)
+                                            @if($dept_name->ticket_id==$ticket->id)
+                                                <i class="fa fa-users"></i>
+                                                {{$dept_name->dept->dept_name}}
+                                            @endif
+                                        @endforeach
+                                    @elseif($ticket->isassign==0)
+                                        <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                </td>
+                                <td>{{$ticket->status_type->status}}</td>
                                 <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
                                 {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
                                 <td>{{$ticket->cases->name}}</td>
@@ -643,8 +961,9 @@
 
             </div>
         </div>
-    </div>
-    </div>
+        </div>
+        </div>
+
 {{--    <script>--}}
 {{--        // $('#select-all').click(function(event) {--}}
 {{--        //     if(this.checked) {--}}
@@ -708,6 +1027,10 @@
 
         } );
         $('#casetype').on('change', function() {
+            var table = $('#allticket').DataTable();
+            table.column(6).search($(this).val()).draw();
+        });
+        $('#priority').on('change', function() {
             var table = $('#allticket').DataTable();
             table.column(6).search($(this).val()).draw();
         });

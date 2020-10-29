@@ -1,5 +1,5 @@
 @extends("layouts.app")
-@section("title","Guest User Information")
+@section("title","Customer")
 @section("csscode")
     <style>
         .dt-button{

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class companyController extends Controller
 {
+    public function index(){
+        return view("company.company");
+    }
     public function store(Request $request){
         $company=new company();
         $company->admin_id=Auth::user()->id;
@@ -19,6 +22,7 @@ class companyController extends Controller
         $name=$image->getClientOriginalName();
         $request->logo->move(public_path().'/companylogo/', $name);
         $company->company_logo=$name;
+        $company->company_short_form=$request->short_form;
         $company->save();
         $user=Auth::user();
         $user->assignRole("Admin");

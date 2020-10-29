@@ -20,6 +20,7 @@ class assignticketController extends Controller
      */
     public function isassign($name)
     {
+
         $tickets = [];
         //admin's agent all ticket select
         $agents = agent::with("user")->where("admin_id", Auth::user()->id)->get();
@@ -50,12 +51,22 @@ class assignticketController extends Controller
         if($name==1) {
             $assign = "show active";
             $unassign="";
-            return view("ticket.isassign", compact("allcases","agents","depts","assign_tickets","unassign_tickets","assign","unassign"));
         }else{
             $assign = "";
             $unassign="show active";
-            return view("ticket.isassign", compact("allcases","agents","depts","assign_tickets","unassign_tickets","assign","unassign"));
         }
+        $assign_to=[];
+        foreach ($assign_tickets as $assign_ticket){
+            $assign_to_agent=assign_ticket::with("agent","ticket")->where("ticket_id",$assign_ticket->id)->first();
+//            dd($assign_to_agent);
+            if($assign_to_agent!=null){
+                array_push($assign_to,$assign_to_agent);
+            }else{
+                $assign_to_dept=assignwithdept::with("dept","ticket")->where("ticket_id",$assign_ticket->id)->first();
+                array_push($assign_to,$assign_to_dept);
+            }
+        }
+        return view("ticket.isassign", compact("allcases","agents","depts","assign_tickets","unassign_tickets","assign","unassign","assign_to"));
     }
 
     /**

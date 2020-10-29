@@ -51,4 +51,16 @@ class User extends Authenticatable
     public function assignticket(){
         return $this->hasMany(assign_ticket::class);
     }
+    public function employee(){
+        return $this->hasMany(employee::class);
+    }
+    public function report_to(){
+        return $this->hasMany(employee::class);
+    }
+    public function userpp(){
+        return $this->hasMany(userprofile::class);
+    }
+    public function dept_head(){
+        return $this->hasMany(department::class);
+    }
 }

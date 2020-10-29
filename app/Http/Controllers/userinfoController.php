@@ -68,8 +68,6 @@ class userinfoController extends Controller
             }
             $user_info->save();
             return redirect()->back()->with("message","Add New User Successful!");
-        }else{
-            return redirect()->back()->with("delete","Email is already exits");
         }
 
     }

@@ -19,5 +19,6 @@ class spatieseeder extends Seeder
         $role = Role::create(['name' => 'SuperAdmin']);
         $role = Role::create(['name' => 'Admin']);
         $role = Role::create(['name' => 'Agent']);
+        $role = Role::create(['name'=>'Employee']);
     }
 }

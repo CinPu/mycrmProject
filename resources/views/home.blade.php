@@ -8,6 +8,9 @@
             <input type="text" class="form-control" name="name" placeholder="Company Name">
         </div>
         <div class="form-group">
+            <input type="text" class="form-control" name="short_form" placeholder="Company Short Form">
+        </div>
+        <div class="form-group">
             <input type="email" class="form-control" name="email" placeholder="Company Email">
         </div>
         <div class="form-group">

@@ -18,6 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->bigInteger("admin_id")->unsigned();
             $table->foreign("admin_id")->references("id")->on("users")->onDelete("cascade");
             $table->string("company_name");
+            $table->string("company_short_form");
             $table->text("company_logo");
             $table->text("company_address");
             $table->string("company_email");

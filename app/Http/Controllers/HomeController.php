@@ -7,8 +7,11 @@ use App\assignwithdept;
 use App\case_type;
 use App\company;
 use App\department;
+use App\priority;
+use App\status;
 use App\ticket;
 use App\User;
+use App\userprofile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -78,7 +81,7 @@ class HomeController extends Controller
                         $openticket ++;
                     }elseif($t->status_type->status=="Pending"){
                         $pending ++;
-                    }elseif($t->status_type->status=="Inprogress"){
+                    }elseif($t->status_type->status=="Progress"){
                         $progress ++;
                     }elseif($t->status_type->status=="New"){
                         $new ++;
@@ -90,10 +93,14 @@ class HomeController extends Controller
                     }
                 }
                 $allcases=case_type::where("admin_uuid",Auth::user()->uuid)->get();
+                $priorities=priority::where("admin_uuid",Auth::user()->uuid)->get();
+                $statuses=status::all();
 
 //            dd($tickets);
                 $depts=department::where("admin_uuid",Auth::user()->uuid)->get();
-                return view("userAdmin.home",compact("agents","assigned","unassigned","depts","pending","allcases","progress","countallticket","tickets","openticket","closeticket","complete","new","countAgent"));
+                $assign_name=assign_ticket::with("agent","agent_pp")->get();
+                $assign_dept_name=assignwithdept::with("dept")->get();
+                return view("userAdmin.home",compact("agents","assigned","unassigned","depts","pending","allcases","progress","countallticket","tickets","openticket","closeticket","complete","new","countAgent","priorities","statuses","assign_name","assign_dept_name"));
                 //end for admin user
             } elseif (Auth::user()->hasAnyRole("Agent")) {
 

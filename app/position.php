@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class company extends Model
+class position extends Model
 {
     public function employee(){
         return $this->hasMany(employee::class);
