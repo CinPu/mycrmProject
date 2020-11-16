@@ -14,15 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $alluser=\App\User::all();
-    $admins=[];
-    foreach ($alluser as $user){
-        if($user->hasAnyRole("Admin")){
-            array_push($admins,$user);
-
-        }
-    }
-    return view('welcome',compact("admins"));
+    $company=\App\company::with("admin")->get();
+    return view('welcome',compact("company"));
 });
 
 Auth::routes();

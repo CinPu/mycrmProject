@@ -66,4 +66,7 @@ class User extends Authenticatable
     public function follower(){
         return $this->hasMany(ticketFollower::class);
     }
+    public function company(){
+        return $this->hasMany(company::class);
+    }
 }
