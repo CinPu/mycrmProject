@@ -345,14 +345,15 @@ class ticketController extends Controller
 //            dd($user);
 //            dd($assigned_user);
             $profile=userprofile::all();
-            $allemployees=employee::with("employee_user")->where("admin_id",Auth::user()->id)->get();
-            $employees=[];
-            foreach ($allemployees as $allemployee){
-                $isfollowed=ticketFollower::with("emp")->where("emp_id",$allemployee->emp_id)->first();
-                if($isfollowed==null){
-                    array_push($employees,$allemployee);
-                }
-            }
+            $employees=employee::with("employee_user")->where("admin_id",Auth::user()->id)->get();
+//            dd($allemployees);
+//            $employees=[];
+//            foreach ($allemployees as $allemployee){
+//                $isfollowed=ticketFollower::with("emp")->where("emp_id",$allemployee->emp_id)->first();
+//                if($isfollowed==null){
+//                    array_push($employees,$allemployee);
+//                }
+//            }
             $followers=ticketFollower::with("emp")->where("ticket_id",$ticket_info->id)->get();
             return view("ticket.show", compact("photos","numberOfphotos","ticket_info", "comments", "admin","depts","end","statuses","profile","employees","followers"));
         }elseif(Auth::user()->hasAnyRole("Agent")){
