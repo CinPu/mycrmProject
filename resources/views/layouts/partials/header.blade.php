@@ -23,7 +23,7 @@
                     @if($company!=null)
                         <a href="{{url("/home")}}" class="logo">
                                 <img src="{{asset("/companylogo/$company->company_logo")}}" alt="Logo" width="40px" height="40px;" class="rounded-circle mr-2">
-                       <span class="text-white"> {{strtoupper($company->company_name)}}</span>
+
                         </a>
                     @else
                         <a href="{{url("/home")}}" class="simple-text text-dark logo-normal">
@@ -45,7 +45,7 @@
             
             <!-- Header Title -->
             <div class="page-title-box">
-
+                <span class="text-white"> {{strtoupper($company->company_name)}}</span>
             </div>
             <!-- /Header Title -->
             
