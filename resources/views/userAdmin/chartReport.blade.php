@@ -1,48 +1,68 @@
-@extends("layouts.app")
+@extends("layouts.mainlayout")
 @section("title","Doughnut Chart Report")
-@section("csscode")
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
-@endsection
-@section("search")
-    <form action="{{url("/search")}}" method="POST" class="navbar-form my-3 mx-3">
-        {{csrf_field()}}
-        <div class="row">
-            <div class="form-group ml-3">
-                <input type="text" name="start_date" id="start_date" autocomplete="off" class="form-control" placeholder="Enter Start Date">
-            </div>
-            <div class="form-group ml-3 " >
-                <input type="text" name="end_date" id="end_date" autocomplete="off" class="form-control" placeholder="Enter End Date">
-            </div>
-
-        <button type="submit" class="btn btn-default btn-round btn-just-icon">
-            <i class="material-icons">search</i>
-            <div class="ripple-container"></div>
-        </button>
-        </div>
-    </form>
-@endsection
 @section("content")
-    <div class="row">
-        <div class="card col-md-4 offset-md-1 col-10 offset-1 text-center" style="background-color:#e0f2f1">
-            <div class="card-header card-header-primary">
-                Doughnut Chart By Status
+    <div class="page-wrapper">
+        <!-- Page Content -->
+        <div class="content container-fluid">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Chart Report</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{url("/home")}}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Chart</li>
+                        </ul>
+                    </div>
+                    <div class="col-auto float-right ml-auto">
+                        <form action="{{url("/search")}}" method="POST" class="navbar-form my-3 mx-3">
+                            {{csrf_field()}}
+                            <div class="row">
+                                <div class="form-group ml-3">
+                                    <input type="date" name="start_date" id="start_date" autocomplete="off" class="form-control" placeholder="Enter Start Date">
+                                </div>
+                                <div class="form-group ml-3 " >
+                                    <input type="date" name="end_date" id="end_date" autocomplete="off" class="form-control" placeholder="Enter End Date">
+                                </div>
+                               <div class="form-group ml-3">
+                                   <button type="submit" class="btn btn-success btn-block">
+                                      <i class="fa fa-search mr-2"></i>Search
+                                   </button>
+                               </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
             </div>
-        <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 my-5">
-            <canvas id="status"></canvas>
-        </div>
-        </div>
-        <div class="card col-md-4 offset-md-1 col-10 offset-1" style="background-color: #f3e5f5">
-            <div class="card-header card-header-primary">
-                Doughnut Chart By Priority Type
+            <!-- /Page Header -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+            <div class="row">
+                <div class="col-md-4 offset-md-1 col-10 offset-1 text-center">
+                    <div class="card-header-pills">
+                       <h4> Doughnut Chart By Status</h4>
+                    </div>
+                </div>
+                <div class="col-md-4 offset-md-1 col-10 offset-1 text-center">
+                    <div class="card-header-pills">
+                        <h4>Doughnut Chart By Priority Type</h4>
+                    </div>
+                </div>
             </div>
-        <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 my-5">
-            <canvas id="priority" ></canvas>
-        </div>
+            <div class="row">
+                <div class="col-md-4 offset-md-1 col-10 offset-1 text-center" style="background-color:#e0f2f1">
+                    <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 mt-3 mb-3">
+                        <canvas id="status"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4 offset-md-1 col-10 offset-1 text-center" style="background-color: #f3e5f5">
+                    <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 mt-3 mb-3">
+                        <canvas id="priority" ></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-@endsection
-@section("scriptcode")
     <script>
         $(function () {
             var ctx = document.getElementById("priority").getContext('2d');
@@ -133,7 +153,5 @@
                 }
             });
         });
-        $("#start_date").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
-        $("#end_date").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
     </script>
 @endsection

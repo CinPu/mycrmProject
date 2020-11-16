@@ -1,9 +1,26 @@
-@extends("layouts.app")
+@extends("layouts.mainlayout")
 @section("title","Assign And Unassign Ticket")
 @section("content")
-    <div class="container-fluid">
-        <div class="card">
-    <ul class="nav nav-tabs bg-secondary" id="myTab" role="tablist">
+    <div class="page-wrapper">
+        <!-- Page Content -->
+        <div class="content container-fluid">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Ticket Detail</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{url("/home")}}">Dashboard</a></li>
+                            <li class="breadcrumb-item active"><a href="{{url("guestUser")}}">Complainer</a></li>
+                            <li class="breadcrumb-item active">Ticket Sending History</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+            <div class="card">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item my-1">
             <a class="nav-link {{$unassign}}" id="home-tab" data-toggle="tab" href="#unassigned" role="tab" aria-controls="home" aria-selected="true">Unassigned Ticket</a>
         </li>
@@ -15,7 +32,7 @@
         </li>
 
     </ul>
-    <div class="tab-content" id="myTabContent">
+                <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade {{$unassign}}  col-12 col-md-12" id="unassigned" role="tabpanel" aria-labelledby="home-tab" style="overflow-x:auto;">
             <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Unassign Tickets</h3>
             <table class="table " id="unassign">
@@ -49,7 +66,7 @@
                 </div>
                 <thead>
                 {{--                        <input type="checkbox" name="select-all" id="select-all" /><span id="label_selectall" class="ml-2">All</span>--}}
-                <button class="btn btn-info ml-3 "  type="button"  data-toggle="modal" data-target="#exampleModal">
+                <button class="btn btn-info ml-3 float-right mr-4 "  type="button"  data-toggle="modal" data-target="#exampleModal">
                     <i class="fa fa-hand-o-right mr-2" aria-hidden="true"></i>Assign
                 </button>
                 <tr>
@@ -224,10 +241,9 @@
             </table>
         </div>
     </div>
+            </div>
+        </div>
     </div>
-    </div>
-@endsection
-@section("scriptcode")
     <script>
         $(document).ready(function () {
             $("#type").change(function () {
@@ -239,20 +255,6 @@
                 }
             });
         });
-    </script>
-    <script>
-        // $('#select-all').click(function(event) {
-        //     if(this.checked) {
-        //         // Iterate each checkbox
-        //         $(':checkbox').each(function() {
-        //             this.checked = true;
-        //         });
-        //     } else {
-        //         $(':checkbox').each(function() {
-        //             this.checked = false;
-        //         });
-        //     }
-        // });
         $(document).ready(function() {
             $(document).on('click', '#ajax', function () {
                 var ticket_id = new Array();
@@ -271,19 +273,22 @@
                     success:function(data){
                         console.log(data);
                         window.location.reload()
-                        md.showNotification("bottom", "center","Assigned Successful","info");
                     }
                 });
             });
         });
-
         $(document).ready(function() {
             $('#unassign').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    {
+                        extend: 'collection',
+                        text: '<i class="fa fa-download mr-2"></i>Export',
+                        buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                    }
                 ],
-
             } );
 
         } );
@@ -320,7 +325,14 @@
             $('#assign').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+
+                    {
+                        extend: 'collection',
+                        text: '<i class="fa fa-download mr-2"></i>Export',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ]
+                    }
                 ],
 
             } );
@@ -357,7 +369,14 @@
             $('#assign_to').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+
+                    {
+                        extend: 'collection',
+                        text: '<i class="fa fa-download mr-2"></i>Export',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ]
+                    }
                 ],
 
             } );

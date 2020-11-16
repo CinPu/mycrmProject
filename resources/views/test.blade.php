@@ -1,261 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
-        div {
-            width:600px;
-            height:500px;
-            background: white;
-            padding: 1em;
+    <title>Example</title>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcNrvPMoDFFCgVzzCP3Oeu1iIwBtJ72ZM"></script>
+    <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
+    <style type="text/css">
+        #map {
+            width: 100%;
+            height: 480px;
         }
     </style>
-    <script>
-        'use strict';
-
-        window.chartColors = {
-            red: 'rgb(255, 99, 132)',
-            orange: 'rgb(255, 159, 64)',
-            yellow: 'rgb(255, 205, 86)',
-            green: 'rgb(75, 192, 192)',
-            blue: 'rgb(54, 162, 235)',
-            purple: 'rgb(153, 102, 255)',
-            grey: 'rgb(201, 203, 207)'
-        };
-
-        (function(global) {
-            var MONTHS = [
-                'January',
-                'February',
-                'March',
-                'April',
-                'May',
-                'June',
-                'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December'
-            ];
-
-            var COLORS = [
-                '#4dc9f6',
-                '#f67019',
-                '#f53794',
-                '#537bc4',
-                '#acc236',
-                '#166a8f',
-                '#00a950',
-                '#58595b',
-                '#8549ba'
-            ];
-
-            var Samples = global.Samples || (global.Samples = {});
-            var Color = global.Color;
-
-            Samples.utils = {
-                // Adapted from http://indiegamr.com/generate-repeatable-random-numbers-in-js/
-                srand: function(seed) {
-                    this._seed = seed;
-                },
-
-                rand: function(min, max) {
-                    var seed = this._seed;
-                    min = min === undefined ? 0 : min;
-                    max = max === undefined ? 1 : max;
-                    this._seed = (seed * 9301 + 49297) % 233280;
-                    return min + (this._seed / 233280) * (max - min);
-                },
-
-                numbers: function(config) {
-                    var cfg = config || {};
-                    var min = cfg.min || 0;
-                    var max = cfg.max || 1;
-                    var from = cfg.from || [];
-                    var count = cfg.count || 8;
-                    var decimals = cfg.decimals || 8;
-                    var continuity = cfg.continuity || 1;
-                    var dfactor = Math.pow(10, decimals) || 0;
-                    var data = [];
-                    var i, value;
-
-                    for (i = 0; i < count; ++i) {
-                        value = (from[i] || 0) + this.rand(min, max);
-                        if (this.rand() <= continuity) {
-                            data.push(Math.round(dfactor * value) / dfactor);
-                        } else {
-                            data.push(null);
-                        }
-                    }
-
-                    return data;
-                },
-
-                labels: function(config) {
-                    var cfg = config || {};
-                    var min = cfg.min || 0;
-                    var max = cfg.max || 100;
-                    var count = cfg.count || 8;
-                    var step = (max - min) / count;
-                    var decimals = cfg.decimals || 8;
-                    var dfactor = Math.pow(10, decimals) || 0;
-                    var prefix = cfg.prefix || '';
-                    var values = [];
-                    var i;
-
-                    for (i = min; i < max; i += step) {
-                        values.push(prefix + Math.round(dfactor * i) / dfactor);
-                    }
-
-                    return values;
-                },
-
-                months: function(config) {
-                    var cfg = config || {};
-                    var count = cfg.count || 12;
-                    var section = cfg.section;
-                    var values = [];
-                    var i, value;
-
-                    for (i = 0; i < count; ++i) {
-                        value = MONTHS[Math.ceil(i) % 12];
-                        values.push(value.substring(0, section));
-                    }
-
-                    return values;
-                },
-
-                color: function(index) {
-                    return COLORS[index % COLORS.length];
-                },
-
-                transparentize: function(color, opacity) {
-                    var alpha = opacity === undefined ? 0.5 : 1 - opacity;
-                    return Color(color).alpha(alpha).rgbString();
-                }
-            };
-
-            // DEPRECATED
-            window.randomScalingFactor = function() {
-                return Math.round(Samples.utils.rand(-100, 100));
-            };
-
-            // INITIALIZATION
-
-            Samples.utils.srand(Date.now());
-
-            // Google Analytics
-            /* eslint-disable */
-            if (document.location.hostname.match(/^(www\.)?chartjs\.org$/)) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-                ga('create', 'UA-28909194-3', 'auto');
-                ga('send', 'pageview');
-            }
-            /* eslint-enable */
-
-        }(this));
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
 </head>
+
 <body>
-<div class="chart">
-<canvas id="myChart"></canvas>
-</div>
-<div class="chart">
-    <canvas id="priority"></canvas>
-</div>
+<div id="map"></div>
+<br>
+<button id="confirmPosition">Confirm Position</button>
+<br>
+<p>On idle position: <span id="onIdlePositionView"></span></p>
+<p>On click position: <span id="onClickPositionView"></span></p>
 <script>
-    var config = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [
-                   12,30,20,50,100,200
-                ],
-                backgroundColor: [
-                    window.chartColors.white,
-                    window.chartColors.red,
-                    window.chartColors.blue,
-                    window.chartColors.yellow,
-                    window.chartColors.green,
-                    window.chartColors.purple,
-                ],
-            }],
-            labels: [
-                'new',
-                'Open',
-                'Close',
-                'Pending',
-                'Progress',
-                'Complete'
-            ]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'All Ticket'
-            },
-        }
+    // Get element references
+    var confirmBtn = document.getElementById('confirmPosition');
+    var onClickPositionView = document.getElementById('onClickPositionView');
+    var onIdlePositionView = document.getElementById('onIdlePositionView');
+    var map = document.getElementById('map');
+
+    // Initialize LocationPicker plugin
+    var lp = new locationPicker(map, {
+        setCurrentPosition: true, // You can omit this, defaults to true
+        lat: 45.5017,
+        lng: -73.5673
+    }, {
+        zoom: 15 // You can set any google map options here, zoom defaults to 15
+    });
+
+    // Listen to button onclick event
+    confirmBtn.onclick = function () {
+        // Get current location and show it in HTML
+        var location = lp.getMarkerPosition();
+        onClickPositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
     };
 
-    window.onload = function() {
-        var ctx = document.getElementById('myChart').getContext('2d');
-        window.myDoughnut = new Chart(ctx, config);
-    };
-    //priority
-    var priority = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [
-                    12,30,20,50,100,200
-                ],
-                backgroundColor: [
-                    window.chartColors.white,
-                    window.chartColors.red,
-                    window.chartColors.blue,
-                    window.chartColors.yellow,
-                    window.chartColors.green,
-                    window.chartColors.purple,
-                ],
-            }],
-            labels: [
-                'new',
-                'Open',
-                'Close',
-                'Pending',
-                'Progress',
-                'Complete'
-            ]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'All Ticket'
-            },
-        }
-    };
-
-    window.onload = function() {
-        var joe = document.getElementById('priority').getContext('2d');
-        window.chart = new Chart(joe, priority);
-    };
+    // Listen to map idle event, listening to idle event more accurate than listening to ondrag event
+    google.maps.event.addListener(lp.map, 'idle', function (event) {
+        // Get current location and show it in HTML
+        var location = lp.getMarkerPosition();
+        onIdlePositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
+    });
 </script>
+
 </body>
 </html>

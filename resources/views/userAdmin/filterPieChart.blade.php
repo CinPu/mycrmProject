@@ -1,21 +1,52 @@
-@extends("layouts.app")
+@extends("layouts.mainlayout")
 @section("title","Doughnut Chart Report")
-@section("csscode")
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
-@endsection
 @section("content")
-    <div class="row">
-        <div style="width:240px;height:240px" class="offset-md-2">
-            <canvas id="status"></canvas>
-        </div>
-        <div style="width:240px;height:240px" class="offset-md-2">
-            <canvas id="priority" ></canvas>
+    <div class="page-wrapper">
+        <!-- Page Content -->
+        <div class="content container-fluid">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Pie Chart Filter Result</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{url("/home")}}">Dashboard</a></li>
+                            <li class="breadcrumb-item active"><a href="{{url("/piechart")}}">Pie Chart</a></li>
+                            <li class="breadcrumb-item active">Filter Result</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+            <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+            <div class="row">
+                <div class="col-md-4 offset-md-1 col-10 offset-1 text-center">
+                    <div class="card-header-pills">
+                        <h4> Doughnut Chart By Status</h4>
+                    </div>
+                </div>
+                <div class="col-md-4 offset-md-1 col-10 offset-1 text-center">
+                    <div class="card-header-pills">
+                        <h4>Doughnut Chart By Priority Type</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 offset-md-1 col-10 offset-1 text-center" style="background-color:#e0f2f1">
+                    <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 mt-3 mb-3">
+                        <canvas id="status"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4 offset-md-1 col-10 offset-1 text-center" style="background-color: #f3e5f5">
+                    <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 mt-3 mb-3">
+                        <canvas id="priority" ></canvas>
+                    </div>
+                </div>
+            </div>
+            <h4 align="center" class="mt-3">Between <strong>{{$startDate->toformattedDateString()}}</strong> and <strong>{{$endDate->toformattedDateString()}}</strong></h4>
         </div>
     </div>
-    <h4 align="center">Between <strong>{{$startDate->toformattedDateString()}}</strong> and <strong>{{$endDate->toformattedDateString()}}</strong></h4>
-@endsection
-@section("scriptcode")
     <script>
         $(function () {
             var ctx = document.getElementById("priority").getContext('2d');

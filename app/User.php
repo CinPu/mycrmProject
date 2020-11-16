@@ -63,4 +63,7 @@ class User extends Authenticatable
     public function dept_head(){
         return $this->hasMany(department::class);
     }
+    public function follower(){
+        return $this->hasMany(ticketFollower::class);
+    }
 }

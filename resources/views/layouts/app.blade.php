@@ -58,33 +58,51 @@
             font-family:Unicode;
         }
         .buttons-copy{
-            margin-left: 20px;
-            border-radius: 5px;
-            color:#fff;background-color:#007bff;border-color:#007bff
+            background-color: white;
+
+            color: black;
+            border-radius: 6px;
+            padding: 8px 20px;
+            border: 2px solid #4CAF50; /* Green */
+            transition-duration: 0.4s;
+            cursor: pointer;
         }
         .buttons-csv{
-            border-radius: 5px;
-            color:#fff;
-            background-color:#28a745;
-            border-color:#28a745;
+            background-color: white;
+            color: black;
+            border-radius: 6px;
+            padding: 8px 20px;
+            border: 2px solid #555555;
+            transition-duration: 0.4s;
+            cursor: pointer;
         }
         .buttons-pdf{
-            border-radius: 5px;
-            color:#fff;
-            background-color:#dc3545;
-            border-color:#dc3545;
+            margin-top: 3px;
+            background-color: white;
+            border-radius: 6px;
+            color: black;
+            padding: 8px 20px;
+            border: 2px solid #e70c0c;
+            transition-duration: 0.4s;
+            cursor: pointer;
         }
         .buttons-excel{
-            border-radius: 5px;
-            color:#fff;
-            background-color:#38c172;
-            border-color:#38c172;
+            background-color: white;
+            border-radius: 6px;
+            color: black;
+            padding: 8px 20px;
+            border-color: #9c27b0;
+            transition-duration: 0.4s;
+            cursor: pointer;
         }
         .buttons-print{
-            border-radius: 5px;
-            color:#000;
-            /*background-color:#ffffff;*/
-            border-color:#ffffff;
+            background-color: white;
+            border-radius: 6px;
+            color: black;
+            padding: 8px 20px;
+            border: 2px solid #d0d5d0;
+            transition-duration: 0.4s;
+            cursor: pointer;
         }
 
     </style>
@@ -93,20 +111,18 @@
 <body >
 <div class="wrapper ">
     @if(\Illuminate\Support\Facades\Auth::check())
-        @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("SuperAdmin")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Admin")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent"))
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="{{url(asset("/assets/img/sidebar-1.jpg"))}}">
-        <!--
-          Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-          Tip 2: you can also add an image using data-image tag
-      -->
-        <div class="logo">
+        @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("SuperAdmin")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Admin")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Employee"))
+            <div class="sidebar" data-color="purple" data-background-color="white" data-image="{{url(asset("/assets/img/sidebar-1.jpg"))}}">
+            <div class="logo">
                 @php
                     if (Auth::user()->hasAnyRole("Admin"))
                     $company=\App\company::where("admin_id",Auth::user()->id)->first();
                     elseif (Auth::user()->hasAnyRole("Agent")){
                     $admin=\App\agent::where("agent_id",\Illuminate\Support\Facades\Auth::user()->id)->first();
                     $company=\App\company::where("admin_id",$admin->admin_id)->first();
+                    }elseif(Auth::user()->hasAnyRole("Employee")){
+                       $employee_admin=\App\employee::where("emp_id",\Illuminate\Support\Facades\Auth::user()->id)->first();
+                        $company=\App\company::where("admin_id",$employee_admin->admin_id)->first();
                     }
                     $profile=\App\userprofile::where("user_id",\Illuminate\Support\Facades\Auth::user()->id)->first();
                 @endphp
@@ -167,6 +183,11 @@
                     </li>
                     <ul class="sub-menu collapse" id="ticket">
                         <li class="nav-item " style="list-style: none">
+                            <a class="nav-link text-dark" href="{{url("/ticket/dashboard")}}">
+                                <p>Ticket Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="nav-item " style="list-style: none">
                             <a class="nav-link text-dark" href="{{url("/case_type")}}">
                                 <p>Case Type</p>
                             </a>
@@ -193,19 +214,7 @@
                             <p>Role & Permission</p>
                         </a>
                     </li>
-
-
-
-{{--                <li class="nav-item ">--}}
-{{--                    <a class="nav-link text-dark" href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}">--}}
-{{--                        <i class="fa fa-paper-plane text-info"></i>--}}
-{{--                        <p>Ticket Create</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-
-
-
-                @else
+                @elseif(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent"))
                     <li class="nav-item active  ">
                         <a class="nav-link" href="{{url("/home")}}">
                            <i class="fa fa-home"></i>
@@ -216,6 +225,32 @@
                         <a class="nav-link" href="{{url("/ticket/create/".\Illuminate\Support\Facades\Auth::user()->uuid)}}">
                             <i class="fa fa-paper-plane text-info"></i>
                             <p>Create Ticket</p>
+                        </a>
+                    </li>
+                @elseif(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Employee"))
+                    <li class="nav-item active  ">
+                        <a class="nav-link" href="{{url("/home")}}">
+                            <i class="fa fa-home"></i>
+                            <p>Home</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url("/employee/tag/tickets")}}">
+                            <i class="fa fa-ticket"></i>
+                            <p>Tags Ticket</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{{url("ticket/create/078f71d1-261a-4aee-b0ce-01ace638e83c")}}">
+                            <i class="fa fa-paper-plane text-info"></i>
+                            <p>Create Ticket</p>
+                        </a>
+                    </li>
+                @else
+                    <li class="nav-item active  ">
+                        <a class="nav-link" href="{{url("/home")}}">
+                            <i class="fa fa-home"></i>
+                            <p>Home</p>
                         </a>
                     </li>
                     @endif
@@ -382,7 +417,7 @@
 </div>
 <!--   Core JS Files   -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.map"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"> </script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"> </script>--}}
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <script src="{{url(asset("/assets/js/core/popper.min.js"))}}"></script>
 <script src="{{url(asset("/assets/js/core/bootstrap-material-design.min.js"))}}"></script>

@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\agent;
+use App\company;
 use App\department;
 use App\department_head;
 use App\deptart_head;
 use App\employee;
+use App\position;
+use App\User;
+use App\userprofile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class departmentController extends Controller
 {
@@ -21,7 +26,29 @@ class departmentController extends Controller
     {
         $agents=agent::with("user")->where("admin_id",Auth::user()->id)->get();
         $depts=department::with("department_head")->where("admin_uuid",Auth::user()->uuid)->get();
-        return view("userAdmin.department",compact("depts","agents"));
+        $lastedept=   department::with("department_head")->orderBy('created_at', 'desc')->where("admin_uuid",Auth::user()->uuid)->first();
+        $company=company::where("admin_id",Auth::user()->id)->first();
+//        dd($company);
+        if (isset($lastedept)) {
+            // Sum 1 + last id
+            $lastedept->dept_id ++;
+            $dept_id = $lastedept->dept_id;
+        } else {
+            $dept_id= $company->company_short_form."-Dept"."-00001";
+        }
+        $positions=position::all();
+
+        $lastemployee        =   employee::orderBy('created_at', 'desc')->where("admin_id",Auth::user()->id)->first();
+        $company=company::where("admin_id",Auth::user()->id)->first();
+//        dd($company);
+        if (isset($lastemployee)) {
+            // Sum 1 + last id
+            $lastemployee->employee_id ++;
+            $emp_id = $lastemployee->employee_id;
+        } else {
+            $emp_id= $company->company_short_form."-00001";
+        }
+        return view("userAdmin.department",compact("depts","agents","dept_id","emp_id","positions","company"));
     }
     public function set_dept_head(Request $request,$id){
         if($request->dept_head!=0) {
@@ -52,11 +79,41 @@ class departmentController extends Controller
      */
     public function store(Request $request)
     {
-        $dept=new department();
-        $dept->dept_name=$request->dept_name;
-        $dept->admin_uuid=Auth::user()->uuid;
-        $dept->dept_head=Auth::user()->id;
-        $dept->save();
+//        dd($request->all());
+        $users=User::where("email",$request->email)->first();
+        if($users==null) {
+//        dd($request->all());
+            $user = new User();
+            $user->name = $request->dept_headName;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->uuid = $request->uuid;
+            $user->save();
+            $lastuser=User::orderBy('created_at', 'desc')->first();
+            $dept=new department();
+            $dept->dept_name=$request->dept_name;
+            $dept->dept_id=$request->dept_id;
+            $dept->admin_uuid=Auth::user()->uuid;
+            $dept->dept_head=$user->id;
+            $dept->save();
+
+            $employee = new employee();
+            $employee->employee_id = $request->emp_id;
+            $employee->report_to = Auth::user()->id;
+            $employee->dept_id =$dept->id;
+            $employee->emp_id = $user->id;
+            $employee->emp_post = $request->position;
+            $employee->admin_id = Auth::user()->id;
+            $employee->company_id = $request->company;
+            $employee->join_date = $request->join_date;
+            $employee->phone = $request->phone;
+            $employee->dept_head=Auth::user()->id;
+            $employee->save();
+            $user->assignRole("Employee");
+        }else{
+            return redirect()->back()->with("delete","Your Email is already Exists");
+        }
+
         return redirect()->back()->with("message","Successful");
     }
     public function dept_change(Request $request,$id)
@@ -79,10 +136,11 @@ class departmentController extends Controller
      */
     public function showMember($id)
     {
-        $members=agent::with("user")->where("dept_id",$id)->get();
+        $members=employee::with("employee_user")->where("dept_id",$id)->get();
         $dept=department::where("id",$id)->first();
+        $user_profile=userprofile::all();
 //        dd($members);
-        return view("userAdmin.deptMember",compact("members","dept"));
+        return view("userAdmin.deptMember",compact("members","dept","user_profile"));
     }
 
     /**

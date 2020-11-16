@@ -1,6 +1,24 @@
-@extends("layouts.app")
+@extends("layouts.mainlayout")
 @section("title","Filter Result")
 @section("content")
+    <div class="page-wrapper">
+        <!-- Page Content -->
+        <div class="content container-fluid">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Ticket Filter Result</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{url("/home")}}">Dashboard</a></li>
+                            <li class="breadcrumb-item active"><a href="{{url("ticket/dashboard")}}">Ticket</a></li>
+                            <li class="breadcrumb-item active">Filter Result</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
     <table class="table" id="pending">
         <thead>
         <div class=" col-md-12">
@@ -50,7 +68,7 @@
                         </a>
                     </td>
                     <td>
-                        <img src="{{url(asset("/profile/".$staff_name->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+{{--                        <img src="{{url(asset("/profile/".$staff_name->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">--}}
                         {{$staff_name->agent->name}}
                     </td>
                     <td>{{$ticket->status_type->status}}</td>
@@ -66,16 +84,22 @@
         @endforeach
         </tbody>
     </table>
-@endsection
-@section("scriptcode")
+        </div>
+    </div>
     <script>
         //pending ticket
         $(document).ready(function() {
             $('#pending').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ]
+                    {
+                        extend: 'collection',
+                        text: '<i class="fa fa-download mr-2"></i>Export',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ]
+                    }
+                ],
             } );
         } );
         $('#pending_casetype').on('change', function() {

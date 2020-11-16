@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ticket extends Model
 {
+    protected $table = 'tickets';
+    protected $fillable = [
+        'id','user_id','ticket_id','userinfo_id','phone','message','title','status','case_type','product','priority','photo','source','isassign','lat','lng'
+    ];
     public function user(){
         return $this->belongsTo(User::class,'user_id','id');
     }
@@ -36,5 +40,8 @@ class ticket extends Model
     }
     public function solveTime(){
         return $this->hasMany(solvedTime::class);
+    }
+    public function follower(){
+        return $this->hasMany(ticketFollower::class);
     }
 }

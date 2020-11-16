@@ -29,7 +29,8 @@ Auth::routes();
 Route::group(['middleware'=>'auth'],function () {
     Route::get("/logout", "Auth\LoginController@logout");
     Route::get('/home', 'HomeController@index');
-    Route::get("/company/create","companyController@index");
+    Route::get("/ticket/dashboard","ticketController@dashboard");
+    Route::get("/company/profile","companyController@index");
     Route::post("/company/profile","companyController@store");
     Route::post("/role/assign/{uid}", "RolemangeControllerController@insertRole");
     Route::post("/role/remove/{uid}", "RolemangeControllerController@removeRole");
@@ -72,13 +73,23 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("/employee/create","employeeController@store");
     Route::post("/dept/head/{id}","departmentController@set_dept_head");
     Route::get("/role","RolemangeControllerController@index");
+    Route::post("/add/follower/{id}","ticketController@follower");
+    Route::get("/follower/remove/{id}","ticketController@removefollower");
+    Route::get("/emp/profile/{emp_id}","employeeController@profile");
+    Route::get("/emp/edit/{emp_id}","employeeController@edit");
+    Route::post("/emp/edit/{emp_id}","employeeController@update");
+    Route::get("/emp/delete/{emp_id}","employeeController@destroy");
+    Route::get("/employee/tag/tickets","employeeController@tagticket");
+    Route::post("/ticket/import","ticketController@ticktImport");
+    Route::post("/employee/import","employeeController@emp_Import");
+    Route::get("/agent/ticket","admin_agentController@agentTicket");
 
 
 });
 Route::post("/user_info/create/{id}","userinfoController@store");
 Route::get("/ticket/create/{id}","ticketController@create");
 Route::post("/ticket/create/{id}","ticketController@store");
-//Route::get("/test",function (){
-//    return view("userAdmin.chartReport");
-//});
+Route::get("/test",function (){
+    return view("test");
+});
 Route::get("/hello","userinfoController@index");

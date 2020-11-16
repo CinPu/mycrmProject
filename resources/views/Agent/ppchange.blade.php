@@ -1,6 +1,24 @@
-@extends("layouts.app")
+@extends("layouts.mainlayout")
 @section("title","Change Profile")
 @section("content")
+    <div class="page-wrapper">
+        <!-- Page Content -->
+        <div class="content container-fluid">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Ticket Detail</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{url("/home")}}">Dashboard</a></li>
+                            <li class="breadcrumb-item active"><a href="{{url("ticket/dashboard")}}">Ticket</a></li>
+                            <li class="breadcrumb-item active">Detail</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
     <div class="card col-md-6 offset-md-3">
     <form action="" method="POST" enctype="multipart/form-data" class="my-5">
         {{csrf_field()}}
@@ -15,8 +33,8 @@
         </div>
     </form>
     </div>
-@endsection
-@section("scriptcode")
+        </div>
+    </div>
         <script>
         var loadFile = function(event) {
             var reader = new FileReader();

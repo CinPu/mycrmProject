@@ -272,4 +272,28 @@ class admin_agentController extends Controller
         $agent->delete();
         return redirect()->back()->with("delete","Delete Successful!");
     }
+    public function agentTicket(){
+        $tickets=ticket::with("priority_type","cases","status_type","sources_type")->where("user_id",Auth::user()->uuid)->get();
+//            dd($tickets);
+        $noOfmyticket=count($tickets);
+
+        $assign=assign_ticket::with("ticket")->where("agent_id",Auth::user()->id)->get();
+        $assignticket=[];
+        foreach ($assign as $sign){
+            $ticket=ticket::with("priority_type","cases","status_type","sources_type")->where("id",$sign->ticket_id)->first();
+            array_push($assignticket,$ticket);
+        }
+        $noOfassign=count($assignticket);
+        $userOfdepts=agent::with("dept")->where("agent_id",Auth::user()->id)->first();
+        $admin=User::where("id",$userOfdepts->admin_id)->first();
+        $allcases = case_type::where("admin_uuid",$admin->uuid)->get();
+        $assingwithDepts=assignwithdept::with("ticket")->where("dept_id",$userOfdepts->dept->id)->get();
+
+//            dd($assingwithDepts);
+        $noOfassign_withdept=count($assingwithDepts);
+        $depts=department::where("admin_uuid",$admin->uuid)->get();
+        $admin_agents=agent::with("user")->where("admin_id",$admin->id)->get();
+        return view("Agent.agentTicket", compact("noOfassign","noOfassign_withdept","assingwithDepts","admin_agents","depts","noOfmyticket","tickets", "allcases","assignticket"));
+
+    }
 }

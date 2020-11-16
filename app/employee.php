@@ -6,11 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class employee extends Model
 {
+    protected $table = 'employees';
+    protected $fillable = [
+        'id',
+        'employee_id',
+        'dob',
+        'join_date',
+        'address',
+        'report_to',
+        'dept_id',
+        'emp_id',
+        'phone',
+        'dept_head',
+        'company_id',
+        'emp_post',
+        'admin_id',
+    ];
     public function employee_user(){
         return $this->belongsTo(User::class,"emp_id","id");
     }
     public function report_to_user(){
         return $this->belongsTo(User::class,"report_to","id");
+    }
+    public function admin(){
+        return $this->belongsTo(User::class,"admin_id","id");
     }
     public function department(){
         return $this->belongsTo(department::class,"dept_id","id");
@@ -20,5 +39,8 @@ class employee extends Model
     }
     public function position(){
         return $this->belongsTo(position::class,"emp_post","id");
+    }
+    public function dept(){
+        return $this->belongsTo(department::class,"dept_id","id");
     }
 }

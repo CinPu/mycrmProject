@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\agent;
+use App\employee;
 use App\rolemangeController;
 use App\User;
 use Illuminate\Http\Request;
@@ -14,9 +15,9 @@ class RolemangeControllerController extends Controller
     public function index(){
         $employees=[];
         $roles=Role::all();
-        $agents=agent::with("user")->where("admin_id",Auth::user()->id)->get();
+        $agents=employee::with("employee_user")->where("admin_id",Auth::user()->id)->get();
         foreach ($agents as $agent){
-            array_push($employees,$agent->user);
+            array_push($employees,$agent->employee_user);
         }
         return view("userAdmin.roleManagement",compact("employees","roles"));
     }

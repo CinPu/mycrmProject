@@ -26,6 +26,8 @@ class CreateEmployeesTable extends Migration
             $table->bigInteger("emp_id")->unsigned();
             $table->foreign("emp_id")->references("id")->on("users")->onDelete("cascade");
             $table->double("phone");
+            $table->bigInteger("dept_head")->unsigned();
+            $table->foreign("dept_head")->references("id")->on("users")->onDelete("cascade");
             $table->bigInteger("company_id")->unsigned();
             $table->foreign("company_id")->references("id")->on("companies")->onDelete("cascade");
             $table->bigInteger("emp_post")->unsigned();

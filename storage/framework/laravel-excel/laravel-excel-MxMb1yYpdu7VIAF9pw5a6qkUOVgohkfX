@@ -1,0 +1,2 @@
+id,user_id,ticket_id,userinfo_id,phone,message,title,status,case_type,product,priority,photo,source,isassign,lat,lng,created_at,updated_at
+3,078f71d1-261a-4aee-b0ce-01ace638e83c,"Company One Co.,Ltd - L5CAUA0VY1BK",1,978483748,<p>safdafasdfsa</p>,New Ticket,1,1,New Product,1,"[""20200721_153125.jpg""]",1,0,16.7968768,96.1544192,2020-11-12 18:00:08,2020-11-12 18:00:08

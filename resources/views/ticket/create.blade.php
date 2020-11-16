@@ -1,6 +1,6 @@
-@extends("layouts.app")
+@extends("layouts.mainlayout")
 @section("title","Ticket Create")
-@section("csscode")
+@section("content")
     <style>
         input[type="file"] {
             display: block;
@@ -32,13 +32,24 @@
             visibility: hidden;
         }
     </style>
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5Jrp9PtHe0WapppUzxbIpMDWMAcV3qE4"></script>
+    <script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5Jrp9PtHe0WapppUzxbIpMDWMAcV3qE4"></script>
     <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
-@endsection
-@section("content")
+    <div class="page-wrapper">
     <div class="container-fluid">
-    <h3>Create New Ticket</h3>
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Create New Ticket</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{url("/home")}}">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="{{url("ticket/dashboard")}}">Ticket</a></li>
+                        <li class="breadcrumb-item active">Create</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
     <form id="ticket_create" method="post" action="{{url("/ticket/create/$id")}}" enctype="multipart/form-data">
        {{csrf_field()}}
         <div class="row">
@@ -130,7 +141,48 @@
             </div>
         </div>
     </form>
+            <script type="text/javascript"
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcNrvPMoDFFCgVzzCP3Oeu1iIwBtJ72ZM"></script>
+            <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
+            <style type="text/css">
+                #map {
+                    width: 100%;
+                    height: 480px;
+                }
+            </style>
+
     </div>
+    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+        <script>
+            // Get element references
+            var confirmBtn = document.getElementById('confirmPosition');
+            var onClickPositionView = document.getElementById('onClickPositionView');
+            var onIdlePositionView = document.getElementById('onIdlePositionView');
+            var map = document.getElementById('map');
+
+            // Initialize LocationPicker plugin
+            var lp = new locationPicker(map, {
+                setCurrentPosition: true, // You can omit this, defaults to true
+                lat: 45.5017,
+                lng: -73.5673
+            }, {
+                zoom: 15 // You can set any google map options here, zoom defaults to 15
+            });
+
+            // Listen to button onclick event
+            confirmBtn.onclick = function () {
+                // Get current location and show it in HTML
+                var location = lp.getMarkerPosition();
+                onClickPositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
+            };
+
+            // Listen to map idle event, listening to idle event more accurate than listening to ondrag event
+            google.maps.event.addListener(lp.map, 'idle', function (event) {
+                // Get current location and show it in HTML
+                var location = lp.getMarkerPosition();
+                onIdlePositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
+            });
+        </script>
     <script>
         $(document).ready(function() {
             if (window.File && window.FileList && window.FileReader) {
@@ -159,13 +211,6 @@
                 alert("Your browser doesn't support to File API")
             }
         });
-
-
-    </script>
-@endsection
-@section("scriptcode")
-    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
-    <script>
         CKEDITOR.replace( 'summary-ckeditor' );
         // Get element references
         var map = document.getElementById('map');
@@ -184,4 +229,5 @@
            document.getElementById("lng").value=location.lng;
         });
     </script>
+
 @endsection

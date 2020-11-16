@@ -1,7 +1,49 @@
-@extends("layouts.app")
+@extends("layouts.mainlayout")
 @section("title","Cases Type")
 @section("content")
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#case_type" data-whatever="@getbootstrap"><i class="fa fa-plus mr-3"></i>New Case</button>
+    <div class="page-wrapper">
+        <!-- Page Content -->
+        <div class="content container-fluid">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Complain Type</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{url("/home")}}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Complain Type</li>
+                        </ul>
+                    </div>
+                    <div class="col-auto float-right ml-auto">
+                        <a href="#" class="btn add-btn"  data-toggle="modal" data-target="#case_type" data-whatever="@getbootstrap"><i class="fa fa-plus"></i> Add Complain Type</a>
+                        <button type="button" class="btn btn-outline-secondary mr-2" data-toggle="modal" data-target="#importEmployee">
+                            <i class="fa fa-upload mr-2"></i>Import
+                        </button>
+                        <div class="modal fade" id="importEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Import Employee</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{url("/ticket/import")}}" method="POST" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <input type="file" name="file" >
+                                            <br>
+                                            <button class="btn btn-outline-success float-right"><i class="fa fa-upload mr-2"></i>Import Ticket</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
 
     <div class="modal fade" id="case_type" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered ">
@@ -28,8 +70,11 @@
         </div>
     </div>
     <div class="card">
-        <h3 class="ml-3"><i class="fa fa-user mr-2"></i>Cases</h3>
-        <table class="table col-12" id="case">
+        <div class="card-header card-header-danger">
+        <h4 class="text-dark"><i class="fa fa-list-alt mr-2"></i>Cases</h4>
+        </div>
+        <div class="col-12" style="overflow-x: auto">
+        <table class="table " id="case">
             <thead>
             <tr>
                 <th scope="col">Case Name</th>
@@ -74,5 +119,13 @@
             @endforeach
             </tbody>
         </table>
+        </div>
     </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function (){
+           $("#case").DataTable();
+        });
+    </script>
 @endsection

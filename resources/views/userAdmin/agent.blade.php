@@ -1,7 +1,49 @@
-@extends("layouts.app")
+@extends("layouts.mainlayout")
 @section("title","Agent")
 @section("content")
-        <a href="{{url("/agent/create")}}" class="btn btn-success" data-toggle="modal" data-target="#agentcreate" data-whatever="@getbootstrap"><i class="fa fa-plus mr-4"></i>Agent create</a>
+    <div class="page-wrapper">
+        <!-- Page Content -->
+        <div class="content container-fluid">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Agent</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{url("/home")}}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Agent</li>
+                        </ul>
+                    </div>
+                    <div class="col-auto float-right ml-auto">
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#agentcreate"><i class="fa fa-plus"></i> Add Agent</a>
+                        <button type="button" class="btn btn-outline-secondary mr-2" data-toggle="modal" data-target="#importEmployee">
+                            <i class="fa fa-upload mr-2"></i>Import
+                        </button>
+                        <div class="modal fade" id="importEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Import Employee</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{url("/ticket/import")}}" method="POST" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <input type="file" name="file" >
+                                            <br>
+                                            <button class="btn btn-outline-success float-right"><i class="fa fa-upload mr-2"></i>Import Ticket</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
         <div class="modal fade" id="agentcreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered ">
                 <div class="modal-content ">
@@ -38,9 +80,8 @@
             </div>
         </div>
         <div class="card">
-            <h3 class="ml-3"><i class="fa fa-user mr-2"></i>Agent</h3>
             <div class="col-md-12">
-        <table class="table" id="agent">
+            <table class="table" id="agent">
             <thead>
             <tr>
                 <th scope="col">Agent</th>
@@ -54,27 +95,36 @@
                     <td> <i class="fa fa-user mr-3"></i><span class="col-6"> {{$agent->user->name}}</span></td>
                     <td>
                         <a href="{{url("/department")}}">{{$agent->dept->dept_name}}</a>
-                        <a href="#" data-toggle="modal" data-target="#{{$agent->user->id}}">
-                           <i class="fa fa-edit ml-3">Change</i>
-                        </a>
+
                     </td>
                     <td>
-                        <a href="{{url("/delete/agent/$agent->id")}}"class="mr-2"><i class="fa fa-trash" style="font-size: 18px;"></i></a>
-                        <a href="{{url("/agent/detail/$agent->id")}}" class="mr-2"><i class="fa fa-eye" style="font-size: 18px;"></i></a>
+                        <div class="dropdown ">
+                            <a href="#" class=" dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-th-list"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#edit{{$agent->user->id}}">
+                                    <i class="fa fa-edit mr-2"></i>Edit
+                                </a>
+                                <a href="{{url("/delete/agent/$agent->id")}}"class="dropdown-item "><i class="fa fa-trash mr-2" ></i>Delete</a>
+                                <a href="{{url("/agent/detail/$agent->id")}}" class="dropdown-item mr-2"><i class="fa fa-eye mr-2" ></i>Agent Profile</a>
+                            </div>
+                        </div>
+
                     </td>
                 </tr>
-                <div class="modal fade" id="{{$agent->user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                <div class="modal fade" id="edit{{$agent->user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                     <div class="modal-dialog" role="document" >
-                        <div class="modal-content">
-                            <div class="modal-body">
+                        <div class="modal-content col-md-8 offset-md-2">
+                            <div class="model-header mt-2">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <i class="fa fa-close"></i>
+                                    <span aria-hidden="true">&times;</span>
                                 </button>
+                            </div>
+                            <div class="modal-body">
                                 <h3 >Change Department</h3>
                                 <form id="change_dept" action="{{url("/department/change/$agent->agent_id")}}" method="post">
                                     {{csrf_field()}}
                                     <div class="form-group">
-                                    <select class="custom-select col-8" name="dept_change">
+                                    <select class="custom-select " name="dept_change">
                                         @foreach($depts as $alldept)
                                             <option value="{{$alldept->id}}">{{$alldept->dept_name}}</option>
                                         @endforeach
@@ -93,8 +143,8 @@
         </table>
             </div>
         </div>
-@endsection
-@section("scriptcode")
+        </div>
+    </div>
     <script>
         $(document).ready(function() {
             $('#agent').DataTable();
