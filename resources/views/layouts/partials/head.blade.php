@@ -51,6 +51,9 @@
             .dataTables_filter{
                 display: none;
             }
+            div.dt-buttons{
+                width: 100px;
+            }
             div.dt-button-collection {
                 position: absolute;
                 width: 150px;
@@ -58,7 +61,7 @@
                 margin-top: 8px;
                 /*padding: 8px 8px 4px 8px;*/
                 /*border:solid darkgrey;*/
-                background-color: white;
+                background-color:#dae0e5;
                 z-index: 2002;
                 border-radius: 5px;
                 box-shadow: 5px 3px 5px rgba(0,0,0,0.3);

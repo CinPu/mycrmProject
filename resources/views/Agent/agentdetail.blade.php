@@ -24,14 +24,14 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-12 col-lg-12 col-xl-4">
             <div class="card ">
 
                     {{--                    <a href="javascript:;">--}}
                     @if($profile_picture==null)
-                        <img class="offset-md-3 mt-4" src="{{url("assets/img/agentpp.png")}}" width="100px;" height="100px;">
+                        <img class="offset-3 offset-lg-3 offset-sm-5 mt-3" src="{{url("assets/img/agentpp.png")}}" width="100px;" height="100px;">
                     @else
-                        <img class="offset-md-3 rounded-circle mt-4" src="{{url(asset("profile/$profile_picture->profile"))}} " style="width: 150px" height="150px;" />
+                        <img class="offset-3 offset-lg-3 offset-sm-5  rounded-circle mt-4" src="{{url(asset("profile/$profile_picture->profile"))}} " style="width: 150px" height="150px;" />
                         {{--                            <img class=" rounded-circle" src="{{url(asset("profile/$profile_picture->profile"))}}" />--}}
                     @endif
                     {{--                    </a>--}}
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-12 col-lg-12 col-xl-8">
             <div class="card">
                 <div class="card-header card-header-primary">
                     <h4 class="card-title">Overview</h4>
@@ -55,7 +55,7 @@
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-summary" role="presentation" aria-labelledby="nav-home-tab">
                             <div class="row">
-                                <div class="card col-md-5 my-3 ml-4">
+                                <div class="card col-md-5 col-sm-10 my-3 ml-4 mr-4">
                                     <div class="mt-3">
                                         <label><i class="fa fa-ticket mr-3"></i>New Ticket</label>@if($new>0)<span class="badge bg-danger float-right">{{$new}}</span>@else <span class="badge bg-primary float-right">{{$new}}</span>@endif
                                     </div>
@@ -75,7 +75,7 @@
                                         <label><i class="fa fa-ticket mr-3 mb-3"></i>Closed Ticket</label><span class="badge bg-primary float-right">{{$closeticket}}</span>
                                     </div>
                                 </div>
-                                <div class="card col-md-5 my-3 offset-1">
+                                <div class="card col-md-5 col-sm-10 my-3 ml-4 col-sm-12 mr-4 ">
                                     @php
                                         $assign=count($assigntickets);
                                         $created=count($agenttickets);
@@ -126,7 +126,8 @@
                             <label class="col-md-3 ">Search By</label>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-md-3 offset-md-1 mt-2">
+                            <span class="mt-3">Case Type</span>
+                            <div class="col-md-3 col-9 offset-md-0 mt-2">
                                 <select class="form-control"  id="created_casetype">
                                     <option value=""> All</option>
                                     @foreach($allcases as $case)
@@ -135,13 +136,13 @@
                                 </select>
                             </div>
                             <div class="offset-md-0 mt-3">
-                                <label class="mr-2">Start Date</label>
+                                <label class="mr-3"> Start Date </label>
                             </div>
                             <div class="mt-2">
                                 <input type="text" class="form-control" id="created_min" name="created_min" >
                             </div>
                             <div class=" offset-md-1 offset-0 mt-3">
-                                <span class=" mr-3 ">End Date</span>
+                                <span class=" mr-4"> End Date </span>
                             </div>
                             <div class="text-white mt-2">
                                 <input type="text" class="form-control" id="created_max" name="created_max" >
@@ -189,7 +190,8 @@
                             <label class="col-md-3 ">Search By</label>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-md-3 offset-md-1">
+                            <span class="mt-3">Case Type</span>
+                            <div class="col-md-3 col-9 offset-md-0 mt-2">
                                 <select class="custom-select"  id="byname_casetype">
                                     <option value=""> All</option>
                                     @foreach($allcases as $case)
@@ -197,16 +199,16 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="offset-md-0">
+                            <div class="offset-md-0 mt-3">
                                 <span class=" mr-3 ">Start Date</span>
                             </div>
-                            <div>
+                            <div class="mt-3">
                                 <input type="text" class="form-control" id="byname_min" name="byname_min" >
                             </div>
-                            <div class=" offset-md-1">
-                                <span class=" mr-3 ">End Date</span>
+                            <div class=" offset-md-1 mt-3">
+                                <span class=" mr-4 ">End Date</span>
                             </div>
-                            <div class="text-white">
+                            <div class="text-white mt-2">
                                 <input type="text" class="form-control" id="byname_max" name="byname_max" >
                             </div>
 
@@ -244,15 +246,13 @@
                 </table>
             </div>
             <div class="tab-pane fade col-12 col-md-12" id="contact" role="tabpanel" aria-labelledby="contact-tab" style="overflow-x:auto;">
-                <h3 class=" text-dark"><i class="mr-3 fa fa-ticket" style="font-size:24px;color: dodgerblue"></i>Assign By Department Tickets</h3>
+                <h3 class=" text-dark">Assign By Department</h3>
                 <table class="table" id="assign_by_dept">
                     <thead>
                     <div class=" col-md-12">
-                        <div class="row">
-                            <label class="col-md-3 ">Search By</label>
-                        </div>
                         <div class="row mb-3">
-                            <div class="col-md-3 offset-md-1">
+                            <span class="mt-3">Case Type</span>
+                            <div class="col-md-3 col-9 offset-md-0 mt-2">
                                 <select class="custom-select"  id="dept_casetype">
                                     <option value=""> All</option>
                                     @foreach($allcases as $case)
@@ -260,16 +260,16 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="offset-md-0">
+                            <div class="offset-md-0 mt-3">
                                 <span class=" mr-3 ">Start Date</span>
                             </div>
-                            <div>
+                            <div class="mt-2">
                                 <input type="text" class="form-control" id="bydept_min" name="bydept_min" >
                             </div>
-                            <div class=" offset-md-1">
-                                <span class=" mr-3 ">End Date</span>
+                            <div class=" offset-md-1 mt-3">
+                                <span class=" mr-4 ">End Date</span>
                             </div>
-                            <div class="text-white">
+                            <div class="text-white mt-2">
                                 <input type="text" class="form-control" id="bydept_max" name="bydept_max" >
                             </div>
 
@@ -315,7 +315,8 @@
                             <label class="col-md-3 ">Search By</label>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-md-3 offset-md-1">
+                            <span class="mt-3">Case Type</span>
+                            <div class="col-md-3 col-9 offset-md-0 mt-2">
                                 <select class="custom-select"  id="ot_casetype">
                                     <option value=""> All</option>
                                     @foreach($allcases as $case)
@@ -323,7 +324,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="offset-md-0">
+                            <div class="offset-md-0 mt-2">
                                 <span class=" mr-3 ">Start Date</span>
                             </div>
                             <div>

@@ -10,42 +10,28 @@
     <title>Welcome</title>
     <style>
         body{
-            background-image: url("public/companylogo/logo.jpg");
+
         }
     </style>
 </head>
-<body style="background-color: lightblue">
-<nav class="navbar navbar-expand-lg navbar-light ">
+<body style="background-color: lightblue;background-image:url(./public/companylogo/logo.jpg);">
+        <nav class="navbar navbar-expand-lg navbar-light ">
         <a class="navbar-brand ml-2" href="#">Support Ticket</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-{{--        <div class="collapse navbar-collapse" id="navbarNav">--}}
-{{--            <ul class="navbar-nav offset-md-10 float-right">--}}
-{{--                <li class="nav-item active">--}}
-{{--                    <a class="nav-link btn btn-outline-warning rounded-pill" href="{{url("/login")}}"><i class="fa fa-sign-in mr-2"></i> <span>Login</span> <span class="sr-only">(current)</span></a>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item ml-2">--}}
-{{--                    <a class="nav-link btn btn-outline-info" href="{{url("/register")}}">Register</a>--}}
-{{--                </li>--}}
-{{--            </ul>--}}
-{{--        </div>--}}
     </nav>
-<div class="home_body" style="height: 250px;">
-    <br>
-<div class="row">
-    <div class="col-md-7">
-        <h3 align="center" class="my-5">
+<div class="row col-12">
+    <div class="col-md-7 ml-4">
+        <h4 align="center" class="mt-5">
             What can we help you?
-        </h3>
+        </h4>
         <!-- Default dropright button -->
-        <div class="btn-group offset-md-4 offset-2 dropright">
+        <div class="form-group">
             <!-- Button trigger modal -->
+            <div class="text-center">
             <button type="button" class="btn btn-primary rounded" data-toggle="modal" data-target="#exampleModalCenter">
                 Send Complain Ticket<i class="fa fa-send-o ml-3"></i>
             </button>
-
-            <!-- Modal -->
+            </div>
+                <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-left" role="document">
                     <div class="modal-content">
@@ -64,9 +50,9 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-    <h3 align="center">SIGN IN</h3>
-    <div class="card border-dark">
+    <div class="col-md-3 ml-4">
+    <h3 align="center" class="mt-5">SIGN IN</h3>
+    <div class="card col-12 border-dark">
     <form method="POST" action="{{route("login")}}" class="col-12 my-3">
         {{csrf_field()}}
         <div class="form-group" data-validate = "Valid email is required: ex@abc.xyz">
@@ -91,7 +77,6 @@
     </form>
     </div>
     </div>
-</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

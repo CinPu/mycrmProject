@@ -18,7 +18,7 @@
             </div>
             <!-- /Page Header -->
             <div class="card">
-                <div class="col-md-12 col-12 mt-3">
+                <div class="col-md-12 col-12 mt-3" style="overflow-x: auto">
             <table class="table " id="userinfo">
                 <thead>
                 <th scope="col">User Name</th>

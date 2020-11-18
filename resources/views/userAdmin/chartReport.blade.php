@@ -1,6 +1,12 @@
 @extends("layouts.mainlayout")
 @section("title","Doughnut Chart Report")
 @section("content")
+    <style>
+        .chartjs-render-monitor{
+            position:relative;
+            padding-right: 20px;
+        }
+    </style>
     <div class="page-wrapper">
         <!-- Page Content -->
         <div class="content container-fluid">
@@ -51,12 +57,12 @@
             </div>
             <div class="row">
                 <div class="col-md-4 offset-md-1 col-10 offset-1 text-center" style="background-color:#e0f2f1">
-                    <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 mt-3 mb-3">
+                    <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 col-sm-12 offset-sm-0 mt-3 mb-3">
                         <canvas id="status"></canvas>
                     </div>
                 </div>
-                <div class="col-md-4 offset-md-1 col-10 offset-1 text-center" style="background-color: #f3e5f5">
-                    <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 mt-3 mb-3">
+                <div class="col-md-4 col-sm-12 offset-md-1 col-10 offset-1 text-center" style="background-color: #f3e5f5">
+                    <div style="width:250px;height:250px;padding-left: 15px;" class="offset-md-1 col-sm-12 offset-sm-0 mt-3 mb-3">
                         <canvas id="priority" ></canvas>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 @section("content")
     <div class="page-wrapper">
         <!-- Page Content -->
-        <div class="content container-fluid">
+        <div class="content container-fluid" >
             <!-- Page Header -->
             <div class="page-header">
                 <div class="row align-items-center">
@@ -42,6 +42,7 @@
                 </div>
             </div>
             <!-- /Page Header -->
+            <div style="overflow-x: auto">
             <table class="table" id="usertable">
                 <thead>
                     <th>User Name</th>
@@ -142,6 +143,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
     <script>

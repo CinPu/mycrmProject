@@ -30,7 +30,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{url("/ticket/import")}}" method="POST" enctype="multipart/form-data">
+                                        <form action="{{url("/employee/import")}}" method="POST" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             <input type="file" name="file" >
                                             <br>
@@ -106,7 +106,7 @@
                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="{{url("emp/edit/$emp->emp_id")}}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                <a class="dropdown-item" href="#"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                <a class="dropdown-item" href="{{url("/emp/delete/$emp->emp_id")}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                             </div>
                         </div>
                         <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/emp/profile/$emp->emp_id")}}">{{$emp->employee_user->name}}</a></h4>
@@ -116,7 +116,7 @@
                         @endforeach
                     </div>
             </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="overflow-x: auto">
                     <table class="table" id="emp">
                         <thead>
                         <tr>
@@ -286,7 +286,19 @@
     <!-- /Page Wrapper -->
     <script>
         $(document).ready(function (){
-            $("#emp").DataTable();
+            $("#emp").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+
+                    {
+                        extend: 'collection',
+                        text: '<i class="fa fa-download mr-2"></i>Export',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ]
+                    }
+                ],
+            });
         });
         $(document).ready(function () {
             $("#type").change(function () {

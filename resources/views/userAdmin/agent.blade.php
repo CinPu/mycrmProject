@@ -17,29 +17,6 @@
                     </div>
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#agentcreate"><i class="fa fa-plus"></i> Add Agent</a>
-                        <button type="button" class="btn btn-outline-secondary mr-2" data-toggle="modal" data-target="#importEmployee">
-                            <i class="fa fa-upload mr-2"></i>Import
-                        </button>
-                        <div class="modal fade" id="importEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Import Employee</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{url("/ticket/import")}}" method="POST" enctype="multipart/form-data">
-                                            {{ csrf_field() }}
-                                            <input type="file" name="file" >
-                                            <br>
-                                            <button class="btn btn-outline-success float-right"><i class="fa fa-upload mr-2"></i>Import Ticket</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -80,7 +57,7 @@
             </div>
         </div>
         <div class="card">
-            <div class="col-md-12">
+            <div class="col-md-12 mt-3" style="overflow-x: auto">
             <table class="table" id="agent">
             <thead>
             <tr>
@@ -147,7 +124,18 @@
     </div>
     <script>
         $(document).ready(function() {
-            $('#agent').DataTable();
+            $('#agent').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<i class="fa fa-download mr-2"></i>Export',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ]
+                    }
+                ],
+            });
         });
         $(document).ready(function () {
             $("#agent_name").change(function () {

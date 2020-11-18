@@ -7,6 +7,7 @@ use App\company;
 use App\department;
 use App\department_head;
 use App\employee;
+use App\Imports\employee_import;
 use App\position;
 use App\ticket;
 use App\ticketFollower;
@@ -16,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class employeeController extends Controller
 {
@@ -183,5 +185,9 @@ class employeeController extends Controller
         $admin_uuid=employee::with("admin")->where("emp_id",Auth::user()->id)->first();
 
         return view("Employee.employeeTagticket",compact("follow_tickets","admin_uuid"));
+    }
+    public function emp_Import(){
+        Excel::import(new employee_import(),request()->file('file'));
+        return back();
     }
 }

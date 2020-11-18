@@ -32,10 +32,8 @@
             visibility: hidden;
         }
     </style>
-    <script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5Jrp9PtHe0WapppUzxbIpMDWMAcV3qE4"></script>
-    <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
     <div class="page-wrapper">
-    <div class="container-fluid">
+    <div class="container-fluid ml-3">
         <!-- Page Header -->
         <div class="page-header">
             <div class="row align-items-center">
@@ -50,7 +48,7 @@
             </div>
         </div>
         <!-- /Page Header -->
-    <form id="ticket_create" method="post" action="{{url("/ticket/create/$id")}}" enctype="multipart/form-data">
+    <form id="ticket_create" method="post" action="{{url("/ticket/create/$id")}}" enctype="multipart/form-data" autocomplete="off">
        {{csrf_field()}}
         <div class="row">
             <div class="col-md-4 card ml-1 ">
@@ -61,7 +59,7 @@
                 </div>
             <div class="form-group mt-3">
                 <label for="email">Email</label><br>
-                <input type="email" id="email" class="form-control " name="email">
+                <input type="email" id="email" class="form-control " name="email" autocomplete="off">
             </div>
                 <div class="form-group mt-3">
                     <label for="phoneNumber">Phone Number</label><br>
@@ -153,36 +151,6 @@
 
     </div>
     <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
-        <script>
-            // Get element references
-            var confirmBtn = document.getElementById('confirmPosition');
-            var onClickPositionView = document.getElementById('onClickPositionView');
-            var onIdlePositionView = document.getElementById('onIdlePositionView');
-            var map = document.getElementById('map');
-
-            // Initialize LocationPicker plugin
-            var lp = new locationPicker(map, {
-                setCurrentPosition: true, // You can omit this, defaults to true
-                lat: 45.5017,
-                lng: -73.5673
-            }, {
-                zoom: 15 // You can set any google map options here, zoom defaults to 15
-            });
-
-            // Listen to button onclick event
-            confirmBtn.onclick = function () {
-                // Get current location and show it in HTML
-                var location = lp.getMarkerPosition();
-                onClickPositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
-            };
-
-            // Listen to map idle event, listening to idle event more accurate than listening to ondrag event
-            google.maps.event.addListener(lp.map, 'idle', function (event) {
-                // Get current location and show it in HTML
-                var location = lp.getMarkerPosition();
-                onIdlePositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
-            });
-        </script>
     <script>
         $(document).ready(function() {
             if (window.File && window.FileList && window.FileReader) {

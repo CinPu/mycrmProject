@@ -117,40 +117,40 @@
             <h4>Ticket Information </h4><span class="ticketid float-right"> Ticket ID : <b class="text-warning">{{$ticket_info->ticket_id}}</b>
             </span><br>
             <div class="row">
-                <div class="col-md-5 offset-md-1 col-12">
-                    <label class="col-6">Ticket  Title </label>
-                    <span class="col-6">: {{$ticket_info->title}}</span>
+                <div class="col-md-6 col-12">
+                    <label class="col-md-6 col-5">Ticket  Title </label>
+                    <span class="col-md-6 col-7">: {{$ticket_info->title}}</span>
                 </div>
                 <div class="col-md-6 col-12">
-                    | <label class="col-6">Case Type </label>
-                    <span class="col-6">: {{$ticket_info->cases->name}}</span>
+                    <label class="col-md-6 col-5">Case Type </label>
+                    <span class="col-md-6 col-7">: {{$ticket_info->cases->name}}</span>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-5 offset-md-1 col-12">
-                    <label class="col-6">Status </label>   <!-- Button trigger modal -->
-                    <span class="col-6">
+                <div class="col-md-6  col-12">
+                    <label class="col-md-6 col-5">Status </label>   <!-- Button trigger modal -->
+                    <span class="col-md-6 col-7">
                         : {{$ticket_info->status_type->status}}
                         @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Admin"))
-                        <a href=""  data-toggle="modal" data-target="#2020"><i class="fa fa-edit"></i>Status Change</a>
+                        <a href=""  data-toggle="modal" data-target="#2020"><i class="fa fa-edit"></i></a>
                             @endif
                     </span>
                 </div>
                 <div class="col-md-6 col-12">
-                    | <label class="col-6"> Last Changed Status </label><span class="col-6"> : {{$ticket_info->updated_at->diffForHumans()}}
+                    <label class="col-md-6 col-5">Status Updated </label><span class="col-md-6 col-7"> : {{$ticket_info->updated_at->diffForHumans()}}
                     </span>
                 </div>
             </div>
             <div class="row mb-5">
-                <div class="col-md-5 offset-md-1 col-12">
-                    <label class="col-6"> Priority </label>
-                    <span class="col-6">
+                <div class="col-md-6 col-12">
+                    <label class="col-md-6 col-5"> Priority </label>
+                    <span class="col-md-6 col-7">
                         : {{$ticket_info->priority_type->priority}}
                     </span>
                 </div>
                 <div class="col-md-6 col-12">
-                    | <label class="col-6"> Complaint Product </label>
-                    <span class="col-6"> : {{$ticket_info->product}}</span>
+                    <label class="col-5 col-md-6"> Complaint Product </label>
+                    <span class="col-7 col-md-6"> : {{$ticket_info->product}}</span>
                 </div>
             </div>
             @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Admin"))
@@ -186,33 +186,33 @@
     </div>
 
             <div class="row">
-                <div class="col-md-8 ">
+                <div class="col-lg-8 col-sm-7 col-12">
                     <div class="card desc">
                         <div class="card-body">
                             <h4>User Contact Information </h4>
                             <div class="row">
-                                <div class="col-md-11 offset-md-1">
-                                    <label class="col-4 col-md-2">User Name </label>
-                                    <span class="col-8 col-md-3"> : {{$ticket_info->userinfo->name}}</span>
+                                <div class="col-lg-11 col-sm-12 offset-lg-1 offset-sm-0 offset-0">
+                                    <label class="col-4 col-sm-4 col-lg-2">User Name </label>
+                                    <span class="col-8 col-lg-3 col-sm-8"> : {{$ticket_info->userinfo->name}}</span>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-11 offset-md-1">
-                                    <label class="col-4 col-md-2">Email</label>
-                                    <span class="col-8 col-md-3">: <a href="mailto:{{$ticket_info->userinfo->email}}">{{$ticket_info->userinfo->email}}</a></span><br>
+                                <div class="col-lg-11 offset-lg-1 offset-sm-0 offset-0">
+                                    <label class="col-4 col-sm-4 col-lg-2">Email</label>
+                                    <span class="col-8 col-sm-8 col-lg-3">: <a href="mailto:{{$ticket_info->userinfo->email}}">{{$ticket_info->userinfo->email}}</a></span><br>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-11 offset-md-1">
-                                    <label class="col-4 col-md-2">Phone </label>
-                                    <span class="col-8 col-md-3">: <a href="tel:+95{{$ticket_info->phone}}">+95{{$ticket_info->phone}}</a>
+                                <div class="col-lg-11 offset-lg-1 offset-sm-0 offset-0">
+                                    <label class="col-4 col-lg-2 col-sm-4">Phone </label>
+                                    <span class="col-8 col-sm-8 col-lg-3">: <a href="tel:+95{{$ticket_info->phone}}">+95{{$ticket_info->phone}}</a>
                                     </span>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-11 offset-md-1">
-                                    <label class="col-4 col-md-2">Source</label>
-                                    <span class="col-8 col-md-3">: {{$ticket_info->sources_type->sources}}</span>
+                                <div class="col-lg-11 offset-lg-1 offset-sm-0 offset-0">
+                                    <label class="col-4 col-sm-4 col-lg-2">Source</label>
+                                    <span class="col-8 col-sm-8 col-lg-3">: {{$ticket_info->sources_type->sources}}</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -230,15 +230,15 @@
                 <div class="card-body">
                 <div class="row">
                     @for($i=0;$i<$numberOfphotos;$i++)
-                    <div class="ml-4"style="padding: 8px;">
-                        <img src="{{asset("/imgs/$photos[$i]")}}"  alt="" class="photos">
+                    <div class="col-sm-8 offset-sm-2 offset-lg-1 col-lg-5 col-10 offset-1"style="padding: 8px;">
+                        <img src="{{asset("/imgs/$photos[$i]")}}"  alt="" class="photos ml-2">
                     </div>
                 @endfor
                 </div>
         </div>
     </div>
         </div>
-                <div class="col-md-4">
+                <div class="col-lg-4 col-sm-5 col-12">
                      <div class="card" id="comment">
                         <h4 class="ml-3 my-3">Comments:</h4>
                          <div class="comments scroll">
@@ -333,11 +333,6 @@
             $(".mul-select").select2({
                 placeholder: "Select Employee", //placeholder
                 tags: true,
-                tokenSeparators: ['/',',',';'," "]
-            });
-        });
-        $(document).ready(function (){
-            $(".follower").function ({
                 tokenSeparators: ['/',',',';'," "]
             });
         });

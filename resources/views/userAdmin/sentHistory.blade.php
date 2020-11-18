@@ -20,7 +20,7 @@
             </div>
             <!-- /Page Header -->
             <div class="card">
-                <div class="col-12 mt-3">
+                <div class="col-12 mt-3" style="overflow-x: auto">
                     <table class="table" id="senthistory">
                         <thead>
                             <tr>

@@ -26,30 +26,30 @@
                 <div class="row mb-3">
                 <div class="form-group col-md-6 col-12 ">
                     <div class="row">
-                    <span for="" class="col-md-4 col-6">Employee ID</span>
-                    <select class="form-control col-md-6 col-6" name="emp_id">
+                    <span for="" class="col-md-4 col-10 ml-3">Employee ID</span>
+                    <select class="form-control col-md-6 col-10 offset-1" name="emp_id">
                         <option value="{{$employees->employee_id}}">{{$employees->employee_id}}</option>
                     </select>
                     </div>
                 </div>
                     <div class="form-group col-md-6 col-12 ">
                         <div class="row">
-                        <span for="" class="col-md-4 col-6">Employee Name</span>
-                        <input type="text" class="form-control col-md-6 col-6" name="emp_name" value="{{$employees->employee_user->name}}">
+                        <span for="" class="col-md-4 col-10 ml-3">Employee Name</span>
+                        <input type="text" class="form-control col-md-6 col-10 offset-1" name="emp_name" value="{{$employees->employee_user->name}}">
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="form-group col-md-6 col-12 ">
                         <div class="row">
-                            <span for="" class="col-md-4 col-6">Email</span>
-                            <input type="email" class="form-control col-md-6 col-6" name="email" value="{{$employees->employee_user->email}}">
+                            <span for="" class="col-md-4 col-10 ml-3">Email</span>
+                            <input type="email" class="form-control col-md-6 col-10 offset-1" name="email" value="{{$employees->employee_user->email}}">
                             </div>
                     </div>
                     <div class="form-group col-md-6 col-12 ">
                         <div class="row">
-                            <span for="" class="col-md-4 col-6">Company</span>
-                            <select class="form-control col-md-6 col-6" name="company">
+                            <span for="" class="col-md-4 col-10 ml-3">Company</span>
+                            <select class="form-control col-md-6 col-10 offset-1" name="company">
                                 <option value="{{$employees->company->id}}">{{$employees->company->company_name}}</option>
                             </select>
                         </div>
@@ -58,11 +58,12 @@
                 <div class="row mb-3">
                     <div class="form-group col-md-6 col-12 ">
                         <div class="row">
-                            <span for="" class="col-md-4 col-6">Department</span>
-                            <select class="form-control col-md-6 col-6" id="type" name="department">
+                            <span for="" class="col-md-4 col-10 ml-3">Department</span>
+                            <select class="form-control col-md-6 col-10 offset-1" id="dept" name="department">
+                                <option value="item0">Choose Department</option>
                                 @foreach($depts as $dept)
                                     @if($dept->id==$employees->dept_id)
-                                        <option  value="{{$dept->id}}">{{$dept->dept_name}}</option>
+                                        <option  value="{{$dept->id}}">{{$dept->dept_name}} (Current)</option>
                                     @else
                                         <option value="{{$dept->id}}">{{$dept->dept_name}}</option>
                                     @endif
@@ -72,8 +73,8 @@
                     </div>
                     <div class="form-group col-md-6 col-12 ">
                         <div class="row">
-                            <span for="" class="col-md-4 col-6">Position</span>
-                            <select name="emp_post" id="" class="form-control col-md-6 col-6" >
+                            <span for="" class="col-md-4 col-10 ml-3">Position</span>
+                            <select name="emp_post" id="" class="form-control col-md-6 col-10 offset-1" >
                                 @foreach($positions as $post)
                                     @if($post->id==$employees->emp_post)
                                         <option selected value="{{$post->id}}">{{$post->emp_position}}</option>
@@ -88,36 +89,36 @@
                 <div class="row mb-3">
                     <div class="form-group col-md-6 col-12 ">
                         <div class="row">
-                            <span for="" class="col-md-4 col-6">Join Date</span>
-                            <input type="date" name="join_date" class="form-control col-md-6 col-6" data-date=""  value="{{Illuminate\Support\Carbon::parse($employees->join_date)->format('Y-m-d')}}">
+                            <span for="" class="col-md-4 col-10 ml-3">Join Date</span>
+                            <input type="date" name="join_date" class="form-control col-md-6 col-10 offset-1" data-date=""  value="{{Illuminate\Support\Carbon::parse($employees->join_date)->format('Y-m-d')}}">
                         </div>
                     </div>
                     <div class="form-group col-md-6 col-12 ">
                         <div class="row">
-                            <span for="" class="col-md-4 col-6">Date Of Birth</span>
-                            <input type="date" name="dob" class="form-control col-md-6 col-6" data-date=""  value="{{Illuminate\Support\Carbon::parse($employees->dob)->format('Y-m-d')}}">
+                            <span for="" class="col-md-4 col-10 ml-3">Date Of Birth</span>
+                            <input type="date" name="dob" class="form-control col-md-6 col-10 offset-1" data-date=""  value="{{Illuminate\Support\Carbon::parse($employees->dob)->format('Y-m-d')}}">
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="form-group col-md-6 col-12 ">
                         <div class="row">
-                            <span for="" class="col-md-4 col-6">Address</span>
-                            <input type="text" name="address" class="form-control col-md-6 col-6" value="{{$employees->Address}}">
+                            <span for="" class="col-md-4 col-10  ml-3">Address</span>
+                            <input type="text" name="address" class="form-control col-md-6 col-10 offset-1" value="{{$employees->Address}}">
                         </div>
                     </div>
                     <div class="form-group col-md-6 col-12 ">
                         <div class="row">
-                            <span for="" class="col-md-4 col-6">Phone</span>
-                            <input type="number" name="phone" class="form-control col-md-6 col-6"   value="{{$employees->phone}}">
+                            <span for="" class="col-md-4 col-10 ml-3">Phone</span>
+                            <input type="number" name="phone" class="form-control col-md-6 col-10 offset-1"   value="{{$employees->phone}}">
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="form-group col-md-6 col-12 ">
                     <div class="row">
-                        <span for="" class="col-md-4 col-6">Report To</span>
-                        <select name="report_to" class="form-control col-md-6 col-6">
+                        <span for="" class="col-md-4 col-10 ml-3">Report To</span>
+                        <select name="report_to" class="form-control col-md-6 col-10 offset-1">
                             @foreach($allemp as $emp)
                                 @if($emp->employee_user->id==$employees->report_to)
                                     <option value="{{$emp->employee_user->id}}" selected>{{$emp->employee_user->name}}</option>
@@ -130,15 +131,15 @@
                 </div>
                     <div class="form-group col-md-6 col-12 ">
                         <div class="row">
-                            <span for="" class="col-md-4 col-6">Department Head</span>
-                            <select class="form-control col-md-6 col-6" name="dept_head" id="size">
+                            <span for="" class="col-md-4 col-10 ml-3">Department Head</span>
+                            <select class="form-control col-md-6 col-10 offset-1" name="dept_head" id="size">
                                 <option></option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="form-group text-center">
-                    <button type="submit" class="btn btn-outline-info col-md-2 col-2">Save</button>
+                    <button type="submit" class="btn btn-outline-info col-md-2 col-8">Save</button>
                 </div>
             </form>
             </div>
@@ -147,7 +148,7 @@
     </div>
     <script>
         $(document).ready(function () {
-            $("#type").change(function () {
+            $("#dept").change(function () {
                 var val = $(this).val();
                 @foreach($depts as $dept)
                 if (val =={{$dept->id}} ) {
