@@ -190,4 +190,10 @@ class employeeController extends Controller
         Excel::import(new employee_import(),request()->file('file'));
         return back();
     }
+    public function filterResult(Request $request){
+
+        $employees=employee::with("employee_user","position")->where("employee_id",$request->employee_id)->orWhere("emp_id",$request->employee_name)->orWhere("emp_post",$request->position)->get();
+        return view("Employee.employeeFilterResult",compact("employees"));
+
+    }
 }

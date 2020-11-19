@@ -45,6 +45,7 @@
             <div style="overflow-x: auto">
             <table class="table" id="usertable">
                 <thead>
+                <th>#</th>
                     <th>User Name</th>
                     <th>Email</th>
                     <th>Role</th>
@@ -54,6 +55,7 @@
                     @foreach($employees as $user)
 {{--                @dd($user)--}}
                         <tr>
+                            <td>{{$user->id}}</td>
                             <td>{{$user->name}}</td>
                             <td>{{$user->email}}</td>
                             <td>

@@ -29,7 +29,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{url("/ticket/import")}}" method="POST" enctype="multipart/form-data">
+                                        <form action="{{url("/dept/import")}}" method="POST" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             <input type="file" name="file" >
                                             <br>

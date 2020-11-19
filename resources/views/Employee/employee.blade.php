@@ -56,22 +56,33 @@
             <!-- /Page Header -->
 
             <!-- Search Filter -->
+            <form action="{{url("/employee/filter")}}" method="POST">
+                {{csrf_field()}}
             <div class="row filter-row">
                 <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus">
-                        <input type="text" class="form-control floating">
-                        <label class="focus-label">Employee ID</label>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus">
-                        <input type="text" class="form-control floating">
-                        <label class="focus-label">Employee Name</label>
+                    <div class="form-group form-focus select-focus focused">
+                        <select class="select floating select2-hidden-accessible form-control" name="employee_id" data-select2-id="3" tabindex="-1" aria-hidden="true">
+                            <option data-select2-id="3">Select Employee ID</option>
+                            @foreach($employees as $emp)
+                                <option value="{{$emp->employee_id}}">{{$emp->employee_id}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="form-group form-focus select-focus focused">
-                        <select class="select floating select2-hidden-accessible form-control" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                        <select class="select floating select2-hidden-accessible form-control" name="employee_name" data-select2-id="2" tabindex="-1" aria-hidden="true">
+                            <option data-select2-id="2">Select Designation</option>
+                            @foreach($employees as $emp)
+                                <option value="{{$emp->emp_id}}">{{$emp->employee_user->name}}</option>
+                            @endforeach
+                        </select>
+                        {{--               --}}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus select-focus focused">
+                        <select class="select floating select2-hidden-accessible form-control" name="position" data-select2-id="1" tabindex="-1" aria-hidden="true">
                             <option data-select2-id="3">Select Designation</option>
                             @foreach($positions as $position)
                                 <option value="{{$position->id}}">{{$position->emp_position}}</option>
@@ -84,6 +95,7 @@
                     <button type="submit" class="btn btn-success btn-block"><i class="fa fa-search mr-2"></i> Search </button>
                 </div>
             </div>
+            </form>
             <!-- Search Filter -->
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">

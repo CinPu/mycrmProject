@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\ticket;
+use App\user_information;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class ticket_import implements ToModel
@@ -15,23 +16,28 @@ class ticket_import implements ToModel
     public function model(array $row)
     {
 //        dd($row);
-        return new ticket([
-            'id'=>$row[0],
-            'user_id'=>$row[1],
-            'ticket_id'=>$row[2],
-            'userinfo_id'=>$row[3],
-            'phone'=>$row[4],
-            'message'=>$row[5],
-            'title'=>$row[6],
-            'status'=>$row[7],
-            'case_type'=>$row[8],
-            'product'=>$row[9],
-            'priority'=>$row[10],
-            'photo'=>$row[11],
-            'source'=>$row[12],
-            'isassign'=>$row[13],
-            'lat'=>$row[14],
-            'lng'=>$row[15],
+        user_information::create([
+            "id"=>$row[6],
+          "name"=>$row[1],
+            'admin_id'=>$row[2],
+            "email"=>$row[3],
+        ]);
+        ticket:: create([
+            'user_id'=>$row[4],
+            'ticket_id'=>$row[5],
+            'userinfo_id'=>$row[6],
+            'phone'=>$row[7],
+            'message'=>$row[8],
+            'title'=>$row[9],
+            'status'=>$row[10],
+            'case_type'=>$row[11],
+            'product'=>$row[12],
+            'priority'=>$row[13],
+            'photo'=>$row[14],
+            'source'=>$row[15],
+            'isassign'=>$row[16],
+            'lat'=>$row[17],
+            'lng'=>$row[18],
 
         ]);
     }

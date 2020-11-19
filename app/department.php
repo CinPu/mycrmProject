@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class department extends Model
 {
+    protected $fillable=[
+        'dept_name','admin_uuid','dept_id','dept_head'
+    ];
     public function agent(){
         return $this->hasMany(agent::class);
     }

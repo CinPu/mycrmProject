@@ -126,7 +126,7 @@
             <form action="{{url("/ticket/search")}}" id="search_ticket" method="POST">
                 {{csrf_field()}}
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-lg-2 col-sm-4">
                         <div class="form-group">
                             <select id="agent_name" name="agent_name" class="form-control text-center" >
                                 <option disabled selected hidden>Select Agent .... </option>
@@ -136,7 +136,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-lg-2 col-sm-4">
                         <div class="form-group">
                             <select id="priority_search" name="priority" class="form-control" >
                                 <option disabled selected hidden>Select Priority .... </option>
@@ -146,7 +146,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-lg-2 col-sm-4">
                         <div class="form-group">
                             <select name="status" id="status" class="form-control" >
                                 <option disabled selected hidden>Select Status ...</option>
@@ -156,21 +156,21 @@
                             </select>
                         </div>
                     </div>
-                    <span class="mt-2 offset-1 offset-md-0">From</span>
-                    <div class="col-md-2">
+                    <span class="mt-2 offset-1 offset-lg-0 offset-sm-1">From</span>
+                    <div class="col-lg-2 col-sm-4">
                         <div class="form-group">
                             <input type="date" id="from_date" name="from_date" class="form-control" required>
                         </div>
                     </div>
-                    <span class="mt-2 offset-1 offset-md-0">To</span>
-                    <div class="col-md-2">
+                    <span class="mt-2 offset-1 offset-lg-0 offset-sm-0">To</span>
+                    <div class="col-lg-2 col-sm-4">
                         <div class="form-group">
                            <span> <input type="date" name="to_date" id="to_date" class="form-control" required></span>
                         </div>
                     </div>
-                    <div class="col-md-1 col-12">
+                    <div class="col-lg-1 col-12 col-sm-2 mr-2">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-outline-warning rounded col-12">Search</button>
+                            <button type="submit" class="btn btn-outline-warning rounded col-12"><i class="fa fa-search"></i></button>
                         </div>
                     </div>
                 </div>
@@ -218,7 +218,7 @@
             <!-- Ticket tab dropdown end -->
             <!-- ticket tab content start-->
             <div class="tab-content" id="nav-tabContent" role="tablist"  >
-                        <div class="tab-pane fade show active col-md-12" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+                <div class="tab-pane fade show active col-md-12" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                     <div class="row">
                         <h5 class=" text-dark col-md-10 col-6">All Tickets</h5>
                     </div>
@@ -361,7 +361,7 @@
                     </table>
 
                 </div>
-                        <div class="tab-pane fade col-md-12 " id="pills-new" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+                <div class="tab-pane fade col-md-12 " id="pills-new" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                     <div class="row">
                     <h5 class=" text-dark col-md-10 col-6">New Tickets</h5>
                     </div>
@@ -481,7 +481,7 @@
                     </table>
 
                 </div>
-                        <div class="tab-pane fade col-md-12" id="pills-open" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+                <div class="tab-pane fade col-md-12" id="pills-open" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                     <div class="row">
                     <h5 class=" text-dark col-md-10 col-6">Open Tickets</h5>
 
@@ -598,7 +598,7 @@
                         </tbody>
                     </table>
                 </div>
-                        <div class="tab-pane fade col-md-12" id="pills-close" role="tabpanel" aria-labelledby="pills-contact-tab"style="overflow-x:auto;">
+                <div class="tab-pane fade col-md-12" id="pills-close" role="tabpanel" aria-labelledby="pills-contact-tab"style="overflow-x:auto;">
                    <div class="row">
                     <h5 class=" text-dark col-md-10 col-6">Closed Tickets</h5>
                    </div>
@@ -714,7 +714,7 @@
                         </tbody>
                     </table>
                 </div>
-                        <div class="tab-pane fade col-md-12" id="pills-complete" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+                <div class="tab-pane fade col-md-12" id="pills-complete" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                    <div class="row">
                     <h5 class=" text-dark col-md-10 col-6">Completed Tickets</h5>
                    </div>
@@ -831,7 +831,7 @@
                         </tbody>
                     </table>
                 </div>
-                        <div class="tab-pane fade col-md-12" id="pills-pending" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+                <div class="tab-pane fade col-md-12" id="pills-pending" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                     <div class="row">
                         <h5 class=" text-dark col-md-10 col-6">Pending Tickets</h5>
                     </div>
@@ -947,7 +947,7 @@
                         </tbody>
                     </table>
                 </div>
-                        <div class="tab-pane fade col-md-12" id="pills-progress" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
+                <div class="tab-pane fade col-md-12" id="pills-progress" role="tabpanel" aria-labelledby="pills-profile-tab" style="overflow-x:auto;">
                     <div class="row">
                         <h5 class=" text-dark col-md-10 col-6">Progress Tickets</h5>
                     </div>
@@ -1063,7 +1063,7 @@
                     {{--                </div>--}}
 
                 </div>
-                    </div>
+            </div>
             <!--end of Ticket tab content -->
         </div>
     </div>

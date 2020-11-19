@@ -8,12 +8,14 @@ use App\department;
 use App\department_head;
 use App\deptart_head;
 use App\employee;
+use App\Imports\dept_import;
 use App\position;
 use App\User;
 use App\userprofile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class departmentController extends Controller
 {
@@ -180,5 +182,9 @@ class departmentController extends Controller
         $dept=department::where("id",$id)->first();
         $dept->delete();
         return redirect()->back()->with("delete","Delete Successful");
+    }
+    public function import(){
+        Excel::import(new dept_import(),request()->file('file'));
+        return back();
     }
 }

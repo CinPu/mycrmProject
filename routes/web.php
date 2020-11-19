@@ -76,6 +76,8 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("/ticket/import","ticketController@ticktImport");
     Route::post("/employee/import","employeeController@emp_Import");
     Route::get("/agent/ticket","admin_agentController@agentTicket");
+    Route::post("/employee/filter","employeeController@filterResult");
+    Route::post("/dept/import","departmentController@import");
 
 
 });
