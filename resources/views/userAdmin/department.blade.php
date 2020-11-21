@@ -219,11 +219,11 @@
         </div>
     </div>
     <script>
-        // $(document).ready(function() {
-        //     $(".dept_head").keyup(function() {
-        //         $(".dept_head").val($(this).val());
-        //     });
-        // });
+        $(document).ready(function() {
+            $(".dept_head").keyup(function() {
+                $(".dept_head").val($(this).val());
+            });
+        });
         $(document).ready(function() {
             $('#dept').DataTable();
         });

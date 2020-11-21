@@ -87,10 +87,15 @@
                     <td><i class="fa fa-bars mr-3"></i>{{$case->name}}
                     </td>
                     <td>
-                        <a href="{{url("case_type/delete/$case->id")}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                        <a href="" class="btn btn-success " data-toggle="modal" data-target="#{{$case->id}}" data-whatever="@getbootstrap"><i class="fa fa-edit"></i></a>
+                        <div class="dropdown ">
+                            <a href="#" class=" dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-th-list"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="" class="dropdown-item" data-toggle="modal" data-target="#case{{$case->id}}" data-whatever="@getbootstrap"><i class="fa fa-edit mr-2"></i>Edit</a>
+                                <a href="{{url("case_type/delete/$case->id")}}" class="dropdown-item"><i class="fa fa-trash mr-2"></i>Delete</a>
 
-                        <div class="modal fade" id="{{$case->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        </div>
+
+                        <div class="modal fade" id="case{{$case->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered ">
                                 <div class="modal-content ">
                                     <div class="modal-header">

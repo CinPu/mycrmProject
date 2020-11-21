@@ -127,10 +127,15 @@
                         <span>{{$priority->hours}} Hour {{$priority->minutes}} Minutes {{$priority->seconds}} Seconds</span>
                     </td>
                     <td>
-                        <a href="{{url("priority/delete/$priority->id")}}" class="btn btn-danger "><i class="fa fa-trash"></i></a>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#{{$priority->id}}" data-whatever="@getbootstrap"><i class="fa fa-edit"></i></button>
+                        <div class="dropdown ">
+                            <a href="#" class=" dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-th-list"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" data-toggle="modal" data-target="#priority{{$priority->id}}" data-whatever="@getbootstrap"><i class="fa fa-edit mr-2"></i>Edit</a>
+                                <a href="{{url("priority/delete/$priority->id")}}" class="dropdown-item"><i class="fa fa-trash mr-2"></i>Delete</a>
+                            </div>
+                        </div>
 
-                        <div class="modal fade" id="{{$priority->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="priority{{$priority->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered ">
                                 <div class="modal-content">
                                     <div class="modal-header">

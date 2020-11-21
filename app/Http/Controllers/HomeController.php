@@ -51,11 +51,11 @@ class HomeController extends Controller
 
             return view("Agent.home");
             }elseif (Auth::user()->hasAnyRole("Employee")){
-
-                return view("Employee.employeehome");
-            }
-            else{
+                return view("Employee.employee_home");
+            } elseif (Auth::user()->hasAnyRole("AdminRegister")){
                 return view("home");
+            } else{
+              return redirect()->back()->with("delete","You doesn't have auth role");
             }
         }else{
 
