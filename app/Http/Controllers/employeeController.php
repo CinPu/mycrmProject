@@ -172,8 +172,9 @@ class employeeController extends Controller
     public function profile($emp_id){
         $emp_details=employee::with("employee_user","report_to_user","company","position","dept")->where("emp_id",$emp_id)->first();
 //        dd($emp_details);
-        $profiles=userprofile::all();
-        return view("Employee.profile",compact("emp_details","profiles"));
+        $profiles=userprofile::where("user_id",$emp_details->emp_id)->first();
+        $report_to_pp=userprofile::where("user_id",$emp_details->report_to_user->id)->first();
+        return view("Employee.profile",compact("emp_details","profiles","report_to_pp"));
     }
     public function tagticket(){
         $followingTickets=ticketFollower::where("emp_id",Auth::user()->id)->get();

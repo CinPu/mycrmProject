@@ -569,4 +569,9 @@ class ticketController extends Controller
                 Excel::import(new ticket_import,request()->file('file'));
         return back();
     }
+    public function dadbordCard($status){
+        $cardStatus=status::where("status",$status)->first();
+        $tickets=ticket::with("priority_type","cases","status_type")->where("user_id",Auth::user()->uuid)->where("status",$cardStatus->id)->get();
+        return view("userAdmin.dashbordcardLink",compact("tickets","status"));
+    }
 }

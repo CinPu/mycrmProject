@@ -19,7 +19,7 @@
         <a class="navbar-brand ml-2" href="#">Support Ticket</a>
     </nav>
 <div class="row col-12">
-    <div class="col-md-7 ml-4">
+    <div class="col-lg-7 col-sm-5 col-11 ml-4">
         <h4 align="center" class="mt-5">
             What can we help you?
         </h4>
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3 ml-4">
+    <div class="col-lg-3 col-sm-5 col-11 ml-4">
     <h3 align="center" class="mt-5">SIGN IN</h3>
     <div class="card col-12 border-dark">
     <form method="POST" action="{{route("login")}}" class="col-12 my-3">

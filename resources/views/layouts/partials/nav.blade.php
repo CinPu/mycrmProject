@@ -87,8 +87,23 @@
 								</ul>
 							</li>
 
-							<li class="{{ Request::is('clients') ? 'active' : '' }}">
-        <a  href="{{ url('clients') }}"><i class="la la-users"></i> <span>Clients</span></a></li>	
+					<li class="menu-title"><span>Client</span></li>
+					<li class="submenu">
+						<a href="#"><i class="la la-user"></i>
+							<span> Client</span>
+							<span class="menu-arrow"></span>
+						</a>
+						<ul style="display: none;">
+							<li class="{{ Request::is('engaged/company') ? 'active' : '' }}"><a  href="{{ url('/engaged/company') }}">Company</a></li>
+{{--							<li class="{{ Request::is('department') ? 'active' : '' }}">--}}
+{{--								<a  href="{{ url('/department') }}">Departments</a>--}}
+{{--							</li>--}}
+{{--							<li class="{{ Request::is('agent') ? 'active' : '' }}" >--}}
+{{--								<a href="{{ url('/agent') }}">Agent</a>--}}
+{{--							</li>--}}
+
+						</ul>
+					</li>
 
 							
 							<li class="submenu">

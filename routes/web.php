@@ -78,6 +78,16 @@ Route::group(['middleware'=>'auth'],function () {
     Route::get("/agent/ticket","admin_agentController@agentTicket");
     Route::post("/employee/filter","employeeController@filterResult");
     Route::post("/dept/import","departmentController@import");
+    Route::get("/engaged/company","companyController@engagedCompany");
+    Route::post("/company/create","companyController@create");
+    Route::get("/company/profile/{id}","companyController@profile");
+    Route::get("/company/edit/{id}","companyController@companyedit");
+    Route::get("/company/delete/{id}","companyController@destory");
+    Route::post("/company/update/{id}","companyController@companyupdate");
+    Route::get("/ticket/status/{status}","ticketController@dadbordCard");
+    Route::get('/chat', function () {
+        return view('chat');
+    });
 
 
 });

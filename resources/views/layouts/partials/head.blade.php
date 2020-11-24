@@ -11,7 +11,7 @@
         <title>@yield("title")</title>
 		
 		<!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+        <link rel="shortcut icon" type="image/x-icon" href="{{url(asset("img/3d.png"))}}">
 		
 		<!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{{url(asset("css/bootstrap.min.css"))}}">

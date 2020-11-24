@@ -53,7 +53,9 @@
         <!-- /Page Header -->
         <div class="col-md-12">
             <div class="row" >
-                <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6" data-toggle="modal" data-target="#new_ticket_dialog">
+
+                <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                    <a href="{{url("/ticket/status/new")}}">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
                             <div>
@@ -70,8 +72,11 @@
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
-                <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6" data-toggle="modal" data-target="#solve_ticket_dialog">
+
+                <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6" >
+                    <a href="{{url("/ticket/status/complete")}}">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
                             <div>
@@ -88,8 +93,10 @@
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
-                <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6" data-toggle="modal" data-target="#open_ticket_dialog">
+                <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                    <a href="{{url("/ticket/status/open")}}">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
                             <div>
@@ -104,8 +111,10 @@
                             <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:{{$percentOfopen}}%;"></div>
                         </div>
                     </div>
+                    </a>
                 </div>
-                <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6" data-toggle="modal" data-target="#pending_ticket_dialog">
+                <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                    <a href="{{url("/ticket/status/pending")}}">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
                             <div><span class="d-block">Pending Tickets</span>
@@ -119,6 +128,7 @@
                             <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="{{$percentOfpending}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$percentOfpending}}%;"></div>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1067,294 +1077,6 @@
             <!--end of Ticket tab content -->
         </div>
     </div>
-        </div>
-    </div>
-    <div class="modal fade bd-example-modal-lg" id="new_ticket_dialog" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-xl " style="padding-top: 250px;">
-            <div class="modal-content scroll offset-lg-1 offset-sm-0 offset-0">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel">New Ticket</h3>
-                    <button type="button " class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div style="overflow-x: auto">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Ticket ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Assign Staff</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Last Updated</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($tickets as $ticket)
-                        @if($ticket->status_type->status=="New")
-                            <tr>
-                                <th>
-                                    <a href="{{ url("tickets/$ticket->ticket_id") }}">
-                                        #{{ $ticket->ticket_id }}
-                                    </a>
-                                </th>
-                                <td scope="row" >{{$ticket->title}}</td>
-
-                                <td>
-                                    @if($ticket->isassign==1)
-                                        @foreach($assign_name as $assignName)
-                                            @if($assignName->ticket_id==$ticket->id)
-                                                @if($assignName->agent_pp!=null)
-                                                    <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                    {{$assignName->agent->name}}
-                                                @else
-                                                    <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                    {{$assignName->agent->name}}
-                                                @endif
-                                            @endif
-                                        @endforeach
-                                        @foreach($assign_dept_name as $dept_name)
-                                            @if($dept_name->ticket_id==$ticket->id)
-                                                <i class="fa fa-users"></i>
-                                                {{$dept_name->dept->dept_name}}
-                                            @endif
-                                        @endforeach
-                                    @elseif($ticket->isassign==0)
-                                        <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
-                                </td>
-                                <td>{{$ticket->status_type->status}}</td>
-                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
-                                {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
-                                <td>
-                                    {{$ticket->cases->name}}
-                                </td>
-                                <td>{{$ticket->created_at->toFormattedDateString()}}</td>
-
-                            </tr>
-                        @endif
-                    @endforeach
-                    </tbody>
-                </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade bd-example-modal-lg" id="solve_ticket_dialog" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-xl " style="padding-top: 250px;">
-            <div class="modal-content scroll offset-lg-1 offset-0 offset-sm-0">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel">Solved Tickets</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div style="overflow-x: auto">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Ticket ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Assign Staff</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Last Updated</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($tickets as $ticket)
-                        @if($ticket->status_type->status=="Complete")
-                            <tr>
-                                <th>
-                                    <a href="{{ url("tickets/$ticket->ticket_id") }}">
-                                        #{{ $ticket->ticket_id }}
-                                    </a>
-                                </th>
-                                <td scope="row" >{{$ticket->title}}</td>
-
-                                <td>
-                                    @if($ticket->isassign==1)
-                                        @foreach($assign_name as $assignName)
-                                            @if($assignName->ticket_id==$ticket->id)
-                                                @if($assignName->agent_pp!=null)
-                                                    <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                    {{$assignName->agent->name}}
-                                                @else
-                                                    <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                    {{$assignName->agent->name}}
-                                                @endif
-                                            @endif
-                                        @endforeach
-                                        @foreach($assign_dept_name as $dept_name)
-                                            @if($dept_name->ticket_id==$ticket->id)
-                                                <i class="fa fa-users"></i>
-                                                {{$dept_name->dept->dept_name}}
-                                            @endif
-                                        @endforeach
-                                    @elseif($ticket->isassign==0)
-                                        <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
-                                </td>
-                                <td>{{$ticket->status_type->status}}</td>
-                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
-                                {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
-                                <td>
-                                    {{$ticket->cases->name}}
-                                </td>
-                                <td>{{$ticket->created_at->toFormattedDateString()}}</td>
-
-                            </tr>
-                        @endif
-                    @endforeach
-                    </tbody>
-                </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade bd-example-modal-lg" id="open_ticket_dialog" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-xl " style="padding-top: 250px;">
-            <div class="modal-content scroll offset-lg-1 offset-sm-0 offset-0">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel">Open Tickets</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div style="overflow-x: auto">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Ticket ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Assign Staff</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Last Updated</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($tickets as $ticket)
-                        @if($ticket->status_type->status=="Open")
-                            <tr>
-                                <th>
-                                    <a href="{{ url("tickets/$ticket->ticket_id") }}">
-                                        #{{ $ticket->ticket_id }}
-                                    </a>
-                                </th>
-                                <td scope="row" >{{$ticket->title}}</td>
-
-                                <td>
-                                    @if($ticket->isassign==1)
-                                        @foreach($assign_name as $assignName)
-                                            @if($assignName->ticket_id==$ticket->id)
-                                                @if($assignName->agent_pp!=null)
-                                                    <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                    {{$assignName->agent->name}}
-                                                @else
-                                                    <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                    {{$assignName->agent->name}}
-                                                @endif
-                                            @endif
-                                        @endforeach
-                                        @foreach($assign_dept_name as $dept_name)
-                                            @if($dept_name->ticket_id==$ticket->id)
-                                                <i class="fa fa-users"></i>
-                                                {{$dept_name->dept->dept_name}}
-                                            @endif
-                                        @endforeach
-                                    @elseif($ticket->isassign==0)
-                                        <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
-                                </td>
-                                <td>{{$ticket->status_type->status}}</td>
-                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
-                                {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
-                                <td>
-                                    {{$ticket->cases->name}}
-                                </td>
-                                <td>{{$ticket->created_at->toFormattedDateString()}}</td>
-
-                            </tr>
-                        @endif
-                    @endforeach
-                    </tbody>
-                </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade bd-example-modal-lg" id="pending_ticket_dialog" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-xl " style="padding-top: 250px;">
-            <div class="modal-content scroll offset-lg-1 offset-sm-0 offset-0">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel">Pending Tickets</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div style="overflow-x: auto">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Ticket ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Assign Staff</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Last Updated</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($tickets as $ticket)
-                        @if($ticket->status_type->status=="Pending")
-                            <tr>
-                                <th>
-                                    <a href="{{ url("tickets/$ticket->ticket_id") }}">
-                                        #{{ $ticket->ticket_id }}
-                                    </a>
-                                </th>
-                                <td scope="row" >{{$ticket->title}}</td>
-
-                                <td>
-                                    @if($ticket->isassign==1)
-                                        @foreach($assign_name as $assignName)
-                                            @if($assignName->ticket_id==$ticket->id)
-                                                @if($assignName->agent_pp!=null)
-                                                    <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                    {{$assignName->agent->name}}
-                                                @else
-                                                    <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                    {{$assignName->agent->name}}
-                                                @endif
-                                            @endif
-                                        @endforeach
-                                        @foreach($assign_dept_name as $dept_name)
-                                            @if($dept_name->ticket_id==$ticket->id)
-                                                <i class="fa fa-users"></i>
-                                                {{$dept_name->dept->dept_name}}
-                                            @endif
-                                        @endforeach
-                                    @elseif($ticket->isassign==0)
-                                        <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
-                                </td>
-                                <td>{{$ticket->status_type->status}}</td>
-                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
-                                {{--                                <td class="border"><img src="{{asset("/imgs/$photos[1]")}}" alt="" width="200px"height="200px"></td>--}}
-                                <td>
-                                    {{$ticket->cases->name}}
-                                </td>
-                                <td>{{$ticket->created_at->toFormattedDateString()}}</td>
-
-                            </tr>
-                        @endif
-                    @endforeach
-                    </tbody>
-                </table>
-                </div>
-            </div>
         </div>
     </div>
     <script>

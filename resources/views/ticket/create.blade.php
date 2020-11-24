@@ -55,7 +55,7 @@
 
                 <div class="form-group mt-3">
                     <label for="name" class="mt-3">Customer Name</label><br>
-                    <input type="text" id="name" class="form-control" name="user_name">
+                    <input type="text" id="name" class="form-control" name="user_name" autocomplete="off">
                 </div>
             <div class="form-group mt-3">
                 <label for="email">Email</label><br>
@@ -63,15 +63,15 @@
             </div>
                 <div class="form-group mt-3">
                     <label for="phoneNumber">Phone Number</label><br>
-                    <input type="number" class="form-control" name="phone" id="phoneNumber" aria-describedby="emailHelp" required>
+                    <input type="number" class="form-control" name="phone" id="phoneNumber" aria-describedby="emailHelp" required autocomplete="off">
                 </div>
                 <label for="title" class="mt-3">Ticket Title</label>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="title" id="title" required>
+                    <input type="text" class="form-control" name="title" id="title" required autocomplete="off">
                 </div>
                 <div class="form-group mt-3">
                     <label for="product">Product</label><br>
-                    <input type="text" class="form-control" name="product" id="product" required>
+                    <input type="text" class="form-control" name="product" id="product" required autocomplete="off">
                 </div>
                 <div class="form-group mt-3">
                     <label for="exampleInputPassword1">Case Type</label><br>
