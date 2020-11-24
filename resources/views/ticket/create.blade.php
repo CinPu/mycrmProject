@@ -51,7 +51,7 @@
     <form id="ticket_create" method="post" action="{{url("/ticket/create/$id")}}" enctype="multipart/form-data" autocomplete="off">
        {{csrf_field()}}
         <div class="row">
-            <div class="col-md-4 card ml-1 ">
+            <div class="col-md-4 card ">
 
                 <div class="form-group mt-3">
                     <label for="name" class="mt-3">Customer Name</label><br>
@@ -116,7 +116,7 @@
                 </div>
             </div>
 
-            <div class="col-md-7 card ml-1">
+            <div class="col-md-7 card ">
                 <label for="exampleInputEmail1" class="mt-3">Description</label>
                 <div class="form-group">
                     <textarea class="form-control" id="summary-ckeditor" name="message" required></textarea>
