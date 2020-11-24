@@ -15,9 +15,16 @@ class CreateCustomerCompaniesTable extends Migration
     {
         Schema::create('customer_companies', function (Blueprint $table) {
             $table->id();
+            $table->string("company_id");
             $table->string("name");
             $table->text("logo");
-            $table->string("company_shortname");
+            $table->text("company_registry");
+            $table->text("company_mission");
+            $table->text("company_vision");
+            $table->string("type_of_business");
+            $table->string("name_of_ceo");
+            $table->text("facebookpage");
+            $table->string("parent_company");
             $table->double("phone");
             $table->double("hotline");
             $table->string("email");

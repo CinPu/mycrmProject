@@ -134,7 +134,7 @@
                 </div>
                 <div id="map"></div>
                 <div class="form-group">
-                <button type="submit" id="submit-all" class="btn btn-primary float-right"><i class="fa fa-paper-plane mr-3"></i>Submit</button>
+                <button type="submit" id="submit-all" class="btn btn-primary float-right mt-3"><i class="fa fa-paper-plane mr-3"></i>Submit</button>
                 </div>
             </div>
         </div>

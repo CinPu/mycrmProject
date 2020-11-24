@@ -99,50 +99,62 @@
                                 <div>
                                     <div class="text-center" >
                                         <h4>Choose Company Logo</h4>
-                                        <img id="output" class="rounded-circle" width="100px" height="100px;"><br><br>
+                                        <img id="output" class="rounded-circle" src="{{url(asset("/img/profiles/avatar-01.jpg"))}}" width="100px" height="100px;"><br><br>
                                         <input type="file" accept="image/*" name="logo"  class="offset-md-1" onchange="loadFile(event)">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row mt-5">
-                                        <span for="" class="col-6 col-md-4">Company Name : </span>
-                                        <input type="text" class="form-control col-md-6 col-6" name="name" >
+                                <div class="row">
+                                    <div class="form-group col-lg-6 col-sm-6 col-12">
+                                        <label>Company ID : </label>
+                                        <input type="text" class="form-control" name="company_id" >
                                     </div>
+                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                        <label>Company Name : </label>
+                                        <input type="text" class="form-control" name="name" >
                                 </div>
-                                <div class="form-group ">
-                                    <div class="row">
-                                        <span class="col-6 col-md-4">Company Name Short Form</span>
-                                        <input type="text" class="form-control col-6 col-md-6" name="short_form" placeholder="eg.LG co.,ltd">
+                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                        <label>Company CEO Name</label>
+                                        <input type="text" class="form-control" name="ceo" placeholder="eg.LG co.,ltd">
+                                </div>
+                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                    <label>Company Email</label>
+                                    <input type="email" class="form-control" name="email" placeholder="Company Email">
+                                </div>
+                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                    <label>Parent Company</label>
+                                    <input type="text" class="form-control" name="parent">
+                                </div>
+                                    <div class="form-group col-lg-6 col-sm-6 col-12">
+                                        <label>Business Type</label>
+                                        <input type="text" class="form-control" name="business_type">
                                     </div>
+                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                    <label>Company Phone</label>
+                                    <input type="number" class="form-control" name="phone" placeholder="09xxxxxxxxx">
                                 </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <span class="col-6 col-md-4">Company Email</span>
-                                        <input type="email" class="form-control col-6 col-md-6" name="email" placeholder="Company Email">
+                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                    <label>Hot Line</label>
+                                    <input type="number" class="form-control" name="hotline" placeholder="09xxxxxxxxx">
+                                </div>
+                                <div class="form-group col-lg-6 col-sm-6 col-12 ">
+                                    <label>Company Website Link</label>
+                                    <input type="text" class="form-control" name="web_link" placeholder="www.cloudark.biz">
+                                </div>
+                                    <div class="form-group col-lg-6 col-sm-6 col-12 ">
+                                        <label>Facebook Page Link</label>
+                                        <input type="text" class="form-control" name="facebook_page" placeholder="www.facebook.com/example">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <span class="col-6 col-md-4">Company Address</span>
-                                        <input type="text" class="form-control col-6 col-md-6" name="address" placeholder="Thiri(5)Street,Hlaing,Yangon">
+                                    <div class="form-group col-lg-6 col-sm-12 col-12 ">
+                                        <label>Company Registry</label><br>
+                                        <textarea rows="3" style="width: 100%"></textarea>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <span class="col-6 col-md-4">Company Phone</span>
-                                        <input type="number" class="form-control col-6 col-md-6" name="phone" placeholder="09xxxxxxxxx">
+                                    <div class="form-group col-lg-6 col-sm-12 col-12 ">
+                                        <label>Company Vision</label><br>
+                                        <textarea rows="3" style="width: 100%"></textarea>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <span class="col-6 col-md-4">Hot Line</span>
-                                        <input type="number" class="form-control col-6 col-md-6" name="hotline" placeholder="09xxxxxxxxx">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <span class="col-6 col-md-4">Company Website Link</span>
-                                        <input type="text" class="form-control col-6 col-md-6" name="web_link" placeholder="www.cloudark.biz">
+                                    <div class="form-group col-lg-12 col-sm-12 col-12 ">
+                                        <label>Company Mission</label><br>
+                                        <textarea rows="3" style="width:100%;"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group text-center">

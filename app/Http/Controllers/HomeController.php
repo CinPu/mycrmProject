@@ -53,9 +53,9 @@ class HomeController extends Controller
             }elseif (Auth::user()->hasAnyRole("Employee")){
                 return view("Employee.employee_home");
             } elseif (Auth::user()->hasAnyRole("AdminRegister")){
-                return view("home");
+
             } else{
-              return redirect()->back()->with("delete","You doesn't have auth role");
+                return view("home");
             }
         }else{
 
