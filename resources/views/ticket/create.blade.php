@@ -33,7 +33,7 @@
         }
     </style>
     <div class="page-wrapper">
-    <div class="container-fluid ml-3">
+    <div class="container-fluid ">
         <!-- Page Header -->
         <div class="page-header">
             <div class="row align-items-center">
@@ -48,10 +48,11 @@
             </div>
         </div>
         <!-- /Page Header -->
+        <div class="col-12">
     <form id="ticket_create" method="post" action="{{url("/ticket/create/$id")}}" enctype="multipart/form-data" autocomplete="off">
        {{csrf_field()}}
         <div class="row">
-            <div class="col-md-4 card ">
+            <div class="col-md-4 card">
 
                 <div class="form-group mt-3">
                     <label for="name" class="mt-3">Customer Name</label><br>
@@ -115,7 +116,6 @@
                     <input type="text" id="lng" name="lng" class="form-control">
                 </div>
             </div>
-
             <div class="col-md-7 card ">
                 <label for="exampleInputEmail1" class="mt-3">Description</label>
                 <div class="form-group">
@@ -139,6 +139,7 @@
             </div>
         </div>
     </form>
+        </div>
             <script type="text/javascript"
                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcNrvPMoDFFCgVzzCP3Oeu1iIwBtJ72ZM"></script>
             <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
