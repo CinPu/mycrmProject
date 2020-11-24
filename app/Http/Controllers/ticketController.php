@@ -572,6 +572,7 @@ class ticketController extends Controller
     public function dadbordCard($status){
         $cardStatus=status::where("status",$status)->first();
         $tickets=ticket::with("priority_type","cases","status_type")->where("user_id",Auth::user()->uuid)->where("status",$cardStatus->id)->get();
-        return view("userAdmin.dashbordcardLink",compact("tickets","status"));
+        $assign_name=assign_ticket::with("agent","agent_pp")->get();
+        return view("userAdmin.dashbordcardLink",compact("tickets","status","assign_name"));
     }
 }
