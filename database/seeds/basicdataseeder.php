@@ -26,7 +26,12 @@ class basicdataseeder extends Seeder
         position::create(['emp_position'=>'Web Developer']);
         position::create(['emp_position'=>'Accountant']);
         position::create(['emp_position'=>'Manager']);
-        position::create(['emp_position'=>'CEO']);
-        position::create(['emp_position'=>'CTO']);
+        position::create(['emp_position'=>'Director']);
+        position::create(['emp_position'=>'General Manager(GM)']);
+        position::create(['emp_position'=>'Executive']);
+        position::create(['emp_position'=>'Assistant Manager(AGM)']);
+        position::create(['emp_position'=>'Senior Manager']);
+        position::create(['emp_position'=>'Officer']);
+        position::create(['emp_position'=>'COO']);
     }
 }

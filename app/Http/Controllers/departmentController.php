@@ -11,6 +11,7 @@ use App\employee;
 use App\Imports\dept_import;
 use App\position;
 use App\User;
+use App\user_employee;
 use App\userprofile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -101,9 +102,12 @@ class departmentController extends Controller
 
             $employee = new employee();
             $employee->employee_id = $request->emp_id;
+            $employee->name=$request->dept_headName;
+            $employee->email=$request->email;
+            $employee->nrc=$request->nrc;
+            $employee->gender=$request->gender;
             $employee->report_to = Auth::user()->id;
             $employee->dept_id =$dept->id;
-            $employee->emp_id = $user->id;
             $employee->emp_post = $request->position;
             $employee->admin_id = Auth::user()->id;
             $employee->company_id = $request->company;
@@ -111,6 +115,10 @@ class departmentController extends Controller
             $employee->phone = $request->phone;
             $employee->dept_head=Auth::user()->id;
             $employee->save();
+            $user_emp=new user_employee();
+            $user_emp->user_id=$user->id;
+            $user_emp->emp_id=$employee->id;
+            $user_emp->save();
             $user->assignRole("Employee");
         }else{
             return redirect()->back()->with("delete","Your Email is already Exists");

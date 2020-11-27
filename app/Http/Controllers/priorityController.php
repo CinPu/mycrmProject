@@ -16,7 +16,11 @@ class priorityController extends Controller
     public function index()
     {
         $priorities=priority::where("admin_uuid",Auth::user()->uuid)->get();
-        return view("userAdmin.priority",compact("priorities"));
+        $isblue=priority::where("color","primary")->first();
+        $isgreen=priority::where("color","success")->first();
+        $isred=priority::where("color","danger")->first();
+        $isyellow=priority::where("color","warning")->first();
+        return view("userAdmin.priority",compact("priorities","isblue",'isgreen','isred','isyellow'));
     }
 
     /**

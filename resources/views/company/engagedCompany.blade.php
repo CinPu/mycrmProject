@@ -106,21 +106,21 @@
                                 <div class="row">
                                     <div class="form-group col-lg-6 col-sm-6 col-12">
                                         <label>Company ID : </label>
-                                        <input type="text" class="form-control" name="company_id" >
+                                        <input type="text" class="form-control" name="company_id" value="{{$company_id}}" >
                                     </div>
-                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group col-lg-6 col-sm-6 col-12">
                                         <label>Company Name : </label>
                                         <input type="text" class="form-control" name="name" >
                                 </div>
-                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group col-lg-6 col-sm-6 col-12">
                                         <label>Company CEO Name</label>
                                         <input type="text" class="form-control" name="ceo" placeholder="eg.LG co.,ltd">
                                 </div>
-                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group col-lg-6 col-sm-6 col-12">
                                     <label>Company Email</label>
                                     <input type="email" class="form-control" name="email" placeholder="Company Email">
                                 </div>
-                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group col-lg-6 col-sm-6 col-12">
                                     <label>Parent Company</label>
                                     <input type="text" class="form-control" name="parent">
                                 </div>
@@ -128,33 +128,41 @@
                                         <label>Business Type</label>
                                         <input type="text" class="form-control" name="business_type">
                                     </div>
-                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group col-lg-6 col-sm-6 col-12">
                                     <label>Company Phone</label>
                                     <input type="number" class="form-control" name="phone" placeholder="09xxxxxxxxx">
                                 </div>
-                                <div class="form-group col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group col-lg-6 col-sm-6 col-12">
                                     <label>Hot Line</label>
                                     <input type="number" class="form-control" name="hotline" placeholder="09xxxxxxxxx">
                                 </div>
-                                <div class="form-group col-lg-6 col-sm-6 col-12 ">
+                                    <div class="form-group col-lg-6 col-sm-6 col-12 ">
                                     <label>Company Website Link</label>
-                                    <input type="text" class="form-control" name="web_link" placeholder="www.cloudark.biz">
+                                    <input type="url" class="form-control" name="web_link" value="https://">
                                 </div>
                                     <div class="form-group col-lg-6 col-sm-6 col-12 ">
                                         <label>Facebook Page Link</label>
-                                        <input type="text" class="form-control" name="facebook_page" placeholder="www.facebook.com/example">
+                                        <input type="url" class="form-control" name="facebook_page" value="https://">
+                                    </div>
+                                    <div class="form-group col-lg-6 col-sm-6 col-12 ">
+                                        <label>LinkedIn</label>
+                                        <input type="url" class="form-control" name="linked_in" value="https://">
+                                    </div>
+                                    <div class="form-group col-lg-6 col-sm-6 col-12 ">
+                                        <label>Address</label>
+                                        <input type="text" class="form-control" name="address" placeholder="Thirih(5)Street,Hlaing Township,Yangon">
                                     </div>
                                     <div class="form-group col-lg-6 col-sm-12 col-12 ">
                                         <label>Company Registry</label><br>
-                                        <textarea rows="3" style="width: 100%"></textarea>
+                                        <textarea rows="3" style="width: 100%" name="company_retistry"></textarea>
                                     </div>
                                     <div class="form-group col-lg-6 col-sm-12 col-12 ">
                                         <label>Company Vision</label><br>
-                                        <textarea rows="3" style="width: 100%"></textarea>
+                                        <textarea rows="3" style="width: 100%" name="vision"></textarea>
                                     </div>
                                     <div class="form-group col-lg-12 col-sm-12 col-12 ">
                                         <label>Company Mission</label><br>
-                                        <textarea rows="3" style="width:100%;"></textarea>
+                                        <textarea rows="3" style="width:100%;" name="mission"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group text-center">

@@ -37,24 +37,21 @@
                             <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                                 <div class="profile-widget">
                                     <div class="profile-img">
-                                        @php
-                                            $pp=App\userprofile::where("user_id",$emp->emp_id)->first();
-                                        @endphp
-                                        @if($pp!=null)
-                                            <a href="{{url("/emp/profile/$emp->emp_id")}}" ><img src="{{asset("/profile/$pp->profile")}}" alt=""class="avatar"></a>
+                                        @if($emp->emp_profile!=null)
+                                            <a href="{{url("/emp/profile/$emp->id")}}" ><img src="{{asset("/profile/$emp->emp_profile")}}" alt=""class="avatar"></a>
                                         @else
-                                            <a href="{{url("/emp/profile/$emp->emp_id")}}" class="avatar"><img src="img/profiles/avatar-02.jpg" alt=""></a>
+                                            <a href="{{url("/emp/profile/$emp->id")}}" class="avatar"><img src="img/profiles/avatar-02.jpg" alt=""></a>
                                         @endif
 
                                     </div>
                                     <div class="dropdown profile-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="{{url("emp/edit/$emp->emp_id")}}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item" href="{{url("/emp/delete/$emp->emp_id")}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a class="dropdown-item" href="{{url("emp/edit/$emp->id")}}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a class="dropdown-item" href="{{url("/emp/delete/$emp->id")}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
-                                    <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/emp/profile/$emp->emp_id")}}">{{$emp->employee_user->name}}</a></h4>
+                                    <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/emp/profile/$emp->id")}}">{{$emp->name}}</a></h4>
                                     <div class="small text-muted">{{$emp->position->emp_position}}</div>
                                 </div>
                             </div>
@@ -78,17 +75,17 @@
                         @foreach($employees as $emp)
                             <tr>
                                 <th>#{{$emp->employee_id}}</th>
-                                <td>{{$emp->employee_user->name}}</td>
-                                <td>{{$emp->employee_user->email}}</td>
+                                <td>{{$emp->name}}</td>
+                                <td>{{$emp->email}}</td>
                                 <td>{{$emp->phone}}</td>
                                 <td>{{$emp->join_date}}</td>
                                 <td>{{$emp->position->emp_position}}</td>
                                 <td>
                                     <a href="#"class="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-th-list ml-2 mt-2" style="font-size: 18px;"></i></a>
                                     <div class="dropdown-menu">
-                                        <a href="{{url("/emp/profile/$emp->emp_id")}}" class="dropdown-item"><i class="fa fa-user mr-2"></i>Profile</a>
-                                        <a href="{{url("/emp/edit/$emp->emp_id")}}" class="dropdown-item"><i class="fa fa-edit mr-2"></i>Edit</a>
-                                        <a href="{{url("/emp/delete/$emp->emp_id")}}" class="dropdown-item"><i class="fa fa-trash-o mr-2"></i>Delete</a>
+                                        <a href="{{url("/emp/profile/$emp->id")}}" class="dropdown-item"><i class="fa fa-user mr-2"></i>Profile</a>
+                                        <a href="{{url("/emp/edit/$emp->id")}}" class="dropdown-item"><i class="fa fa-edit mr-2"></i>Edit</a>
+                                        <a href="{{url("/emp/delete/$emp->id")}}" class="dropdown-item"><i class="fa fa-trash-o mr-2"></i>Delete</a>
                                     </div>
                                 </td>
                             </tr>

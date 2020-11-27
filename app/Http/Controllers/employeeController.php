@@ -12,12 +12,14 @@ use App\position;
 use App\ticket;
 use App\ticketFollower;
 use App\User;
+use App\user_employee;
 use App\userprofile;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use Spatie\Permission\Models\Role;
 
 class employeeController extends Controller
 {
@@ -40,8 +42,8 @@ class employeeController extends Controller
         } else {
             $emp_id= $company->company_short_form."-00001";
         }
-        $pp=userprofile::all();
-        return view("Employee.employee",compact("positions","depts","company","employees","emp_id","pp"));
+        $roles= $roles=Role::all();
+        return view("Employee.employee",compact("positions","depts","company","employees","emp_id","roles"));
     }
 
     /**
@@ -65,26 +67,40 @@ class employeeController extends Controller
 //        dd($request->all());
         $users=User::where("email",$request->email)->first();
         if($users==null) {
-
-            $user = new User();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->uuid = $request->uuid;
-            $user->save();
             $employee = new employee();
             $employee->employee_id = $request->emp_id;
+            $employee->name=$request->name;
+            $employee->marital_status=$request->marital_status;
+            $employee->email=$request->email;
             $employee->report_to = $request->report_to;
             $employee->dept_id = $request->department;
-            $employee->emp_id = $user->id;
             $employee->emp_post = $request->position;
+            $employee->gender=$request->gender;
+            $employee->nrc=$request->nrc;
+            $image = $request->file("profile");
+            $name = $image->getClientOriginalName();
+            $request->profile->move(public_path() . '/profile/', $name);
+            $employee->emp_profile = $name;
+            $employee->nationality=$request->nationality;
             $employee->admin_id = Auth::user()->id;
             $employee->company_id = $request->company;
             $employee->join_date = Carbon::create($request->join_date);
             $employee->phone = $request->phone;
             $employee->dept_head=$request->dept_head;
             $employee->save();
-            $user->assignRole("Employee");
+            if($request->login=="on") {
+                $user = new User();
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->password = Hash::make($request->password);
+                $user->uuid = $request->uuid;
+                $user->save();
+                $user->assignRole("$request->role");
+                $user_emp=new user_employee();
+                $user_emp->user_id=$user->id;
+                $user_emp->emp_id=$employee->id;
+                $user_emp->save();
+            }
             return redirect()->back()->with("message","Successful");
         }else{
             return redirect()->back()->with("delete","Email already Exist");
@@ -170,11 +186,14 @@ class employeeController extends Controller
        return redirect()->back()->with("delete","Employee Delete Successful!");
     }
     public function profile($emp_id){
-        $emp_details=employee::with("employee_user","report_to_user","company","position","dept")->where("emp_id",$emp_id)->first();
+        $emp_details=employee::with("report_to_user","company","position","dept")->where("id",$emp_id)->first();
 //        dd($emp_details);
-        $profiles=userprofile::where("user_id",$emp_details->emp_id)->first();
-        $report_to_pp=userprofile::where("user_id",$emp_details->report_to_user->id)->first();
-        return view("Employee.profile",compact("emp_details","profiles","report_to_pp"));
+        if($emp_details->report_to_user->hasAnyRole("Admin")){
+            $pp=$emp_details->report_to_user->profile;
+        }else{
+            $pp=$emp_details->emp_profile;
+        }
+        return view("Employee.profile",compact("emp_details","pp"));
     }
     public function tagticket(){
         $followingTickets=ticketFollower::where("emp_id",Auth::user()->id)->get();
@@ -183,7 +202,8 @@ class employeeController extends Controller
             $ticket=ticket::with("priority_type","cases","status_type")->where("id",$ticket->ticket_id)->first();
            array_push($follow_tickets,$ticket);
         }
-        $admin_uuid=employee::with("admin")->where("emp_id",Auth::user()->id)->first();
+        $user_emp=user_employee::where("user_id",Auth::user()->id)->first();
+        $admin_uuid=employee::with("admin")->where("id",$user_emp->emp_id)->first();
 
         return view("Employee.employeeTagticket",compact("follow_tickets","admin_uuid"));
     }
@@ -192,8 +212,10 @@ class employeeController extends Controller
         return back();
     }
     public function filterResult(Request $request){
-
-        $employees=employee::with("employee_user","position")->where("employee_id",$request->employee_id)->orWhere("emp_id",$request->employee_name)->orWhere("emp_post",$request->position)->get();
+        $date=explode("-",$request->daterange);
+        $start_date=Carbon::create($date[0]);
+        $end_date=Carbon::create($date[1]);
+        $employees=employee::with("position")->orWhere("emp_post",$request->position)->orWhere("employee_id",$request->employee_id)->orWhere("name",$request->employee_name)->orWhereBetween("join_date",[$start_date,$end_date])->get();
         return view("Employee.employeeFilterResult",compact("employees"));
 
     }

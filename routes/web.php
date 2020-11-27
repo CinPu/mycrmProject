@@ -85,6 +85,8 @@ Route::group(['middleware'=>'auth'],function () {
     Route::get("/company/delete/{id}","companyController@destory");
     Route::post("/company/update/{id}","companyController@companyupdate");
     Route::get("/ticket/status/{status}","ticketController@dadbordCard");
+    Route::post("/company/edit/{type}/{id}","companyController@update");
+    Route::get("customer_company/delet/{id}","companyController@delete");
     Route::get('/chat', function () {
         return view('chat');
     });

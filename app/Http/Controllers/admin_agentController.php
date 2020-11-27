@@ -11,6 +11,7 @@ use App\employee;
 use App\solvedTime;
 use App\ticket;
 use App\User;
+use App\user_employee;
 use App\userprofile;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,9 +28,15 @@ class admin_agentController extends Controller
      */
     public function index()
     {
+        $employees=[];
         $agents=agent::with("user","dept")->where("admin_id",Auth::user()->id)->get();
         $depts=department::where("admin_uuid",Auth::user()->uuid)->get();
-        $employees=employee::with("employee_user","department")->where("admin_id",Auth::user()->id)->get();
+        $emp_user=user_employee::with("employee","user")->get();
+        foreach ($emp_user as $emp){
+            if($emp->employee->admin_id==Auth::user()->id){
+                array_push($employees,$emp);
+            }
+        }
         return view("userAdmin.agent",compact("agents","depts","employees"));
     }
 
@@ -233,31 +240,36 @@ class admin_agentController extends Controller
         return redirect("/home")->with("message","Successful!");
     }
     public function ppchange(){
-        return view("Agent.ppchange");
+        if(Auth::user()->hasAnyRole("Admin")){
+            $pp=Auth::user()->profile;
+            return view("Agent.ppchange",compact("pp"));
+        }else{
+            $user_emp=user_employee::where("user_id",Auth::user()->id)->first();
+            $user_pp = employee::where("id",$user_emp->emp_id)->first();
+            $pp=$user_pp->profile;
+            return view("Agent.ppchange",compact("pp"));
+        }
+
     }
     public function profileChange(Request $request){
-        $ishasprofile = userprofile::all();
-        $user=[];
-        foreach ($ishasprofile as $pp) {
-            array_push($user,$pp->user_id);
-        }
-        if (!in_array(Auth::user()->id,$user)) {
-            $profile = new userprofile();
-            $image = $request->file("profile");
-            $name = $image->getClientOriginalName();
-            $request->profile->move(public_path() . '/profile/', $name);
-            $profile->profile= $name;
-            $profile->user_id=Auth::user()->id;
-            $profile->save();
-        }else{
-            $user_pp=userprofile::where("user_id",Auth::user()->id)->first();
-            $image = $request->file("profile");
-            $name = $image->getClientOriginalName();
-            $request->profile->move(public_path() . '/profile/', $name);
-            $user_pp->profile=$name;
-            $user_pp->update();
-        }
-        return redirect("/home")->with("message","Profile Change Successful");
+           if(Auth::user()->hasAnyRole("Admin")) {
+               $user_pp = User::where("id", Auth::user()->id)->first();
+               $image = $request->file("profile");
+               $name = $image->getClientOriginalName();
+               $request->profile->move(public_path() . '/profile/', $name);
+               $user_pp->profile = $name;
+               $user_pp->update();
+               return redirect("/home")->with("message", "Profile Change Successful");
+           }else{
+               $user_emp=user_employee::where("user_id",Auth::user()->id)->first();
+               $user_pp = employee::where("id",$user_emp->emp_id)->first();
+               $image = $request->file("profile");
+               $name = $image->getClientOriginalName();
+               $request->profile->move(public_path() . '/profile/', $name);
+               $user_pp->emp_profile = $name;
+               $user_pp->update();
+               return redirect("/home")->with("message", "Profile Change Successful");
+           }
 
     }
     /**

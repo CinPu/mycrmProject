@@ -28,18 +28,14 @@
                             <div class="profile-view">
                                 <div class="profile-img-wrap">
                                     <div class="profile-img">
-                                        @if($profiles==null)
-                                        <a href="#"><img alt="" src="{{url(asset("img/profiles/avatar-02.jpg"))}}"></a>
-                                        @else
-                                            <a href="#"><img alt="" src="{{url(asset("profile/$profiles->profile"))}}"></a>
-                                        @endif
+                                            <a href="#"><img alt="" src="{{url(asset("profile/$emp_details->emp_profile"))}}"></a>
                                     </div>
                                 </div>
                                 <div class="profile-basic">
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="profile-info-left">
-                                                <h3 class="user-name m-t-0 mb-0">{{$emp_details->employee_user->name}}</h3>
+                                                <h3 class="user-name m-t-0 mb-0">{{$emp_details->name}}</h3>
                                                 <small class="text-muted">{{$emp_details->position->emp_position}}</small>
                                                 <div class="staff-id">Employee ID : {{$emp_details->employee_id}}</div>
                                                 <div class="small doj text-muted">Date of Join : {{$emp_details->join_date}}</div>
@@ -54,7 +50,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="title">Email:</div>
-                                                    <div class="text"><a href="">{{$emp_details->employee_user->email}}</a></div>
+                                                    <div class="text"><a href="">{{$emp_details->email}}</a></div>
                                                 </li>
                                                 <li>
                                                     <div class="title">Birthday:</div>
@@ -79,10 +75,10 @@
                                                     <div class="text">
                                                         <div class="avatar-box">
                                                             <div>
-                                                                @if($report_to_pp==null)
+                                                                @if($pp==null)
                                                                 <img src="{{url(asset("img/profiles/avatar-16.jpg"))}}" class="avatar avatar-xs" alt="">
                                                                 @else
-                                                                    <img src="{{url(asset("profile/$report_to_pp->profile"))}}" class="avatar avatar-xs" alt="">
+                                                                    <img src="{{url(asset("profile/$pp"))}}" class="avatar avatar-xs" alt="">
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -125,12 +121,12 @@
                                     <h3 class="card-title">Personal Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a></h3>
                                     <ul class="personal-info">
                                         <li>
-                                            <div class="title">Passport No.</div>
-                                            <div class="text">9876543210</div>
+                                            <div class="title">NRC No.</div>
+                                            <div class="text">{{$emp_details->nrc}}</div>
                                         </li>
                                         <li>
-                                            <div class="title">Passport Exp Date.</div>
-                                            <div class="text">9876543210</div>
+                                            <div class="title">Gender</div>
+                                            <div class="text">{{$emp_details->gender}}</div>
                                         </li>
                                         <li>
                                             <div class="title">Tel</div>
@@ -138,7 +134,7 @@
                                         </li>
                                         <li>
                                             <div class="title">Nationality</div>
-                                            <div class="text">Indian</div>
+                                            <div class="text">{{$emp_details->nationality}}</div>
                                         </li>
                                         <li>
                                             <div class="title">Religion</div>

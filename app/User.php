@@ -57,9 +57,6 @@ class User extends Authenticatable
     public function report_to(){
         return $this->hasMany(employee::class);
     }
-    public function userpp(){
-        return $this->hasMany(userprofile::class);
-    }
     public function dept_head(){
         return $this->hasMany(department::class);
     }
@@ -68,5 +65,8 @@ class User extends Authenticatable
     }
     public function company(){
         return $this->hasMany(company::class);
+    }
+    public function emp_user(){
+        return $this->hasMany(user_employee::class);
     }
 }

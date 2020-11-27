@@ -1,6 +1,7 @@
 @extends("layouts.mainlayout")
 @section("title","Employee")
 @section("content")
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <div class="page-wrapper">
         <!-- Page Content -->
         <div class="content container-fluid">
@@ -59,31 +60,31 @@
             <form action="{{url("/employee/filter")}}" method="POST">
                 {{csrf_field()}}
             <div class="row filter-row">
-                <div class="col-sm-6 col-md-3">
+                <div class="col-sm-4 col-lg-2">
                     <div class="form-group form-focus select-focus focused">
-                        <select class="select floating select2-hidden-accessible form-control" name="employee_id" data-select2-id="3" tabindex="-1" aria-hidden="true">
-                            <option data-select2-id="3">Select Employee ID</option>
+                        <select class="select floating select2-hidden-accessible form-control" id="emp_id" name="employee_id" data-select2-id="3" tabindex="-1" aria-hidden="true">
+                            <option selected disabled>Select Employee ID</option>
                             @foreach($employees as $emp)
                                 <option value="{{$emp->employee_id}}">{{$emp->employee_id}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-3">
+                <div class="col-sm-4 col-lg-2">
                     <div class="form-group form-focus select-focus focused">
-                        <select class="select floating select2-hidden-accessible form-control" name="employee_name" data-select2-id="2" tabindex="-1" aria-hidden="true">
-                            <option data-select2-id="2">Select Designation</option>
+                        <select id="emp_name" class="select floating select2-hidden-accessible form-control" name="employee_name" data-select2-id="2" tabindex="-1" aria-hidden="true">
+                            <option selected disabled>Select Employee Name</option>
                             @foreach($employees as $emp)
-                                <option value="{{$emp->emp_id}}">{{$emp->employee_user->name}}</option>
+                                <option value="{{$emp->name}}">{{$emp->name}}</option>
                             @endforeach
                         </select>
                         {{--               --}}
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-3">
+                <div class="col-sm-4 col-lg-2">
                     <div class="form-group form-focus select-focus focused">
                         <select class="select floating select2-hidden-accessible form-control" name="position" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                            <option data-select2-id="3">Select Designation</option>
+                            <option selected disabled>Select Designation</option>
                             @foreach($positions as $position)
                                 <option value="{{$position->id}}">{{$position->emp_position}}</option>
                             @endforeach
@@ -91,8 +92,13 @@
                         {{--               --}}
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-3">
-                    <button type="submit" class="btn btn-success btn-block"><i class="fa fa-search mr-2"></i> Search </button>
+                <div class="col-sm-4 col-lg-2">
+                    <div class="form-group form-focus select-focus focused">
+                    <input type="text" class="form-control" id="join_date" name="daterange"  />
+                    </div>
+                </div>
+                <div class="col-sm-4 col-lg-2 ">
+                    <button type="submit" class="btn btn-success btn-block"><i class="fa fa-search mr-2"></i>Search</button>
                 </div>
             </div>
             </form>
@@ -104,15 +110,7 @@
                     <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                     <div class="profile-widget">
                         <div class="profile-img">
-                            @php
-                                $pp=App\userprofile::where("user_id",$emp->emp_id)->first();
-                            @endphp
-                            @if($pp!=null)
-                                <a href="{{url("/emp/profile/$emp->emp_id")}}" ><img src="{{asset("/profile/$pp->profile")}}" alt=""class="avatar"></a>
-                            @else
-                                <a href="{{url("/emp/profile/$emp->emp_id")}}" class="avatar"><img src="img/profiles/avatar-02.jpg" alt=""></a>
-                            @endif
-
+                                <a href="{{url("/emp/profile/$emp->id")}}" ><img src="{{asset("/profile/$emp->emp_profile")}}" alt=""class="avatar"></a>
                         </div>
                         <div class="dropdown profile-action">
                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -121,7 +119,7 @@
                                 <a class="dropdown-item" href="{{url("/emp/delete/$emp->emp_id")}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                             </div>
                         </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/emp/profile/$emp->emp_id")}}">{{$emp->employee_user->name}}</a></h4>
+                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/emp/profile/$emp->id")}}">{{$emp->name}}</a></h4>
                         <div class="small text-muted">{{$emp->position->emp_position}}</div>
                     </div>
                 </div>
@@ -145,8 +143,8 @@
                         @foreach($employees as $emp)
                             <tr>
                                 <th>#{{$emp->employee_id}}</th>
-                                <td>{{$emp->employee_user->name}}</td>
-                                <td>{{$emp->employee_user->email}}</td>
+                                <td>{{$emp->name}}</td>
+                                <td>{{$emp->email}}</td>
                                 <td>{{$emp->phone}}</td>
                                 <td>{{$emp->join_date}}</td>
                                 <td>{{$emp->position->emp_position}}</td>
@@ -179,6 +177,13 @@
                     <div class="modal-body">
                         <form action="{{url("/employee/create")}}" method="POST">
                             {{csrf_field()}}
+                            <div>
+                                <div class="text-center" >
+                                    <h4>Profile Picture</h4>
+                                    <img id="output" class="rounded-circle" src="{{url(asset("/img/profiles/avatar-01.jpg"))}}" width="100px" height="100px;"><br>
+                                    <input type="file" accept="image/*" name="profile"  class="offset-md-1" onchange="loadFile(event)">
+                                </div>
+                            </div>
                                 <div class="form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="name">Name</label>
@@ -190,15 +195,33 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mt-3">
-                                    <div class="col-md-6">
-                                        <label for="">Password</label>
-                                        <input type="password" name="password" class="form-control">
+                                    <div class="col-6">
+                                        <label for="">Gender</label><br>
+                                        <input type="radio"name="gender" class="mr-3" value="Male"><label for="">Male</label>
+                                        <input type="radio"name="gender" class="mr-3 ml-5" value="Female"><label for="">Female</label>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="">Confirm Password</label>
-                                        <input type="password" name="confirm_password" class="form-control">
+                                    <div class="col-6">
+                                        <label for="">Marital Status</label>
+                                        <select name="marital_status" id="" class="form-control">
+                                            <option value="Single">Single</option>
+                                            <option value="Married">Married</option>
+                                            <option value="Widowed">Widowed</option>
+                                            <option value="Separated">Separated</option>
+                                            <option value="Divorced">Divorced</option>
+                                        </select>
                                     </div>
                                 </div>
+                                <div class="form-group row mt-3">
+                                <div class="col-md-6">
+                                    <label for="">NRC No.</label>
+                                    <input type="text" name="nrc" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Nationality</label>
+                                    <input type="text" name="nationality" class="form-control">
+                                </div>
+
+                            </div>
                                 <div class="form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="">Employee ID</label>
@@ -247,7 +270,7 @@
                                         <select name="report_to" class="form-control" id="">
                                             <option value="{{\Illuminate\Support\Facades\Auth::user()->id}}">{{\Illuminate\Support\Facades\Auth::user()->name}} (Admin)</option>
                                             @foreach($employees as $employee)
-                                                <option value="{{$employee->employee_user->id}}">{{$employee->employee_user->name}}</option>
+                                                <option value="{{$employee->id}}">{{$employee->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -258,11 +281,40 @@
                                         </select>
                                     </div>
                                 </div>
-                            <div class="modal-footer">
+                            <hr>
+                            <span data-toggle="collapse" data-target="#dept_head_info" >
+                            <input type="checkbox" name="login">
+                            </span><span for="">Log as In</span>
+
+                            <div class="sub-menu collapse border mt-3" id="dept_head_info">
+                                <h5 align="center" class="mt-3">Log As In </h5>
+                                <div class="col-12 form-group row mt-3">
+                                    <div class="col-md-6">
+                                        <label for="">Password</label>
+                                        <input type="password" name="password" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="">Confirm Password</label>
+                                        <input type="password" name="confirm_password" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-12 form-group row mt-3">
+                                    <div class="col-md-6">
+                                        <label for="">Role</label>
+                                        <select class="form-control" name="role" id="">
+                                            @foreach($roles as $role)
+                                            <option value="{{$role->name}}">{{$role->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <input type="hidden" name="uuid" value="{{Str::uuid()->toString()}}">
+                                </div>
+                            </div>
+                            <div class="modal-footer mt-3">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
-                            <input type="hidden" name="uuid" value="{{Str::uuid()->toString()}}">
+
                         </form>
                     </div>
                 </div>
@@ -296,6 +348,9 @@
 
     </div>
     <!-- /Page Wrapper -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script>
         $(document).ready(function (){
             $("#emp").DataTable({
@@ -322,6 +377,22 @@
                     $("#size").html( "<option></option>");
                 }
                 @endforeach
+            });
+        });
+        var loadFile = function(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('output');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
+        document.getElementById("join_date").innerHTML = Date();
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'right',
+            }, function(start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
             });
         });
     </script>

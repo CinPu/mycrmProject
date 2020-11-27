@@ -36,9 +36,9 @@
                             <div class="form-group">
                                 <label for="agent_name">Agent Name:</label><br>
                                 <select class="form-control" id="agent_name" name="agent_name">
-                                    <option value="item0">Choose Department</option>
+                                    <option value="item0">Choose Employee</option>
                                     @foreach($employees as $employee)
-                                        <option value="{{$employee->employee_user->id}}">{{$employee->employee_user->name}}</option>
+                                        <option value="{{$employee->user_id}}">{{$employee->user->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -141,8 +141,8 @@
             $("#agent_name").change(function () {
                 var val = $(this).val();
                 @foreach($employees as $emp)
-                if (val =={{$emp->emp_id}} ) {
-                    $("#dept_id").html("<option value='{{$emp->dept_id}}'>{{$emp->department->dept_name}}</option>");
+                if (val =={{$emp->user_id}} ) {
+                    $("#dept_id").html("<option value='{{$emp->employee->dept_id}}'>{{$emp->employee->department->dept_name}}</option>");
                 }else if(val=="item0") {
                     $("#dept_id").html( "<option></option>");
                 }

@@ -62,10 +62,19 @@
                                 <div class="form-group">
                                     <label for="priority">Color</label>
                                     <select class="form-control"name="color" id="">
+                                        <option selected disabled>Choose Color</option>
+                                        @if($isgreen==null)
                                         <option value="success">Green</option>
+                                        @endif
+                                        @if($isred==null)
                                         <option value="danger">Red</option>
-                                        <option value="facebook">Blue</option>
-                                        <option value="primary">Pink</option>
+                                         @endif
+                                        @if($isblue==null)
+                                        <option value="primary">Blue</option>
+                                        @endif
+                                        @if($isyellow==null)
+                                        <option value="warning">Yellow</option>
+                                            @endif
                                     </select>
                                 </div>
                                 <label>Duration Time : </label>
@@ -118,9 +127,9 @@
                         @elseif($priority->color=="danger")
                             <a href=""class="btn btn-danger">Red</a>
                         @elseif($priority->color=="primary")
-                            <a href=""class="btn btn-primary">Pink</a>
-                        @elseif($priority->color=="facebook")
-                            <a href=""class="btn btn-facebook">Blue</a>
+                            <a href=""class="btn btn-primary">Blue</a>
+                        @elseif($priority->color=="warning")
+                            <a href=""class="btn btn-warning">Yellow</a>
                         @endif
                     </td>
                     <td>
@@ -151,16 +160,19 @@
                                                 <label for="priority_name">Priority Name</label>
                                                 <input type="text" class="form-control" id="priority_name" aria-describedby="emailHelp" name="priority" value="{{$priority->priority}}" placeholder="Priority Name">
                                             </div>
-                                            <div class="form-group">
-                                                <label for="priority">Color: <button type="button" class="btn btn-{{$priority->color}}"></button></label>
-                                                <select class="form-control"name="color" id="">
-                                                    <option></option>
-                                                    <option value="success">Green</option>
-                                                    <option value="danger">Red</option>
-                                                    <option value="facebook">Blue</option>
-                                                    <option value="primary">Pink</option>
-                                                </select>
-                                            </div>
+{{--                                            <div class="form-group">--}}
+{{--                                                <label for="priority">Color: <button type="button" class="btn btn-{{$priority->color}}"></button></label>--}}
+{{--                                                <select class="form-control"name="color" id="">--}}
+{{--                                                    <option disabled selected>Choose Color</option>--}}
+
+{{--                                                    @if($isgreen==null)--}}
+{{--                                                        <option value="success">Green</option>--}}
+{{--                                                    @endif--}}
+{{--                                                    <option value="danger">Red</option>--}}
+{{--                                                    <option value="primary">Blue</option>--}}
+{{--                                                    <option value="warning">Yellow</option>--}}
+{{--                                                </select>--}}
+{{--                                            </div>--}}
                                             <span>Old Duration Time : </span> : {{$priority->hours}} Hours {{$priority->minutes}} Minutes {{$priority->seconds}} Seconds
                                             <div class="form-group ">
                                                 <label for="duration_time" class="my-2">Select New Duration Time : </label><br>

@@ -6,6 +6,7 @@ use App\agent;
 use App\employee;
 use App\rolemangeController;
 use App\User;
+use App\user_employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -15,9 +16,12 @@ class RolemangeControllerController extends Controller
     public function index(){
         $employees=[];
         $roles=Role::all();
-        $agents=employee::with("employee_user")->where("admin_id",Auth::user()->id)->get();
+        $agents=user_employee::with("user","employee")->get();
+
         foreach ($agents as $agent){
-            array_push($employees,$agent->employee_user);
+            if($agent->employee->admin_id==Auth::user()->id) {
+                array_push($employees, $agent->user);
+            }
         }
         return view("userAdmin.roleManagement",compact("employees","roles"));
     }

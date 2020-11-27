@@ -311,12 +311,15 @@
                                     @if($ticket->isassign==1)
                                         @foreach($assign_name as $assignName)
                                             @if($assignName->ticket_id==$ticket->id)
-                                                @if($assignName->agent_pp!=null)
-                                                    <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                    {{$assignName->agent->name}}
+                                                @php
+                                                    $emp=\App\employee::where("id",$assignName->employee->emp_id)->first();
+                                                @endphp
+                                                @if($emp->emp_profile!=null)
+                                                    <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                    {{$emp->name}}
                                                 @else
                                                     <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                    {{$assignName->agent->name}}
+                                                    {{$emp->name}}
                                                 @endif
                                             @endif
                                         @endforeach
@@ -458,12 +461,12 @@
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($assignName->agent_pp!=null)
-                                                        <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$assignName->agent->name}}
+                                                    @if($emp->emp_profile!=null)
+                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                        {{$emp->name}}
                                                     @else
                                                         <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$assignName->agent->name}}
+                                                        {{$emp->name}}
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -576,12 +579,12 @@
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($assignName->agent_pp!=null)
-                                                        <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$assignName->agent->name}}
+                                                    @if($emp->emp_profile!=null)
+                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                        {{$emp->name}}
                                                     @else
                                                         <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$assignName->agent->name}}
+                                                        {{$emp->name}}
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -692,12 +695,12 @@
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($assignName->agent_pp!=null)
-                                                        <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$assignName->agent->name}}
+                                                    @if($emp->emp_profile!=null)
+                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                        {{$emp->name}}
                                                     @else
                                                         <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$assignName->agent->name}}
+                                                        {{$emp->name}}
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -809,12 +812,12 @@
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($assignName->agent_pp!=null)
-                                                        <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$assignName->agent->name}}
+                                                    @if($emp->emp_profile!=null)
+                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                        {{$emp->name}}
                                                     @else
                                                         <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$assignName->agent->name}}
+                                                        {{$emp->name}}
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -924,12 +927,12 @@
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($assignName->agent_pp!=null)
-                                                        <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$assignName->agent->name}}
+                                                    @if($emp->emp_profile!=null)
+                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                        {{$emp->name}}
                                                     @else
                                                         <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$assignName->agent->name}}
+                                                        {{$emp->name}}
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -1041,12 +1044,12 @@
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($assignName->agent_pp!=null)
-                                                        <img src="{{url(asset("/profile/".$assignName->agent_pp->profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$assignName->agent->name}}
+                                                    @if($emp->emp_profile!=null)
+                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                        {{$emp->name}}
                                                     @else
                                                         <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$assignName->agent->name}}
+                                                        {{$emp->name}}
                                                     @endif
                                                 @endif
                                             @endforeach

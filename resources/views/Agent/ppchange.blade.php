@@ -24,9 +24,8 @@
         {{csrf_field()}}
     <div class="text-center" >
         <h4>Choose Your Profile Picture</h4>
-        <input type="file" accept="image/*" name="profile" onchange="loadFile(event)">
-        <br>
-        <img id="output" class="rounded-circle" width="80px" height="80px;">
+        <img id="output" src="{{url(asset("/profile/$pp"))}}" class="rounded-circle" width="80px" height="80px;"><br>
+        <input type="file" class="my-3"  accept="image/*" name="profile" onchange="loadFile(event)">
     </div>
         <div class="text-center mt-2">
         <button type="submit"  class="btn btn-primary">Save Change</button>

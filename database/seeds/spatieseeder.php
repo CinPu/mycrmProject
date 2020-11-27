@@ -17,7 +17,7 @@ class spatieseeder extends Seeder
         Permission::create(['name' => 'Edit']);
         Permission::create(['name' => 'Delete']);
         $role = Role::create(['name' => 'SuperAdmin']);
-        $role=Role::create(['name'=>'AdminRegister']);
+        $role=Role::create(['name'=>'TicketAdmin']);
         $role = Role::create(['name' => 'Admin']);
         $role = Role::create(['name' => 'Agent']);
         $role = Role::create(['name'=>'Employee']);

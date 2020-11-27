@@ -24,6 +24,7 @@ class CreateCustomerCompaniesTable extends Migration
             $table->string("type_of_business");
             $table->string("name_of_ceo");
             $table->text("facebookpage");
+            $table->text("linkedin");
             $table->string("parent_company");
             $table->double("phone");
             $table->double("hotline");

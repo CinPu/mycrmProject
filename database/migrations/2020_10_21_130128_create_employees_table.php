@@ -15,16 +15,22 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->text("emp_profile")->nullable();
             $table->string("employee_id");
+            $table->string("name");
+            $table->string("email");
+            $table->text("nrc");
+            $table->text("gender");
+            $table->string("nationality")->nullable();
+            $table->string("religion")->nullable();
             $table->dateTime("dob")->nullable();
+            $table->string("marital_status")->nullable();
             $table->dateTime("join_date");
             $table->text("address")->nullable();
             $table->bigInteger("report_to")->unsigned();
             $table->foreign("report_to")->references("id")->on("users")->onDelete("cascade");
             $table->bigInteger("dept_id")->unsigned();
             $table->foreign("dept_id")->references("id")->on("departments")->onDelete("cascade");
-            $table->bigInteger("emp_id")->unsigned();
-            $table->foreign("emp_id")->references("id")->on("users")->onDelete("cascade");
             $table->double("phone");
             $table->bigInteger("dept_head")->unsigned();
             $table->foreign("dept_head")->references("id")->on("users")->onDelete("cascade");

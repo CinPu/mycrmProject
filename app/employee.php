@@ -43,4 +43,7 @@ class employee extends Model
     public function dept(){
         return $this->belongsTo(department::class,"dept_id","id");
     }
+    public function emp_user(){
+        return $this->hasMany(user_employee::class);
+    }
 }

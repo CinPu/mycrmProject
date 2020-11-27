@@ -73,7 +73,7 @@
                             </div>
                                 <div class="sub-menu collapse border mt-3" id="dept_head_info">
                                 <h5 align="center" class="mt-3">Head Of Department </h5>
-                                <div class="col-12 form-group row mt-3">
+                                    <div class="col-12 form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="">Employee ID</label>
                                         <input type="text" name="emp_id" class="form-control" value="{{$emp_id}}">
@@ -83,7 +83,18 @@
                                         <input type="text" name="dept_headName" class="dept_head form-control" required>
                                     </div>
                                 </div>
-                                <div class="col-12 form-group row mt-3">
+                                    <div class="col-12 form-group row mt-3">
+                                        <div class="col-6">
+                                        <label for="">Gender</label><br>
+                                        <input type="radio"name="gender" class="mr-3" value="Male"><label for="">Male</label>
+                                        <input type="radio"name="gender" class="mr-2 ml-2" value="Female"><label for="">Female</label>
+                                    </div>
+                                        <div class="col-md-6">
+                                        <label for="">NRC No.</label>
+                                        <input type="text" name="nrc" class="form-control">
+                                    </div>
+                                    </div>
+                                    <div class="col-12 form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="">Password</label>
                                         <input type="password" name="password" class="form-control">
@@ -93,7 +104,7 @@
                                         <input type="password" name="confirm_password" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-12 form-group row mt-3">
+                                    <div class="col-12 form-group row mt-3">
 
                                     <div class="col-md-6">
                                         <label for="">Phone</label>
@@ -104,7 +115,7 @@
                                         <input type="email" name="email" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-12 form-group row mt-3">
+                                    <div class="col-12 form-group row mt-3">
                                     <div class="col-md-6">
                                     <label for="">Position</label>
                                     <select name="position" class="form-control" id="">

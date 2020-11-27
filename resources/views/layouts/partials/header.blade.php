@@ -2,16 +2,17 @@
 <div class="header">
 
 @php
-    use Illuminate\Support\Facades\Auth;if (Auth::user()->hasAnyRole("Admin"))
+    use App\user_employee;use Illuminate\Support\Facades\Auth;
+if (Auth::user()->hasAnyRole("Admin")){
     $company=\App\company::where("admin_id",Auth::user()->id)->first();
-    elseif (Auth::user()->hasAnyRole("Agent")){
-    $admin=\App\agent::where("agent_id",\Illuminate\Support\Facades\Auth::user()->id)->first();
-    $company=\App\company::where("admin_id",$admin->admin_id)->first();
-    }elseif(Auth::user()->hasAnyRole("Employee")){
-       $employee_admin=\App\employee::where("emp_id",\Illuminate\Support\Facades\Auth::user()->id)->first();
+    $profile=Auth::user()->profile;
+   }else{
+        $user_emp=user_employee::where("user_id",Auth::user()->id)->first();
+       $employee_admin=\App\employee::where("id",$user_emp->emp_id)->first();
         $company=\App\company::where("admin_id",$employee_admin->admin_id)->first();
+         $profile=$employee_admin->emp_profile;
     }
-    $profile=\App\userprofile::where("user_id",\Illuminate\Support\Facades\Auth::user()->id)->first();
+
 @endphp
             <!-- Logo -->
             <div class="header-left">
@@ -287,28 +288,28 @@
                         @if(\Illuminate\Support\Facades\Auth::check())
                             @if($profile==null)
                                 <span class="status online"></span>
-                                <span class="user-img"><img src="{{asset("profile/back.jpg")}}" alt="ggg"  width="20px;" height="20px"></span>
+                                <span class="user-img"><img src="{{asset("profile/user.png")}}" class="avatar" alt="userProfile" height="20px;"></span>
                             <span></span>
                             @else
-                                <img src="{{asset("/profile/$profile->profile")}}" width="30px;" height="30px" class="rounded-circle">
+                                <img src="{{asset("/profile/$profile")}}" width="30px;" height="30px" class="rounded-circle">
                             @endif
 
                             @endif
                     </a>
                     <div class="dropdown-menu">
                         @if($profile==null)
-                            <span class="user-img text-center offset-md-2 mt-2">
-                                <img src="{{asset("profile/back.jpg")}}" alt="ggg"  width="40px;" height="30px">
+                            <span class="user-img text-center offset-lg-5 offset-sm-5 mt-2">
+                                <img src="{{asset("profile/user.png")}}" alt="userpp"  width="40px;" height="30px">
                             </span>
                            <h4 align="center"> {{\Illuminate\Support\Facades\Auth::user()->name}}</h4>
                                 @else
-                            <span class="user-img text-center offset-2 mt-2">
-                                    <img src="{{asset("/profile/$profile->profile")}}" width="40px;" height="40px" class="rounded-circle">
+                            <span class="offset-lg-4 offset-sm-5 mt-2">
+                                    <img src="{{asset("/profile/$profile")}}" width="50px;" height="50px;"  class="rounded-circle">
                            <h4 align="center"> {{\Illuminate\Support\Facades\Auth::user()->name}}</h4>
                             </span>
                                 @endif
 
-                        <a class="dropdown-item" href="{{url("/pp/change")}}"><i class="fa fa-image mr-2"></i>Change Profile Picture</a>
+                        <a class="dropdown-item" href="{{url("/pp/change")}}"><i class="fa fa-image mr-2"></i>Change Profile</a>
                         <a class="dropdown-item" href="{{url("/user/setting")}}"><i class="fa fa-cogs mr-2"></i>Password Change</a>
                         <a class="dropdown-item" href="{{url("/logout")}}"><i class="fa fa-sign-out mr-2"></i>Logout</a>
                     </div>
