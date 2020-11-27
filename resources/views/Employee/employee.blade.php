@@ -175,7 +175,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{url("/employee/create")}}" method="POST">
+                        <form action="{{url("/employee/create")}}" method="POST" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div>
                                 <div class="text-center" >

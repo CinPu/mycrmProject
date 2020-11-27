@@ -64,7 +64,6 @@ class employeeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $users=User::where("email",$request->email)->first();
         if($users==null) {
             $employee = new employee();
@@ -77,7 +76,7 @@ class employeeController extends Controller
             $employee->emp_post = $request->position;
             $employee->gender=$request->gender;
             $employee->nrc=$request->nrc;
-            $image = $request->file("profile");
+            $image = $request->profile;
             $name = $image->getClientOriginalName();
             $request->profile->move(public_path() .'/profile/', $name);
             $employee->emp_profile = $name;

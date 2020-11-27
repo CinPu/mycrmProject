@@ -151,7 +151,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{url("/company/edit/info/$company->id")}}">
+                        <form method="POST" action="{{url("/company/edit/info/$company->id")}}" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="col-12 mb-3">
                                 <div>
