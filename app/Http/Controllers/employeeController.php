@@ -219,7 +219,7 @@ class employeeController extends Controller
         $report_to=[];
         foreach ($employees as $emp){
             $user_emp=user_employee::with("user")->where("emp_id",$emp->id)->first();
-            if($user_emp!=null){
+            if($user_emp!=null && $user_emp->emp_id!=$emp_id){
                 array_push($report_to,$user_emp);
             }
         }
