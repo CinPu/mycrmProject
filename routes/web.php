@@ -69,8 +69,7 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("/add/follower/{id}","ticketController@follower");
     Route::get("/follower/remove/{id}","ticketController@removefollower");
     Route::get("/emp/profile/{emp_id}","employeeController@profile");
-    Route::get("/emp/edit/{emp_id}","employeeController@edit");
-    Route::post("/emp/edit/{emp_id}","employeeController@update");
+    Route::post("employee/update/{edit_type}/{emp_id}","employeeController@update");
     Route::get("/emp/delete/{emp_id}","employeeController@destroy");
     Route::get("/employee/tag/tickets","employeeController@tagticket");
     Route::post("/ticket/import","ticketController@ticktImport");

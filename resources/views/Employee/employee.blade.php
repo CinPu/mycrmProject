@@ -110,13 +110,18 @@
                     <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                     <div class="profile-widget">
                         <div class="profile-img">
+                            @if($emp->emp_profile!=null)
                                 <a href="{{url("/emp/profile/$emp->id")}}" ><img src="{{asset("/profile/$emp->emp_profile")}}" alt=""class="avatar"></a>
+                            @else
+
+                                <a href="{{url("/emp/profile/$emp->id")}}" ><img src="{{asset("img/profiles/avatar-01.jpg")}}" alt=""class="avatar"></a>
+                            @endif
                         </div>
                         <div class="dropdown profile-action">
                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="{{url("emp/edit/$emp->emp_id")}}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                <a class="dropdown-item" href="{{url("/emp/delete/$emp->emp_id")}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+{{--                                <a class="dropdown-item" href="{{url("emp/edit/$emp->emp_id")}}"><i class="fa fa-pencil m-r-5"></i> Edit</a>--}}
+                                <a class="dropdown-item" href="{{url("/emp/delete/$emp->id")}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                             </div>
                         </div>
                         <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/emp/profile/$emp->id")}}">{{$emp->name}}</a></h4>
@@ -151,9 +156,8 @@
                                 <td>
                                     <a href="#"class="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-th-list ml-2 mt-2" style="font-size: 18px;"></i></a>
                                     <div class="dropdown-menu">
-                                        <a href="{{url("/emp/profile/$emp->emp_id")}}" class="dropdown-item"><i class="fa fa-user mr-2"></i>Profile</a>
-                                        <a href="{{url("/emp/edit/$emp->emp_id")}}" class="dropdown-item"><i class="fa fa-edit mr-2"></i>Edit</a>
-                                        <a href="{{url("/emp/delete/$emp->emp_id")}}" class="dropdown-item"><i class="fa fa-trash-o mr-2"></i>Delete</a>
+                                        <a href="{{url("/emp/profile/$emp->id")}}" class="dropdown-item"><i class="fa fa-user mr-2"></i>Profile</a>
+                                        <a href="{{url("/emp/delete/$emp->id")}}" class="dropdown-item"><i class="fa fa-trash-o mr-2"></i>Delete</a>
                                     </div>
                                 </td>
                             </tr>
@@ -220,7 +224,6 @@
                                     <label for="">Nationality</label>
                                     <input type="text" name="nationality" class="form-control">
                                 </div>
-
                             </div>
                                 <div class="form-group row mt-3">
                                     <div class="col-md-6">
@@ -269,8 +272,8 @@
                                         <label for="">Report To</label>
                                         <select name="report_to" class="form-control" id="">
                                             <option value="{{\Illuminate\Support\Facades\Auth::user()->id}}">{{\Illuminate\Support\Facades\Auth::user()->name}} (Admin)</option>
-                                            @foreach($employees as $employee)
-                                                <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                            @foreach($report_to as $report)
+                                                <option value="{{$report->user->id}}">{{$report->user->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>

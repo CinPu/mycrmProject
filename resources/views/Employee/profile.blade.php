@@ -28,7 +28,11 @@
                             <div class="profile-view">
                                 <div class="profile-img-wrap">
                                     <div class="profile-img">
+                                        @if($emp_details->emp_profile!=null)
                                             <a href="#"><img alt="" src="{{url(asset("profile/$emp_details->emp_profile"))}}"></a>
+                                        @else
+                                            <a href="#" ><img src="{{asset("img/profiles/avatar-01.jpg")}}" alt=""class="avatar"></a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="profile-basic">
@@ -53,12 +57,9 @@
                                                     <div class="text"><a href="">{{$emp_details->email}}</a></div>
                                                 </li>
                                                 <li>
-                                                    <div class="title">Birthday:</div>
+                                                    <div class="title">Department:</div>
                                                     <div class="text">
-                                                        @if($emp_details->dob==null)
-                                                            No birthday has been added yet !
-                                                        @else{{$emp_details->dob}}
-                                                    @endif
+                                                        {{$emp_details->dept->dept_name}}
                                                     </div>
                                                 </li>
                                                 <li>
@@ -82,9 +83,16 @@
                                                                 @endif
                                                             </div>
                                                         </div>
-                                                        <a href="profile">
+                                                        @if($emp_details->report_to_user->hasAnyRole("Admin"))
+                                                            {{$emp_details->report_to_user->name}}
+                                                        @else
+                                                            @php
+                                                            $emp_user=\App\user_employee::where("user_id",$emp_details->report_to_user->id)->first();
+                                                            @endphp
+                                                        <a href="{{url("/emp/profile/$emp_user->emp_id")}}">
                                                             {{$emp_details->report_to_user->name}}
                                                         </a>
+                                                            @endif
                                                     </div>
                                                 </li>
                                             </ul>
@@ -129,8 +137,8 @@
                                             <div class="text">{{$emp_details->gender}}</div>
                                         </li>
                                         <li>
-                                            <div class="title">Tel</div>
-                                            <div class="text"><a href="">9876543210</a></div>
+                                            <div class="title">Birth Date</div>
+                                            <div class="text">{{$emp_details->dob}}</div>
                                         </li>
                                         <li>
                                             <div class="title">Nationality</div>
@@ -138,19 +146,11 @@
                                         </li>
                                         <li>
                                             <div class="title">Religion</div>
-                                            <div class="text">Christian</div>
+                                            <div class="text">{{$emp_details->religion}}</div>
                                         </li>
                                         <li>
                                             <div class="title">Marital status</div>
-                                            <div class="text">Married</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Employment of spouse</div>
-                                            <div class="text">No</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">No. of children</div>
-                                            <div class="text">2</div>
+                                            <div class="text">{{$emp_details->marital_status}}</div>
                                         </li>
                                     </ul>
                                 </div>
@@ -639,49 +639,94 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Profile Information</h5>
+                        <h5 class="modal-title">Profile Information Edit</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="{{url("employee/update/profile/$emp_details->id")}}" method="POST" enctype="multipart/form-data">
+                           {{csrf_field()}}
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="profile-img-wrap edit-img">
-                                        <img class="inline-block" src="img/profiles/avatar-02.jpg" alt="user">
-                                        <div class="fileupload btn">
-                                            <span class="btn-text">edit</span>
-                                            <input class="upload" type="file">
+                                    <h4 align="center">Profile Picture</h4>
+                                        <div>
+                                            <div class="text-center" >
+                                                <img id="output" class="rounded-circle" src="{{url(asset("/img/profiles/avatar-01.jpg"))}}" width="100px" height="100px;"><br><br>
+                                                <input type="file" accept="image/*" name="profile"  class="offset-md-1" onchange="loadFile(event)">
+                                            </div>
                                         </div>
-                                    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>First Name</label>
-                                                <input type="text" class="form-control" value="John">
+                                                <label>Employee ID</label>
+                                                <input type="text" class="form-control" name="emp_id" value="{{$emp_details->employee_id}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Last Name</label>
-                                                <input type="text" class="form-control" value="Doe">
+                                                <label for="name">Name</label>
+                                                <input type="text" id="name" name="name" class="form-control" value="{{$emp_details->name}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Birth Date</label>
-                                                <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text" value="05/06/1985">
-                                                </div>
+                                                <label for="email">Email</label>
+                                                <input type="email" id="email" name="email" class="form-control" value="{{$emp_details->email}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Gender</label>
-                                                <select class="select form-control">
-                                                    <option value="male selected">Male</option>
-                                                    <option value="female">Female</option>
+                                                <label>Phone Number</label>
+                                                <input type="text" name="phone" class="form-control" value="{{$emp_details->phone}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Join Date</label>
+                                                    <input class="form-control" name="join_date" id="join_date" type="date">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Department <span class="text-danger">*</span></label>
+                                                <select class="select" name="dept">
+                                                    @foreach($depts as $dept)
+                                                        @if($dept->id==$emp_details->dept->id)
+                                                            <option value="{{$dept->id}}" selected>{{$dept->dept_name}}</option>
+                                                        @else
+                                                            <option value="{{$dept->id}}">{{$dept->dept_name}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Designation <span class="text-danger">*</span></label>
+                                                <select class="select" name="position">
+                                                @foreach($positions as $post)
+                                                    @if($post->id==$emp_details->emp_post)
+                                                        <option value="{{$post->id}}" selected>{{$post->emp_position}}</option>
+                                                        @else
+                                                        <option value="{{$post->id}}">{{$post->emp_position}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Reports To <span class="text-danger">*</span></label>
+                                                <select class="select" name="report_to">
+                                                    <option value="{{\Illuminate\Support\Facades\Auth::user()->id}}">{{\Illuminate\Support\Facades\Auth::user()->name}}</option>
+                                                    @foreach($report_to as $report)
+                                                        @if($report->report_to==$emp_details->report_to)
+                                                    <option value="{{$report->user->id}}" selected>{{$report->user->name}}</option>
+                                                        @else
+                                                            <option value="{{$report->user->id}}">{{$report->user->name}}</option>
+                                                        @endif
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -692,69 +737,12 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Address</label>
-                                        <input type="text" class="form-control" value="4487 Snowbird Lane">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>State</label>
-                                        <input type="text" class="form-control" value="New York">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Country</label>
-                                        <input type="text" class="form-control" value="United States">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Pin Code</label>
-                                        <input type="text" class="form-control" value="10523">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Phone Number</label>
-                                        <input type="text" class="form-control" value="631-889-3206">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Department <span class="text-danger">*</span></label>
-                                        <select class="select">
-                                            <option>Select Department</option>
-                                            <option>Web Development</option>
-                                            <option>IT Management</option>
-                                            <option>Marketing</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Designation <span class="text-danger">*</span></label>
-                                        <select class="select">
-                                            <option>Select Designation</option>
-                                            <option>Web Designer</option>
-                                            <option>Web Developer</option>
-                                            <option>Android Developer</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Reports To <span class="text-danger">*</span></label>
-                                        <select class="select">
-                                            <option>-</option>
-                                            <option>Wilmer Deluna</option>
-                                            <option>Lesley Grauer</option>
-                                            <option>Jeffery Lalor</option>
-                                        </select>
+                                        <input type="text" name="address" class="form-control" value="{{$emp_details->address}}">
                                     </div>
                                 </div>
                             </div>
                             <div class="submit-section">
-                                <button class="btn btn-primary submit-btn">Submit</button>
+                                <button type="submit" class="btn btn-primary submit-btn">Update</button>
                             </div>
                         </form>
                     </div>
@@ -774,62 +762,52 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="{{url("employee/update/personal/$emp_details->id")}}" method="POST">
+                            {{csrf_field()}}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Passport No</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Passport Expiry Date</label>
-                                        <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Tel</label>
-                                        <input class="form-control" type="text">
+                                        <label>NRC No</label>
+                                        <input type="text" name="nrc" class="form-control" value="{{$emp_details->nrc}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nationality <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text">
+                                        <input class="form-control" type="text" name="nationality" value="{{$emp_details->nationality}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Religion</label>
-                                        <div class="cal-icon">
-                                            <input class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Marital status <span class="text-danger">*</span></label>
-                                        <select class="select form-control">
-                                            <option>-</option>
-                                            <option>Single</option>
-                                            <option>Married</option>
+                                        <label>Gender</label>
+                                        <select class="form-control" name="gender" id="gendet">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Employment of spouse</label>
-                                        <input class="form-control" type="text">
+                                        <label>Birth Date</label>
+                                        <input class="form-control" name="dob" id="dob" type="date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>No. of children </label>
-                                        <input class="form-control" type="text">
+                                        <label>Religion</label>
+                                        <input class="form-control" type="text" name="religion">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Marital status <span class="text-danger">*</span></label>
+                                        <select class="select form-control" name="marital_status">
+                                            <option value="Single">Single</option>
+                                            <option value="Married">Married</option>
+                                            <option value="Widowed">Widowed</option>
+                                            <option value="Separated">Separated</option>
+                                            <option value="Divorced">Divorced</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -1251,5 +1229,15 @@
         <!-- /Experience Modal -->
 
     </div>
+    <script>
+        var loadFile = function(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('output');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
+    </script>
     <!-- /Page Wrapper -->
 @endsection
