@@ -138,7 +138,7 @@
                 <div class="row">
                     <div class="col-lg-2 col-sm-4">
                         <div class="form-group">
-                            <select id="agent_name" name="agent_name" class="form-control text-center" >
+                            <select id="agent_name" name="agent_name" class="select form-control text-center" >
                                 <option disabled selected hidden>Select Agent .... </option>
                                 @foreach($agents as $agent)
                                     <option value="{{$agent->agent_id}}">{{$agent->user->name}}</option>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="col-lg-2 col-sm-4">
                         <div class="form-group">
-                            <select id="priority_search" name="priority" class="form-control" >
+                            <select id="priority_search" name="priority" class="select form-control" >
                                 <option disabled selected hidden>Select Priority .... </option>
                                 @foreach($priorities as $priority)
                                     <option value="{{$priority->id}}">{{$priority->priority}}</option>
@@ -158,7 +158,7 @@
                     </div>
                     <div class="col-lg-2 col-sm-4">
                         <div class="form-group">
-                            <select name="status" id="status" class="form-control" >
+                            <select name="status" id="status" class="select form-control" >
                                 <option disabled selected hidden>Select Status ...</option>
                                 @foreach($statuses as $status)
                                     <option value="{{$status->id}}">{{$status->status}}</option>
@@ -330,7 +330,7 @@
                                             @endif
                                         @endforeach
                                     @elseif($ticket->isassign==0)
-                                        <a href="{{url("isassign/2")}}" class="btn btn-outline-info">Unassigned </a> @endif
+                                        <a href="{{url("isassign/2")}}" class="btn btn-outline-warning">Unassigned </a> @endif
                                 </td>
                                 <td><a href=""  data-toggle="modal" data-target="#status{{$ticket->id}}">{{$ticket->status_type->status}}</a>
                                     <div class="modal fade" id="status{{$ticket->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
@@ -362,7 +362,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
+                                <td><i class="fa fa-dot-circle-o text-{{$ticket->priority_type->color}} mr-2"></i>{{$ticket->priority_type->priority}}</td>
                                 <td>
                                     {{$ticket->cases->name}}
                                 </td>
@@ -576,6 +576,7 @@
                                     </th>
                                     <td scope="row" >{{$ticket->title}}</td>
                                     <td>
+
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
@@ -595,7 +596,8 @@
                                                 @endif
                                             @endforeach
                                         @elseif($ticket->isassign==0)
-                                            <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                            <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a>
+                                        @endif
                                     </td>
                                     <td>{{$ticket->status_type->status}}</td>
                                     <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>

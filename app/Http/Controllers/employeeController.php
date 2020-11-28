@@ -197,10 +197,7 @@ class employeeController extends Controller
     {
 //
        $employee=employee::where("id",$emp_id)->first();
-//       dd($employee);
        $employee->delete();
-        $user=User::where("id",$emp_id)->first();
-       $user->delete();
        return redirect()->back()->with("delete","Employee Delete Successful!");
     }
     public function profile($emp_id){
@@ -245,7 +242,8 @@ class employeeController extends Controller
         $date=explode("-",$request->daterange);
         $start_date=Carbon::create($date[0]);
         $end_date=Carbon::create($date[1]);
-        $employees=employee::with("position")->orWhere("emp_post",$request->position)->orWhere("employee_id",$request->employee_id)->orWhere("name",$request->employee_name)->orWhereBetween("join_date",[$start_date,$end_date])->get();
+        $employees=employee::with("position")->orWhere("emp_post",$request->position)->orWhere("employee_id",$request->employee_id)->orwhere('name', 'LIKE', "%$request->employee_name%")
+            ->orWhereBetween("join_date",[$start_date,$end_date])->get();
         return view("Employee.employeeFilterResult",compact("employees"));
 
     }

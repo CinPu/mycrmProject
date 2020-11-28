@@ -16,26 +16,25 @@ class employee_import implements ToModel
     */
     public function model(array $row)
     {
-           User::create([
-               "id"=>$row[11],
-              "email"=>$row[1],
-              "name"=>$row[2],
-              "password"=>Hash::make($row[3]),
-               "uuid"=>$row[4]
-           ]);
-           employee::create([
-               'employee_id'=>$row[5],
-               'dob'=>$row[6],
-               'join_date'=>$row[7],
-               'address'=>$row[8],
-               'report_to'=>$row[9],
-               'dept_id'=>$row[10],
-               'emp_id'=>$row[11],
-               'phone'=>$row[12],
-               'dept_head'=>$row[13],
-               'company_id'=>$row[14],
-               'emp_post'=>$row[15],
-               'admin_id'=>$row[16],
+        return new employee([
+            'employee_id'=>$row[1],
+            'name'=>$row[2],
+            'email'=>$row[3],
+            'nrc'=>$row[4],
+            'gender'=>$row[5],
+            'nationality'=>$row[6],
+            'religion'=>$row[7],
+            'dob'=>$row[8],
+            'marital_status'=>$row[9],
+            'join_date'=>$row[10],
+            'address'=>$row[11],
+            'report_to'=>$row[12],
+            'dept_id'=>$row[13],
+            'phone'=>$row[14],
+            'dept_head'=>$row[15],
+            'company_id'=>$row[16],
+            'emp_post'=>$row[17],
+            'admin_id'=>$row[18],
            ]);
 
     }

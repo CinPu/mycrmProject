@@ -141,6 +141,8 @@
 										<a  href="{{ url('/piechart') }}">Chart Report</a></li>
 									<li class="{{ Request::is('guestUser') ? 'active' : '' }}">
 										<a  href="{{ url('guestUser') }}">Complainer</a></li>
+									<li class="{{ Request::is('isassign/2') ? 'active' : '' }}" >
+										<a href="{{ url('isassign/2') }}">Assign Ticket</a></li>
 									<li class="{{ Request::is('taxes') ? 'active' : '' }}" >
 										<a href="{{ url('taxes') }}">Taxes</a></li>
 								</ul>

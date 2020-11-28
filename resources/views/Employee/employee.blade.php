@@ -59,46 +59,42 @@
             <!-- Search Filter -->
             <form action="{{url("/employee/filter")}}" method="POST">
                 {{csrf_field()}}
-            <div class="row filter-row">
+            <div class="row">
                 <div class="col-sm-4 col-lg-2">
-                    <div class="form-group form-focus select-focus focused">
-                        <select class="select floating select2-hidden-accessible form-control" id="emp_id" name="employee_id" data-select2-id="3" tabindex="-1" aria-hidden="true">
-                            <option selected disabled>Select Employee ID</option>
-                            @foreach($employees as $emp)
-                                <option value="{{$emp->employee_id}}">{{$emp->employee_id}}</option>
-                            @endforeach
-                        </select>
+                    <div class="form-group form-focus">
+                        <input type="text" name="employee_id" class="form-control floating" placeholder="{{$employees[0]->employee_id}}">
+                        <label class="focus-label">Employee ID</label>
                     </div>
                 </div>
                 <div class="col-sm-4 col-lg-2">
-                    <div class="form-group form-focus select-focus focused">
-                        <select id="emp_name" class="select floating select2-hidden-accessible form-control" name="employee_name" data-select2-id="2" tabindex="-1" aria-hidden="true">
-                            <option selected disabled>Select Employee Name</option>
-                            @foreach($employees as $emp)
-                                <option value="{{$emp->name}}">{{$emp->name}}</option>
-                            @endforeach
-                        </select>
-                        {{--               --}}
+                    <div class="form-group form-focus">
+                        <input type="text" name="employee_name" class="form-control floating">
+                        <label class="focus-label">Employee Name</label>
                     </div>
                 </div>
-                <div class="col-sm-4 col-lg-2">
+                <div class="col-sm-4 col-lg-3">
                     <div class="form-group form-focus select-focus focused">
-                        <select class="select floating select2-hidden-accessible form-control" name="position" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                            <option selected disabled>Select Designation</option>
-                            @foreach($positions as $position)
-                                <option value="{{$position->id}}">{{$position->emp_position}}</option>
-                            @endforeach
-                        </select>
-                        {{--               --}}
+                        <div class="form-group form-focus select-focus">
+                            <select class="select floating" name="position">
+                                <option>Select Designation</option>
+                                @foreach($positions as $position)
+                                    <option value="{{$position->id}}">{{$position->emp_position}}</option>
+                                @endforeach
+                            </select>
+                            <label class="focus-label">Designation</label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-4 col-lg-2">
+                <div class="col-sm-4 col-lg-3">
                     <div class="form-group form-focus select-focus focused">
                     <input type="text" class="form-control" id="join_date" name="daterange"  />
+                        <label class="focus-label">Join Date</label>
                     </div>
                 </div>
                 <div class="col-sm-4 col-lg-2 ">
-                    <button type="submit" class="btn btn-success btn-block"><i class="fa fa-search mr-2"></i>Search</button>
+                    <div class="form-group form-focus">
+                    <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fa fa-search mr-2"></i>Search</button>
+                    </div>
                 </div>
             </div>
             </form>

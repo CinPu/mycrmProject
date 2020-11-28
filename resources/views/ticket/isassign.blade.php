@@ -9,11 +9,11 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Ticket Detail</h3>
+                        <h3 class="page-title">Assign And Unassign</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{url("/home")}}">Dashboard</a></li>
-                            <li class="breadcrumb-item active"><a href="{{url("guestUser")}}">Complainer</a></li>
-                            <li class="breadcrumb-item active">Ticket Sending History</li>
+                            <li class="breadcrumb-item active"><a href="{{url("ticket/dashboard")}}">Ticket</a></li>
+                            <li class="breadcrumb-item active">Assign & Unassign</li>
                         </ul>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                         </td>
                         <td>{!!substr($ticket->message,0,150)!!}....</td>
                         <td>{{$ticket->status_type->status}}</td>
-                        <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
+                        <td>{{$ticket->priority_type->priority}}</td>
                         <td>
                             {{$ticket->cases->name}}
                         </td>
@@ -195,7 +195,7 @@
                         </td>
                         <td>{!!substr($ticket->message,0,150)!!}....</td>
                         <td>{{$ticket->status_type->status}}</td>
-                        <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}"></button>{{$ticket->priority_type->priority}}</td>
+                        <td><i class="fa fa-dot-circle-o text-{{$ticket->priority_type->color}}"></i> {{$ticket->priority_type->priority}}</td>
                         <td>
                             {{$ticket->cases->name}}
                         </td>
