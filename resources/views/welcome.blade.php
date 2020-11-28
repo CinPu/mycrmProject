@@ -15,71 +15,72 @@
     </style>
 </head>
 <body style="background-color: lightblue;background-image:url(./public/companylogo/logo.jpg);">
-        <nav class="navbar navbar-expand-lg navbar-light ">
-        <a class="navbar-brand ml-2" href="#">Support Ticket</a>
-    </nav>
-<div class="row col-12">
-    <div class="col-lg-7 col-sm-5 col-11 ml-4">
-        <h4 align="center" class="mt-5">
-            What can we help you?
-        </h4>
-        <!-- Default dropright button -->
-        <div class="form-group">
-            <!-- Button trigger modal -->
-            <div class="text-center">
-            <button type="button" class="btn btn-primary rounded" data-toggle="modal" data-target="#exampleModalCenter">
-                Send Complain Ticket<i class="fa fa-send-o ml-3"></i>
-            </button>
-            </div>
-                <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-left" role="document">
-                    <div class="modal-content">
-                        <div>
-                            <span type="button " class="mr-3 mt-2 close float-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></span>
+<nav class=" navbar navbar-expand-lg navbar-light mt-2" id="pills-tab" role="tablist">
+    <a class="navbar-brand " href="#">Support Ticket</a>
+    <ul class="nav nav-pills offset-lg-8 offset-0" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa fa-lock mr-2"></i>Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa fa-envelope mr-2"></i>Sending</a>
+        </li>
 
-                        </div>
-                        <span class="mt-2 ml-3">Which Company Do You Want to Send Complain Ticket?</span>
-                        <div class="modal-body">
-                            @foreach($company as $com)
-                                <a class="btn btn-outline-dark col-12 mt-2" href="{{url("/ticket/create/".$com->admin->uuid)}}"><img src="{{url(asset("companylogo/$com->company_logo"))}}" alt="" class="rounded-circle float-left" width="30px;"height="30px;"> {{$com->company_name}}</a>
-                            @endforeach
+    </ul>
+</nav>
+        <div class="container-fluid">
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <h4 align="center" class="mt-5">
+                        Choose You Want to Send Company?
+                    </h4>
+                    @foreach($company as $com)
+                        <a href="{{url("/ticket/create/".$com->admin->uuid)}}" style="text-decoration: none">
+                            <div class="row  text-center">
+                                <div class="col-12">
+                                    <div class="card col-lg-2 col-sm-3 col-5 offset-1 offset-lg-1 rounded shadow">
+                                        <div class="card-body text-center">
+                                            <img src="{{url(asset("companylogo/$com->company_logo"))}}" class="rounded-circle mb-3" width="50%" height="50%;">
+                                            <br><b align="center" style="font-size:100%">{{$com->company_name}}</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+
+                </div>
+                <div class="tab-pane fade offset-lg-1 show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="col-lg-3 col-sm-6 col-11 offset-lg-4 offset-sm-3">
+                        <h3 align="center" class="mt-5">SIGN IN</h3>
+                        <div class="card col-12 border-dark">
+                            <form method="POST" action="{{route("login")}}" class="col-12 my-3">
+                                {{csrf_field()}}
+                                <div class="form-group" data-validate = "Valid email is required: ex@abc.xyz">
+                                    <span class="label-input100">Email</span>
+                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email addess...">
+                                    <span class="focus-input100"></span>
+                                </div>
+                                <div class="form-group" data-validate = "Password is required">
+                                    <span class="label-input100">Password</span>
+                                    <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password" placeholder="*************">
+                                    <span class="focus-input100"></span>
+                                </div>
+                                <div class="form-group ">
+                                    <button type="submit"  class="btn btn-primary col-12 mt-2">
+                                        Sign in
+                                    </button>
+                                    <a href="{{url("/register")}}" class="btn btn-outline-success col-12 mt-2">
+                                        Sign Up
+                                    </a>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         </div>
-    </div>
-    <div class="col-lg-3 col-sm-5 col-11 ml-4">
-    <h3 align="center" class="mt-5">SIGN IN</h3>
-    <div class="card col-12 border-dark">
-    <form method="POST" action="{{route("login")}}" class="col-12 my-3">
-        {{csrf_field()}}
-        <div class="form-group" data-validate = "Valid email is required: ex@abc.xyz">
-            <span class="label-input100">Email</span>
-            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email addess...">
-            <span class="focus-input100"></span>
-        </div>
-
-        <div class="form-group" data-validate = "Password is required">
-            <span class="label-input100">Password</span>
-            <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password" placeholder="*************">
-            <span class="focus-input100"></span>
-        </div>
-            <div class="form-group ">
-                <button type="submit"  class="btn btn-primary col-12 mt-2">
-                    Sign in
-                </button>
-                <a href="{{url("/register")}}" class="btn btn-outline-success col-12 mt-2">
-                    Sign Up
-                </a>
-            </div>
-    </form>
-    </div>
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
