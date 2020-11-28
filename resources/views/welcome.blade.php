@@ -50,9 +50,12 @@
 
                 </div>
                 <div class="tab-pane fade offset-lg-1 show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="col-lg-3 col-sm-6 col-11 offset-lg-4 offset-sm-3">
-                        <h3 align="center" class="mt-5">SIGN IN</h3>
+                    <div class="col-lg-4 col-sm-6 col-11 offset-lg-3 offset-sm-3">
+                        <h3 align="center">SIGN IN</h3>
                         <div class="card col-12 border-dark">
+                            <div class="text-center mt-3">
+                            <img src="{{url(asset("/companylogo/mainlogo.png"))}}" alt="" width="30%" height="30%;">
+                            </div>
                             <form method="POST" action="{{route("login")}}" class="col-12 my-3">
                                 {{csrf_field()}}
                                 <div class="form-group" data-validate = "Valid email is required: ex@abc.xyz">
