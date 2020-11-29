@@ -13,7 +13,7 @@
                         <h3 class="page-title">Company Profile</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{url("home")}}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Company</li>
+                            <li class="breadcrumb-item active"><a href="{{url("engaged/company")}}">Company</a></li>
                             <li class="breadcrumb-item active">Profile</li>
                         </ul>
                     </div>
@@ -24,10 +24,8 @@
             <div class="card mb-0">
                 <div class="card-body">
                     <div class="dropdown profile-action">
-                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons" style="font-size: 20px;">more_vert</i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                        <div class="pro-edit">
+                            <a class="edit-icon" href="#" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i></a>
                         </div>
                     </div>
                     <div class="row">
@@ -298,21 +296,7 @@
                 </div>
             </div>
         </div>
-        <div id="delete" class="modal custom-modal fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        Are you sure delete <b>{{$company->name}}</b>?
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-12">
-                            <a href="#" class=" offset-4 btn btn-outline-warning text-center" data-dismiss="modal" aria-label="Close">No</a>
-                            <a href="{{url("/customer_company/delet/$company->id")}}" class="btn btn-outline-danger text-center">Yes</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <!-- /Page Content -->
 
     </div>

@@ -17,7 +17,7 @@ class CreateCustomerCompaniesTable extends Migration
             $table->id();
             $table->string("company_id");
             $table->string("name");
-            $table->text("logo");
+            $table->text("logo")->nullable();
             $table->text("company_registry");
             $table->text("company_mission");
             $table->text("company_vision");
@@ -28,7 +28,7 @@ class CreateCustomerCompaniesTable extends Migration
             $table->string("parent_company");
             $table->double("phone");
             $table->double("hotline");
-            $table->string("email");
+            $table->string("email")->unique();
             $table->text("company_website");
             $table->text("company_address");
             $table->bigInteger("admin_id")->unsigned();

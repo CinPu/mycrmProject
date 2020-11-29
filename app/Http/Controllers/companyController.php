@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\company;
 use App\customerCompany;
+use App\Imports\companyimport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class companyController extends Controller
 {
@@ -143,5 +145,9 @@ class companyController extends Controller
         $company=customerCompany::where("id",$id)->first();
         $company->delete();
         return redirect("/engaged/company")->with("message","$company->name delete Successful");
+    }
+    public function import(){
+        Excel::import(new companyimport(),request()->file('file'));
+        return back();
     }
 }

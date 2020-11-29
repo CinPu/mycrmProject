@@ -78,13 +78,13 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("/employee/filter","employeeController@filterResult");
     Route::post("/dept/import","departmentController@import");
     Route::get("/engaged/company","companyController@engagedCompany");
-    Route::post("/company/create","companyController@create");
-    Route::get("/company/profile/{id}","companyController@profile");
-    Route::get("/company/edit/{id}","companyController@companyedit");
-    Route::get("/company/delete/{id}","companyController@destory");
-    Route::post("/company/update/{id}","companyController@companyupdate");
+    Route::post("client/company/create","companyController@create");
+    Route::get("client/company/profile/{id}","companyController@profile");
+    Route::get("client/company/delete/{id}","companyController@destory");
+    Route::post("client/company/update/{id}","companyController@companyupdate");
     Route::get("/ticket/status/{status}","ticketController@dadbordCard");
     Route::post("/company/edit/{type}/{id}","companyController@update");
+    Route::post("client/company/import","companyController@import");
     Route::get("customer_company/delet/{id}","companyController@delete");
     Route::get('/chat', function () {
         return view('chat');

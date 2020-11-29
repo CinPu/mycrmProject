@@ -114,10 +114,23 @@
                             @endif
                         </div>
                         <div class="dropdown profile-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                            <div class="dropdown-menu dropdown-menu-right">
-{{--                                <a class="dropdown-item" href="{{url("emp/edit/$emp->emp_id")}}"><i class="fa fa-pencil m-r-5"></i> Edit</a>--}}
-                                <a class="dropdown-item" href="{{url("/emp/delete/$emp->id")}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                            <div class="pro-edit">
+                                <button class="edit-icon"  href="#" data-toggle="modal" data-target="#delete{{$emp->id}}"><i class="fa fa-trash-o"></i></button>
+                            </div>
+                        </div>
+                        <div id="delete{{$emp->id}}" class="modal custom-modal fade" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        Are you sure delete <b>{{$emp->name}}</b>?
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <a href="#" class=" btn btn-outline-warning text-center" data-dismiss="modal" aria-label="Close">No</a>
+                                            <a href="{{url("/emp/delete/$emp->id")}}" class="btn btn-outline-danger text-center">Yes</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/emp/profile/$emp->id")}}">{{$emp->name}}</a></h4>

@@ -25,13 +25,13 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Import Employee</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Import Company</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{url("/employee/import")}}" method="POST" enctype="multipart/form-data">
+                                        <form action="{{url("client/company/import")}}" method="POST" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             <input type="file" name="file" >
                                             <br>
@@ -40,16 +40,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="view-icons">
-                            <ul class="nav" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <a class="grid-view btn btn-link nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="fa fa-th"></i></a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a  id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" class="list-view btn btn-link nav-link"><i class="fa fa-bars"></i></a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -62,21 +52,35 @@
                     <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                         <div class="profile-widget">
                             <div class="profile-img">
-                                    <a href="{{url("/company/profile/$company->id")}}" >
+                                    <a href="{{url("client/company/profile/$company->id")}}" >
                                         <img src="{{url(asset("/companylogo/$company->logo"))}}"class="avatar" alt="">
                                     </a>
                             </div>
                             <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{{url("/company/edit/$company->id")}}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="{{url("/company/delete/$company->id")}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                <div class="pro-edit">
+                                    <button class="edit-icon"  href="#" data-toggle="modal" data-target="#delete{{$company->id}}"><i class="fa fa-trash-o"></i></button>
+                                </div>
+                            </div>
+                            <div id="delete{{$company->id}}" class="modal custom-modal fade" role="dialog">
+                                <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            Are you sure delete <b>{{$company->name}}</b>?
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-12">
+                                                <a href="#" class="btn btn-outline-warning text-center" data-dismiss="modal" aria-label="Close">No</a>
+                                                <a href="{{url("/customer_company/delet/$company->id")}}" class="btn btn-outline-danger text-center">Yes</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/company/profile/$company->id")}}">{{$company->name}}</a></h4>
 {{--                            <div class="small text-muted">{{$emp->position->emp_position}}</div>--}}
                         </div>
                     </div>
+
                 @endforeach
             </div>
             <!-- /Content End -->
