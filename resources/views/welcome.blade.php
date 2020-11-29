@@ -34,21 +34,20 @@
                     <h4 align="center" class="mt-5">
                         Choose You Want to Send Company?
                     </h4>
+                    <div class="row">
                     @foreach($company as $com)
-                        <a href="{{url("/ticket/create/".$com->admin->uuid)}}" style="text-decoration: none">
-                            <div class="row  text-center">
-                                <div class="col-12">
-                                    <div class="card col-lg-2 col-sm-3 col-5 offset-1 offset-lg-1 rounded shadow">
+                        <div class="col-lg-2 col-sm-3 col-6">
+                                <a href="{{url("/ticket/create/".$com->admin->uuid)}}" style="text-decoration: none">
+                                    <div class="card  rounded shadow">
                                         <div class="card-body text-center">
                                             <img src="{{url(asset("companylogo/$com->company_logo"))}}" class="rounded-circle mb-3" width="50%" height="50%;">
                                             <br><b align="center" style="font-size:100%">{{$com->company_name}}</b>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </a>
+                                 </a>
+                        </div>
                     @endforeach
-
+                    </div>
                 </div>
                 <div class="tab-pane fade offset-lg-1 show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <div class="col-lg-4 col-sm-6 col-11 offset-lg-3 offset-sm-3">
