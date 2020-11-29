@@ -62,7 +62,7 @@
             <div class="row">
                 <div class="col-sm-4 col-lg-2">
                     <div class="form-group form-focus">
-                        <input type="text" name="employee_id" class="form-control floating" placeholder="{{$employees[0]->employee_id}}">
+                        <input type="text" name="employee_id" class="form-control floating">
                         <label class="focus-label">Employee ID</label>
                     </div>
                 </div>
