@@ -119,7 +119,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                                    <form action="{{url("client/company/create")}}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{url("client/company/create")}}" method="POST" id="clientcreate" enctype="multipart/form-data">
                                         {{csrf_field()}}
                                         <div class="col-12 mb-3">
                                             <div>
@@ -140,7 +140,7 @@
                                                 </div>
                                                 <div class="form-group col-lg-6 col-sm-6 col-12">
                                                     <label>Company CEO Name</label>
-                                                    <input type="text" class="form-control" name="ceo" placeholder="eg.LG co.,ltd">
+                                                    <input type="text" class="form-control" name="ceo" >
                                                 </div>
                                                 <div class="form-group col-lg-6 col-sm-6 col-12">
                                                     <label>Company Email</label>

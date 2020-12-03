@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\company;
 use App\customerCompany;
 use App\Imports\companyimport;
+use App\user_employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -45,7 +46,12 @@ class companyController extends Controller
     }
     public function create(Request $request){
         $company=new customerCompany();
-        $company->admin_id=Auth::user()->id;
+        if(Auth::user()->hasAnyRole("Admin")){
+            $company->admin_id=Auth::user()->id;
+        }else{
+            $auth_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
+            $company->admin_id=$auth_user->employee->admin_id;
+        }
         $company->company_id=$request->company_id;
         $company->name=$request->name;
         $company->email=$request->email;
@@ -54,9 +60,11 @@ class companyController extends Controller
         $company->company_website=$request->web_link;
         $company->company_address=$request->address;
         $image=$request->file("logo");
-        $name=$image->getClientOriginalName();
-        $request->logo->move(public_path().'/companylogo/', $name);
-        $company->logo=$name;
+        if($image!=null) {
+            $name = $image->getClientOriginalName();
+            $request->logo->move(public_path() . '/companylogo/', $name);
+            $company->logo = $name;
+        }
         $company->company_registry=$request->company_retistry;
         $company->company_mission=$request->mission;
         $company->company_vision=$request->vision;
