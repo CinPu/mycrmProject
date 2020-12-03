@@ -125,7 +125,7 @@
                                             <div>
                                                 <div class="text-center" >
                                                     <h4>Choose Company Logo</h4>
-                                                    <img id="output" class="rounded-circle" src="{{url(asset("/img/profiles/avatar-01.jpg"))}}" width="100px" height="100px;"><br><br>
+                                                    <img id="com_output" class="rounded-circle" src="{{url(asset("/img/profiles/avatar-01.jpg"))}}" width="100px" height="100px;"><br><br>
                                                     <input type="file" accept="image/*" name="logo"  class="offset-md-1" onchange="loadFile(event)">
                                                 </div>
                                             </div>
@@ -214,6 +214,14 @@
         var reader = new FileReader();
         reader.onload = function(){
             var output = document.getElementById('output');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    };
+    var loadFile = function(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('com_output');
             output.src = reader.result;
         };
         reader.readAsDataURL(event.target.files[0]);
