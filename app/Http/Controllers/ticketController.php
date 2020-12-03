@@ -79,7 +79,7 @@ class ticketController extends Controller
                 */
                 $priorities = priority::where("admin_uuid", $id)->get();
                 $cats = case_type::where("admin_uuid", $id)->get();
-                return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities", "user_infos"));
+                return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities"));
                 /*
                  * end of admin
                  */
