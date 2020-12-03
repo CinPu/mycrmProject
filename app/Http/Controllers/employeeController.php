@@ -211,12 +211,6 @@ class employeeController extends Controller
     public function profile($emp_id){
         $emp_details=employee::with("report_to_user","company","position","dept")->where("id",$emp_id)->first();
 //        dd($emp_details);
-        if($emp_details->report_to_user->hasAnyRole("Admin")){
-            $pp=$emp_details->report_to_user->profile;
-        }else{
-            $user_emp=user_employee::with("employee")->get();
-            $pp=$user_emp->employee->emp_profile;
-        }
         $admin=User::where("id",$emp_details->admin_id)->first();
         $positions=position::get();
         $depts=department::where("admin_uuid",$admin->uuid)->get();
@@ -228,6 +222,13 @@ class employeeController extends Controller
                 array_push($report_to,$user_emp);
             }
         }
+        if($emp_details->report_to_user->hasAnyRole("Admin")){
+            $pp=$emp_details->report_to_user->profile;
+        }else{
+            $user_emp=user_employee::with("employee")->where("user_id",$emp_details->report_to)->first();
+            $pp=$user_emp->employee->emp_profile;
+        }
+
         return view("Employee.profile",compact("emp_details","pp","positions","depts","report_to"));
     }
     public function tagticket(){
