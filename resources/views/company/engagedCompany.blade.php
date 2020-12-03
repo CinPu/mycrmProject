@@ -118,7 +118,7 @@
                                 </div>
                                     <div class="form-group col-lg-6 col-sm-6 col-12">
                                         <label>Company CEO Name</label>
-                                        <input type="text" class="form-control" name="ceo" placeholder="eg.LG co.,ltd">
+                                        <input type="text" class="form-control" name="ceo">
                                 </div>
                                     <div class="form-group col-lg-6 col-sm-6 col-12">
                                     <label>Company Email</label>

@@ -122,13 +122,6 @@
                                     <form action="{{url("client/company/create")}}" method="POST" id="clientcreate" enctype="multipart/form-data">
                                         {{csrf_field()}}
                                         <div class="col-12 mb-3">
-                                            <div>
-                                                <div class="text-center" >
-                                                    <h4>Choose Company Logo</h4>
-                                                    <img id="com_output" class="rounded-circle" src="{{url(asset("/img/profiles/avatar-01.jpg"))}}" width="100px" height="100px;"><br><br>
-                                                    <input type="file" accept="image/*" name="logo"  class="offset-md-1" onchange="loadFile(event)">
-                                                </div>
-                                            </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-6 col-sm-6 col-12">
                                                     <label>Company ID : </label>
@@ -214,14 +207,6 @@
         var reader = new FileReader();
         reader.onload = function(){
             var output = document.getElementById('output');
-            output.src = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    };
-    var loadFile = function(event) {
-        var reader = new FileReader();
-        reader.onload = function(){
-            var output = document.getElementById('com_output');
             output.src = reader.result;
         };
         reader.readAsDataURL(event.target.files[0]);
