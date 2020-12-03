@@ -27,8 +27,10 @@ class CreateCustomersTable extends Migration
             $table->foreign("company_id")->references("id")->on("customer_companies")->onDelete("cascade");
             $table->text("address");
             $table->bigInteger("admin_id")->unsigned();
+            $table->foreign("admin_id")->references("id")->on("users")->onDelete("cascade");
             $table->string("report_to");
             $table->bigInteger("admin_company_id")->unsigned();
+            $table->foreign("admin_company_id")->references("id")->on("companies")->onDelete("cascade");
             $table->timestamps();
         });
     }

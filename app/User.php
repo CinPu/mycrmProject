@@ -69,4 +69,7 @@ class User extends Authenticatable
     public function emp_user(){
         return $this->hasMany(user_employee::class);
     }
+    public function customer(){
+        return $this->hasMany(customer::class);
+    }
 }

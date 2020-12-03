@@ -70,16 +70,7 @@
                                                     <li>
                                                         <span class="title">Customer Creator</span>
                                                         <span class="text">
-                                                                   <div class="avatar-box">
-                                                            <div>
-                                                                @if($customer_creator->emp_profile==null)
-                                                                    <img src="{{url(asset("img/profiles/avatar-16.jpg"))}}" class="avatar avatar-xs" alt="">
-                                                                @else
-                                                                    <img src="{{url(asset("profile/".$customer_creator->employee->emp_profile))}}" class="avatar avatar-xs" alt="">
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                            {{$customer_creator->employee->name}}</span>
+                                                            {{$customer->user->name}}</span>
                                                     </li>
                                                 </ul>
                                             </div>

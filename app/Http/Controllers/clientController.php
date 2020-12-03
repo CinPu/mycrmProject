@@ -121,10 +121,9 @@ class clientController extends Controller
             $authenticate_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
             $companies=customerCompany::where("admin_id",$authenticate_user->employee->admin_id)->get();
         }
-        $customer=customer::with("customer_company","customer_position")->where("id",$id)->first();
-        $customer_creator=user_employee::with("employee")->where("user_id",$customer->admin_id)->first();
+        $customer=customer::with("customer_company","customer_position","user")->where("id",$id)->first();
         $position=position::all();
-        return view("client.client-profile",compact("customer","customer_creator","companies","position"));
+        return view("client.client-profile",compact("customer","companies","position"));
     }
 
     /**
@@ -185,7 +184,6 @@ class clientController extends Controller
 //        dd($request->all());
         if ($request->client_id != null) {
             $filter_results=customer::with("customer_position", "customer_company")->where("customer_id",$request->client_id)->get();
-        dd($filter_results);
         }else{
             if ($request->client_name == null || $request->client_name == ''){
                 $name = 'empty';
