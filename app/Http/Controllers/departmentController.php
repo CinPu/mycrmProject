@@ -128,7 +128,8 @@ class departmentController extends Controller
     }
     public function dept_change(Request $request,$id)
     {
-        $dept=employee::where("emp_id",$id)->first();
+        $agent_emp=user_employee::where("user_id",$id)->first();
+        $dept=employee::where("id",$agent_emp->emp_id)->first();
         $dept->dept_id=$request->dept_change;
         $dept->update();
         $agent_dept=agent::where("agent_id",$id)->first();
@@ -146,11 +147,10 @@ class departmentController extends Controller
      */
     public function showMember($id)
     {
-        $members=employee::with("employee_user")->where("dept_id",$id)->get();
+        $members=employee::where("dept_id",$id)->get();
         $dept=department::where("id",$id)->first();
-        $user_profile=userprofile::all();
 //        dd($members);
-        return view("userAdmin.deptMember",compact("members","dept","user_profile"));
+        return view("userAdmin.deptMember",compact("members","dept"));
     }
 
     /**

@@ -139,7 +139,7 @@
                 </div>
                         @endforeach
                     </div>
-            </div>
+                </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="overflow-x: auto">
                     <table class="table" id="emp">
                         <thead>

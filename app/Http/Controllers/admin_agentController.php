@@ -32,8 +32,10 @@ class admin_agentController extends Controller
         $agents=agent::with("user","dept")->where("admin_id",Auth::user()->id)->get();
         $depts=department::where("admin_uuid",Auth::user()->uuid)->get();
         $emp_user=user_employee::with("employee","user")->get();
+        $ticket_admin=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
+        $system_admin=User::where("id",$ticket_admin->employee->admin_id)->first();
         foreach ($emp_user as $emp){
-            if($emp->employee->admin_id==Auth::user()->id){
+            if($emp->employee->admin_id==$system_admin->id && $ticket_admin->emp_id!=$emp->emp_id && !$emp->user->hasAnyRole("Agent")){
                 array_push($employees,$emp);
             }
         }
@@ -195,7 +197,7 @@ class admin_agentController extends Controller
                 }
             }
         }
-        $profile_picture=userprofile::where("user_id",$agentuser->id)->first();
+        $profile_picture=user_employee::with("employee")->where("user_id",$agent->agent_id)->first();
         return view("Agent.agentdetail",compact("openticket","pending","progress","new","complete","closeticket","agenttickets","assigndepts","assigntickets","agentuser","agent","allcases","twenty_fivepercent","fifty_percent","seventy_fivepercent","hundred_percent","overtimeuse","profile_picture","overtimeuse_ticket"));
     }
 

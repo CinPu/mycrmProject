@@ -15,11 +15,24 @@ class priorityController extends Controller
      */
     public function index()
     {
-        $priorities=priority::where("admin_uuid",Auth::user()->uuid)->get();
-        $isblue=priority::where("color","primary")->first();
-        $isgreen=priority::where("color","success")->first();
-        $isred=priority::where("color","danger")->first();
-        $isyellow=priority::where("color","warning")->first();
+        $priorities = priority::where("admin_uuid", Auth::user()->uuid)->get();
+        $isyellow=0;
+        $isred=0;
+        $isgreen=0;
+            $isblue=0;
+
+      foreach ($priorities as $priority){
+        if ($priority->color=="primary") {
+            $isblue=1;
+        } elseif ($priority->color == "success") {
+            $isgreen = 1;
+        } elseif ($priority->color == "danger") {
+            $isred = 1;
+        } elseif ($priority->color == "warning") {
+            $isyellow = 1;
+        }
+    }
+
         return view("userAdmin.priority",compact("priorities","isblue",'isgreen','isred','isyellow'));
     }
 

@@ -68,7 +68,7 @@
             </div>
             <!-- /Page Header -->
             <div class="card">
-                @if(Auth::user()->hasAnyRole("Admin"))
+                @if(Auth::user()->hasAnyRole("TicketAdmin"))
                     @if($ticket_info->isassign==1)
                         <div class="col-md-12 mt-3">
                             <button type="button" class="btn btn-primary float-right" data-toggle="modal"
@@ -97,7 +97,7 @@
                 {{--            @endif--}}
                 <span id="clock-placeholder"></span>
 
-                @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Admin"))
+                @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("TicketAdmin"))
                     <div class="modal fade" id="reassign" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -396,7 +396,7 @@
                 if (val == "dept") {
                     $("#size").html("@foreach($depts as $dept)<option value='{{$dept->id}}'>{{$dept->dept_name}}</option> @endforeach");
                 } else if (val == "agent") {
-                    $("#size").html(" @if(Auth::user()->hasAnyRole('Admin')) @foreach($admin as $agent) @if($agent->user->uuid!=$ticket_info->user_id)<option value='{{$agent->user->id}}'>{{$agent->user->name}}</option> @endif @endforeach @elseif(Auth::user()->hasAnyRole('Agent'))@foreach($admin as $agent)@if($agent->user->uuid!=Auth::user()->uuid)<option value='{{$agent->user->id}}'>{{$agent->user->name}}</option> @endif @endforeach @endif");
+                    $("#size").html(" @if(Auth::user()->hasAnyRole('TicketAdmin')) @foreach($admin as $agent) @if($agent->user->uuid!=$ticket_info->user_id)<option value='{{$agent->user->id}}'>{{$agent->user->name}}</option> @endif @endforeach @elseif(Auth::user()->hasAnyRole('Agent'))@foreach($admin as $agent)@if($agent->user->uuid!=Auth::user()->uuid)<option value='{{$agent->user->id}}'>{{$agent->user->name}}</option> @endif @endforeach @endif");
                 }
             });
         });

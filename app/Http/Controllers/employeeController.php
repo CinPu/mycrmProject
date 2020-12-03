@@ -160,7 +160,13 @@ class employeeController extends Controller
             if($request->join_date!=null) {
                 $employee->join_date = Carbon::create($request->join_date);
             }
-            $employee->dept_id=$request->dept;
+            if($employee->dept_id!=$request->dept) {
+                $employee->dept_id = $request->dept;
+                $user_emp=user_employee::where("emp_id",$emp_id)->first();
+                $agent=agent::where("agent_id",$user_emp->user_id)->first();
+                $agent->dept_id=$request->dept;
+                $agent->update();
+            }
             $employee->emp_post=$request->position;
             $employee->report_to=$request->report_to;
             $employee->address=$request->address;
@@ -195,7 +201,9 @@ class employeeController extends Controller
      */
     public function destroy($emp_id)
     {
-//
+        $user_emp=user_employee::where("emp_id",$emp_id)->first();
+        $agent=agent::where("agent_id",$user_emp->user_id)->first();
+        $agent->delete();
        $employee=employee::where("id",$emp_id)->first();
        $employee->delete();
        return redirect()->back()->with("delete","Employee Delete Successful!");
@@ -206,7 +214,8 @@ class employeeController extends Controller
         if($emp_details->report_to_user->hasAnyRole("Admin")){
             $pp=$emp_details->report_to_user->profile;
         }else{
-            $user_emp=user_employee::with("employee")->where("user_id",$emp_details->report_to)->first();
+            $user_emp=user_employee::with("employee")->get();
+            dd($user_emp);
             $pp=$user_emp->employee->emp_profile;
         }
         $admin=User::where("id",$emp_details->admin_id)->first();

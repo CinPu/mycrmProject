@@ -71,7 +71,7 @@
                 <tr>
                     <td> <i class="fa fa-user mr-3"></i><span class="col-6"> {{$agent->user->name}}</span></td>
                     <td>
-                        <a href="{{url("/department")}}">{{$agent->dept->dept_name}}</a>
+                       {{$agent->dept->dept_name}}
 
                     </td>
                     <td>

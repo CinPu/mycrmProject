@@ -32,10 +32,10 @@ class companyController extends Controller
         return redirect()->back();
     }
     public function engagedCompany(){
-        $lastcompany=customerCompany::orderBy('created_at', 'desc')->where("admin_id",Auth::user()->id)->first();
+        $lastcompany=customerCompany::orderBy('id', 'desc')->where("admin_id",Auth::user()->id)->first();
         if (isset($lastcompany)) {
             // Sum 1 + last id
-            $lastcompany->employee_id ++;
+            $lastcompany->company_id ++;
             $company_id = $lastcompany->company_id;
         } else {
             $company_id="Company"."-00001";

@@ -13,9 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $company=\App\company::with("admin")->get();
-    return view('welcome',compact("company"));
+Route::get('/',function (){
+    $user_Emp=\App\user_employee::with("employee","user")->get();
+    $ticket_admin=[];
+    foreach ($user_Emp as $tikerAdmin){
+        if($tikerAdmin->user->hasAnyRole("TicketAdmin")){
+            array_push($ticket_admin,$tikerAdmin);
+        }
+    }
+    return view('welcome',compact("ticket_admin"));
 });
 
 Auth::routes();
@@ -85,7 +91,14 @@ Route::group(['middleware'=>'auth'],function () {
     Route::get("/ticket/status/{status}","ticketController@dadbordCard");
     Route::post("/company/edit/{type}/{id}","companyController@update");
     Route::post("client/company/import","companyController@import");
-    Route::get("customer_company/delet/{id}","companyController@delete");
+    Route::get("customer_company/delete/{id}","companyController@delete");
+    Route::get("client","clientController@index");
+    Route::get("client/customer/create","clientController@create");
+    Route::post("client/customer/create","clientController@store");
+    Route::post("client/customer/update/{id}","clientController@update");
+    Route::get("/profile/{client_id}","clientController@show");
+    Route::get("/client/delete/{id}","clientController@destroy");
+    Route::post("client/search","clientController@filter");
     Route::get('/chat', function () {
         return view('chat');
     });

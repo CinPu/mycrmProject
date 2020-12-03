@@ -28,10 +28,10 @@
             <div class="card ">
 
                     {{--                    <a href="javascript:;">--}}
-                    @if($profile_picture==null)
+                    @if($profile_picture->employee->emp_profile==null)
                         <img class="offset-3 offset-lg-3 offset-sm-5 mt-3" src="{{url("assets/img/agentpp.png")}}" width="100px;" height="100px;">
                     @else
-                        <img class="offset-3 offset-lg-3 offset-sm-5  rounded-circle mt-4" src="{{url(asset("profile/$profile_picture->profile"))}} " style="width: 150px" height="150px;" />
+                        <img class="offset-3 offset-lg-3 offset-sm-5  rounded-circle mt-4" src="{{url(asset("profile/".$profile_picture->employee->emp_profile))}} " style="width: 150px" height="150px;" />
                         {{--                            <img class=" rounded-circle" src="{{url(asset("profile/$profile_picture->profile"))}}" />--}}
                     @endif
                     {{--                    </a>--}}

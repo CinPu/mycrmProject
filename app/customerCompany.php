@@ -25,4 +25,7 @@ class customerCompany extends Model
     "company_address",
     "admin_id"
     ];
+    public function customer(){
+        return $this->hasMany(customer::class);
+    }
 }

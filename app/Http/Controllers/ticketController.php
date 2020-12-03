@@ -36,144 +36,6 @@ class ticketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function dashboard()
-    {
-        if (Auth::check()) {
-            if (Auth::user()->hasAnyRole("SuperAdmin")) {
-                $alluser = User::all();
-                $roles = Role::all();
-                return view("SuperAdmin.home", compact("alluser", "roles"));
-            } elseif (Auth::user()->hasAnyRole("Admin")) {
-                //select admin's agent
-                $tickets = [];
-                //admin's agent all ticket select
-                $agents = agent::with("user")->where("admin_id", Auth::user()->id)->get();
-//                  dd($agents);
-                foreach ($agents as $agent) {
-                    $agents_tickets = ticket::with("priority_type", "cases", "status_type")->where("user_id", $agent->user->uuid)->get();
-                    //all agents' ticket add to tickets[]
-                    foreach ($agents_tickets as $agent_ticket) {
-                        array_push($tickets, $agent_ticket);
-                    }
-                }
-                //ticket for admin from user to admin
-                $user_tickets = ticket::with("priority_type", "cases", "status_type")->where("user_id", Auth::user()->uuid)->get();
-                foreach ($user_tickets as $user_ticket) {
-                    array_push($tickets, $user_ticket);
-                }
-                //count ticket each status;
-                $countAgent = count($agents);
-                $countallticket = count($tickets);
-                $openticket = 0;
-                $closeticket = 0;
-                $complete = 0;
-                $pending = 0;
-                $progress = 0;
-                $new = 0;
-                //end of ticket count
-                $assigned = [];
-                $unassigned = [];
-                foreach ($tickets as $t) {
-                    if ($t->status_type->status == "Close") {
-                        $closeticket++;
-                    } elseif ($t->status_type->status == "Complete") {
-                        $complete++;
-                    } elseif ($t->status_type->status == "Open") {
-                        $openticket++;
-                    } elseif ($t->status_type->status == "Pending") {
-                        $pending++;
-                    } elseif ($t->status_type->status == "Progress") {
-                        $progress++;
-                    } elseif ($t->status_type->status == "New") {
-                        $new++;
-                    }
-                    if ($t->isassign == 0) {
-                        array_push($unassigned, $t);
-                    } elseif ($t->isassign == 1) {
-                        array_push($assigned, $t);
-                    }
-                }
-                $allcases = case_type::where("admin_uuid", Auth::user()->uuid)->get();
-                $priorities = priority::where("admin_uuid", Auth::user()->uuid)->get();
-                $statuses = status::all();
-
-//            dd($tickets);
-                $depts = department::where("admin_uuid", Auth::user()->uuid)->get();
-                $assign_name = assign_ticket::with("employee")->get();
-                $employee = employee::where("admin_id", Auth::user()->id)->get();
-                $assign_dept_name = assignwithdept::with("dept")->get();
-                return view("userAdmin.ticketdashboard", compact("agents", "assigned", "unassigned", "depts", "pending", "allcases", "progress", "countallticket", "tickets", "openticket", "closeticket", "complete", "new", "countAgent", "priorities", "statuses", "assign_name", "assign_dept_name", "employee"));
-                //end for admin user
-            } elseif (Auth::user()->hasAnyRole("Agent")) {
-
-                $tickets = ticket::with("priority_type", "cases", "status_type", "sources_type")->where("user_id", Auth::user()->uuid)->get();
-//            dd($tickets);
-                $noOfmyticket = count($tickets);
-
-                $assign = assign_ticket::with("ticket")->where("agent_id", Auth::user()->id)->get();
-                $assignticket = [];
-                foreach ($assign as $sign) {
-                    $ticket = ticket::with("priority_type", "cases", "status_type", "sources_type")->where("id", $sign->ticket_id)->first();
-                    array_push($assignticket, $ticket);
-                }
-                $noOfassign = count($assignticket);
-                $userOfdepts = agent::with("dept")->where("agent_id", Auth::user()->id)->first();
-                $admin = User::where("id", $userOfdepts->admin_id)->first();
-                $allcases = case_type::where("admin_uuid", $admin->uuid)->get();
-                $assingwithDepts = assignwithdept::with("ticket")->where("dept_id", $userOfdepts->dept->id)->get();
-
-//            dd($assingwithDepts);
-                $noOfassign_withdept = count($assingwithDepts);
-                $depts = department::where("admin_uuid", $admin->uuid)->get();
-                $admin_agents = agent::with("user")->where("admin_id", $admin->id)->get();
-                return view("Agent.home", compact("noOfassign", "noOfassign_withdept", "assingwithDepts", "admin_agents", "depts", "noOfmyticket", "tickets", "allcases", "assignticket"));
-
-            } else {
-                return view("home");
-            }
-        } else {
-
-        }
-    }
-
-    public function index()
-    {
-        if (Auth::user()->hasAnyRole("SuperAdmin")) {
-            $tickets = ticket::all();
-            $category = category::all();
-            return view("ticket.index", compact("tickets", "category"));
-        } //for admin user
-        elseif (Auth::user()->hasAnyRole("Admin")) {
-
-            //start user role
-        } elseif (Auth::user()->hasAnyRole("Agent")) {
-            $tickets = ticket::with("priority_type")->where("user_id", Auth::user()->uuid)->get();
-//            dd($tickets);
-            $noOfmyticket = count($tickets);
-            $category = case_type::all();
-            $assignticket = assign_ticket::with("ticket")->where("agent_id", Auth::user()->id)->get();
-//            dd($assignticket);
-//            foreach ($assignticket as $assticket){
-////                dd($assticket->ticket->priority);
-//                $accept_tickets=priority::where("id",$assticket->ticket->priority)->get();
-//            }
-//            dd($accept_tickets);
-//            $agent_ticket=$assignticket->ticket;
-            $noOfassign = count($assignticket);
-            $userOfdepts = admin_agent::with("dept")->where("agent_id", Auth::user()->id)->first();
-            $admin = User::where("id", $userOfdepts->admin_id)->first();
-//            dd($userOfdepts);
-//            $assingwithDepts=[];
-//            foreach ($userOfdepts as $userOfdept){
-            $assingwithDepts = assigntodepartment::with("ticket")->where("dept_id", $userOfdepts->dept->id)->get();
-//                array_push($assingwithDepts,$assingwithDept);
-//            }
-//            dd($assingwithDepts);
-            $noOfassign_withdept = count($assingwithDepts);
-            return view("ticket.agentTicket", compact("noOfassign", "noOfmyticket", "tickets", "category", "assignticket", "assingwithDepts", "noOfassign_withdept", "admin"));
-        }
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -185,7 +47,7 @@ class ticketController extends Controller
 //        dd($id);
         $statuses = status::all();
         $sources = sources::all();
-
+        //ticket create for agent start
         if (Auth::check()) {
             if (Auth::user()->hasAnyRole("Agent")) {
                 $agent_admins = agent::where("agent_id", Auth::user()->id)->get();
@@ -198,15 +60,33 @@ class ticketController extends Controller
 //                    }
                 }
                 return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities", "user_infos"));
+            /*
+             * end of ticket create for agent
+             */
             } elseif (Auth::user()->hasAnyRole("Admin")) {
+                /*
+                 * ticket create as admin start
+                */
                 $priorities = priority::where("admin_uuid", $id)->get();
                 $cats = case_type::where("admin_uuid", $id)->get();
-                $user_infos = user_information::where("admin_id", $id)->get();
                 return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities", "user_infos"));
-            } elseif (Auth::user()->hasAnyRole("Employee")) {
+            /*
+             * end of admin
+             */
+            }elseif (Auth::user()->hasAnyRole("TicketAdmin")) {
+                /*
+                 *  ticket admin start
+                */
                 $priorities = priority::where("admin_uuid", $id)->get();
                 $cats = case_type::where("admin_uuid", $id)->get();
-                $user_infos = user_information::where("admin_id", $id)->get();
+                return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities", "user_infos"));
+                /*
+                 * end of admin
+                 */
+            }
+            elseif (Auth::user()->hasAnyRole("Employee")) {
+                $priorities = priority::where("admin_uuid", $id)->get();
+                $cats = case_type::where("admin_uuid", $id)->get();
                 return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities", "user_infos"));
             }
         } else {
@@ -258,6 +138,7 @@ class ticketController extends Controller
             $user_info->save();
         }
         $name = User::where("uuid", $request->uuid)->first();
+        $emp=user_employee::with("employee")->where("user_id",$name->id)->first();
         $ticket = new ticket();
         $ticket->title = $request->title;
         $ticket->message = $request->message;
@@ -273,7 +154,7 @@ class ticketController extends Controller
                 $company_name = company::where("admin_id", $name->id)->first();
             }
         } else {
-            $company_name = company::where("admin_id", $name->id)->first();
+            $company_name = company::where("id", $emp->employee->company_id)->first();
         }
         $ticket->ticket_id = $company_name->company_name . " - " . strtoupper(Str::random(12));
         $ticket->status = $request->status;
@@ -341,6 +222,20 @@ class ticketController extends Controller
             $emp_user = user_employee::with("employee")->get();
             foreach ($emp_user as $emps) {
                 if ($emps->employee->admin_id == Auth::user()->id) {
+                    array_push($employees, $emps);
+                }
+            }
+            $followers = ticketFollower::with("emp")->where("ticket_id", $ticket_info->id)->get();
+            return view("ticket.show", compact("photos", "numberOfphotos", "ticket_info", "comments", "admin", "depts", "end", "statuses", "employees", "followers"));
+        }elseif (Auth::user()->hasAnyRole("TicketAdmin")) {
+            $admin = agent::with("user")->where("admin_id", Auth::user()->id)->get();
+            $auth_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
+            $system_admin=User::where("id",$auth_user->employee->admin_id)->first();
+            $depts = department::where("admin_uuid",$system_admin->uuid)->get();
+            $employees = [];
+            $emp_user = user_employee::with("employee")->get();
+            foreach ($emp_user as $emps) {
+                if ($emps->employee->admin_id ==$system_admin->id) {
                     array_push($employees, $emps);
                 }
             }

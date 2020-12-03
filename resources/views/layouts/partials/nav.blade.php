@@ -71,9 +71,7 @@
 		<li class="{{ Request::is('department') ? 'active' : '' }}">
 			<a  href="{{ url('/department') }}">Departments</a>
 		</li>
-									<li class="{{ Request::is('agent') ? 'active' : '' }}" >
-										<a href="{{ url('/agent') }}">Agent</a>
-									</li>
+
 {{--									<li>--}}
 
 {{--        <a class="{{ Request::is('designations') ? 'active' : '' }}" href="{{ url('designations') }}">Designations</a></li>								--}}
@@ -95,9 +93,9 @@
 						</a>
 						<ul style="display: none;">
 							<li class="{{ Request::is('engaged/company') ? 'active' : '' }}"><a  href="{{ url('/engaged/company') }}">Company</a></li>
-{{--							<li class="{{ Request::is('department') ? 'active' : '' }}">--}}
-{{--								<a  href="{{ url('/department') }}">Departments</a>--}}
-{{--							</li>--}}
+							<li class="{{ Request::is('client') ? 'active' : '' }}">
+								<a  href="{{ url('/client') }}">Clients</a>
+							</li>
 {{--							<li class="{{ Request::is('agent') ? 'active' : '' }}" >--}}
 {{--								<a href="{{ url('/agent') }}">Agent</a>--}}
 {{--							</li>--}}
@@ -126,27 +124,6 @@
 							<li class="{{ Request::is('leads') ? 'active' : '' }}">
         <a  href="{{ url('leads') }}"><i class="la la-user-secret"></i><span>Leads</span></a></li>		
 
-
-							<li class="submenu">
-								<a href="#"><i class="la la-ticket"></i> <span> Ticket </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li class="{{ Request::is('ticket/dashboard') ? 'active' : '' }}">
-										<a  href="{{ url('/ticket/dashboard') }}"><span>Tickets Dashboard</span></a></li>
-										<li class="{{ Request::is('priority') ? 'active' : '' }}">
-										<a href="{{ url('priority') }}">Priority</a></li>
-
-									<li class="{{ Request::is('case_type') ? 'active' : '' }}">
-										<a  href="{{ url('/case_type') }}">Case Type</a></li>
-									<li class="{{ Request::is('piechart') ? 'active' : '' }}">
-										<a  href="{{ url('/piechart') }}">Chart Report</a></li>
-									<li class="{{ Request::is('guestUser') ? 'active' : '' }}">
-										<a  href="{{ url('guestUser') }}">Complainer</a></li>
-									<li class="{{ Request::is('isassign/2') ? 'active' : '' }}" >
-										<a href="{{ url('isassign/2') }}">Assign Ticket</a></li>
-									<li class="{{ Request::is('taxes') ? 'active' : '' }}" >
-										<a href="{{ url('taxes') }}">Taxes</a></li>
-								</ul>
-							</li>
 							<li>
 							<a  href="{{ url('/role') }}"><i class="la la-user-secret"></i><span>Role & Permission</span></a></li>
 							<li class="submenu">
@@ -481,6 +458,29 @@
 						</ul>
 							</li>
 				</ul>
+				@elseif(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("TicketAdmin"))
+					<ul>
+
+						<li class="{{ Request::is('home') ? 'active' : '' }}" >
+							<a href="{{ url('/home') }}"><i class="fa fa-dashboard mr-2"></i><span>Dashboard</span></a>
+						</li>
+						<li class="{{ Request::is('agent') ? 'active' : '' }}" >
+							<a href="{{ url('/agent') }}"><i class="fa fa-user-circle-o mr-2"></i><span>Agent</span></a>
+						</li>
+						<li class="{{ Request::is('priority') ? 'active' : '' }}">
+						<a href="{{ url('priority') }}"><i class="fa fa-signal"></i><span>Priority</span></a></li>
+						<li class="{{ Request::is('case_type') ? 'active' : '' }}">
+						<a  href="{{ url('/case_type') }}"><i class="fa fa-th-list"></i><span>Case Type</span></a></li>
+					<li class="{{ Request::is('piechart') ? 'active' : '' }}">
+						<a  href="{{ url('/piechart') }}"><i class="fa fa-pie-chart"></i><span>Chart Report</span></a></li>
+					<li class="{{ Request::is('guestUser') ? 'active' : '' }}">
+						<a  href="{{ url('guestUser') }}"><i class="fa fa-users"></i><span>Complainer</span></a></li>
+					<li class="{{ Request::is('isassign/2') ? 'active' : '' }}" >
+						<a href="{{ url('isassign/2') }}"><i class="fa fa-ticket"></i><span>Assign Ticket</span></a></li>
+						<li class="{{ Request::is('client') ? 'active' : '' }}">
+							<a  href="{{ url('/client') }}"><i class="fa fa-users"></i><span>Clients</span></a>
+						</li>
+					</ul>
 					@elseif(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent"))
 					<ul>
 						<li><a  href="{{ url('/home') }}"><i class="fa fa-home"></i><span>Home</span></a></li>
@@ -490,6 +490,9 @@
 					<ul>
 						<li><a  href="{{ url('/home') }}"><i class="fa fa-home"></i><span>Home</span></a></li>
 						<li><a  href="{{url("/employee/tag/tickets")}}"><i class="fa fa-ticket"></i><span>Tags Ticket</span></a></li>
+						<li class="{{ Request::is('client') ? 'active' : '' }}">
+							<a  href="{{ url('/client') }}"><i class="fa fa-users"></i><span>Clients</span></a>
+						</li>
 					</ul>
 				@endif
 			</div>

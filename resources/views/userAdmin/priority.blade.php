@@ -63,16 +63,16 @@
                                     <label for="priority">Color</label>
                                     <select class="form-control"name="color" id="">
                                         <option selected disabled>Choose Color</option>
-                                        @if($isgreen==null)
+                                        @if($isgreen==0)
                                         <option value="success">Green</option>
                                         @endif
-                                        @if($isred==null)
+                                        @if($isred==0)
                                         <option value="danger">Red</option>
                                          @endif
-                                        @if($isblue==null)
+                                        @if($isblue==0)
                                         <option value="primary">Blue</option>
                                         @endif
-                                        @if($isyellow==null)
+                                        @if($isyellow==0)
                                         <option value="warning">Yellow</option>
                                             @endif
                                     </select>
