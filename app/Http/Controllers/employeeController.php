@@ -215,7 +215,6 @@ class employeeController extends Controller
             $pp=$emp_details->report_to_user->profile;
         }else{
             $user_emp=user_employee::with("employee")->get();
-            dd($user_emp);
             $pp=$user_emp->employee->emp_profile;
         }
         $admin=User::where("id",$emp_details->admin_id)->first();
