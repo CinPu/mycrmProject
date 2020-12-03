@@ -1,8 +1,9 @@
 @extends("layouts.mainlayout")
 @section("title","Card Link")
+@section("content")
 <div class="page-wrapper">
     <div class="container-fluid">
-<div class="page-header">
+            <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
             <h3 class="page-title">Tickets</h3>
@@ -13,8 +14,8 @@
         </div>
     </div>
 </div>
-        <div style="overflow-x: auto">
-<table class="table">
+            <div style="overflow-x: auto">
+                <table class="table">
     <thead>
     <tr>
         <th scope="col">Ticket ID</th>
@@ -70,6 +71,7 @@
     @endforeach
     </tbody>
 </table>
-        </div>
+            </div>
     </div>
 </div>
+@endsection
