@@ -305,7 +305,9 @@ class admin_agentController extends Controller
 
 //            dd($assingwithDepts);
         $noOfassign_withdept=count($assingwithDepts);
-        $depts=department::where("admin_uuid",$admin->uuid)->get();
+        $auth_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
+        $system_admin=User::where("id",$auth_user->employee->admin_id)->first();
+        $depts=department::where("admin_uuid",$system_admin->uuid)->get();
         $admin_agents=agent::with("user")->where("admin_id",$admin->id)->get();
         return view("Agent.agentTicket", compact("noOfassign","noOfassign_withdept","assingwithDepts","admin_agents","depts","noOfmyticket","tickets", "allcases","assignticket"));
 

@@ -232,6 +232,14 @@ class employeeController extends Controller
         return view("Employee.profile",compact("emp_details","pp","positions","depts","report_to"));
     }
     public function tagticket(){
+        $user_Emp=\App\user_employee::with("employee","user")->get();
+        $authuser=\App\user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
+        $ticket_admin=[];
+        foreach ($user_Emp as $tikerAdmin){
+            if($tikerAdmin->user->hasAnyRole("TicketAdmin") && $tikerAdmin->employee->admin_id==$authuser->employee->admin_id){
+                array_push($ticket_admin,$tikerAdmin);
+            }
+        }
         $followingTickets=ticketFollower::where("emp_id",Auth::user()->id)->get();
         $follow_tickets=[];
         foreach ($followingTickets as $ticket){
@@ -241,7 +249,7 @@ class employeeController extends Controller
         $user_emp=user_employee::where("user_id",Auth::user()->id)->first();
         $admin_uuid=employee::with("admin")->where("id",$user_emp->emp_id)->first();
 
-        return view("Employee.employeeTagticket",compact("follow_tickets","admin_uuid"));
+        return view("Employee.employeeTagticket",compact("follow_tickets","admin_uuid","ticket_admin"));
     }
     public function emp_Import(){
         Excel::import(new employee_import(),request()->file('file'));

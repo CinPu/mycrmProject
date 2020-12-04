@@ -49,31 +49,16 @@ class ticketController extends Controller
         $sources = sources::all();
         //ticket create for agent start
         if (Auth::check()) {
-            if (Auth::user()->hasAnyRole("Agent")) {
-                $agent_admins = agent::where("agent_id", Auth::user()->id)->get();
-                foreach ($agent_admins as $agent_admin) {
-                    $admins = User::whereId($agent_admin->admin_id)->first();
-//                    foreach ($admins as $admin) {
+            if (Auth::user()->hasAnyRole("Agent")){
+                $agent_admins = agent::where("agent_id", Auth::user()->id)->first();
+                    $admins = User::whereId($agent_admins->admin_id)->first();
                     $cats = case_type::where("admin_uuid", $admins->uuid)->get();
                     $priorities = priority::where("admin_uuid", $admins->uuid)->get();
-                    $user_infos = user_information::where("admin_id", $admins->uuid)->get();
-//                    }
-                }
-                return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities", "user_infos"));
+                return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities"));
             /*
              * end of ticket create for agent
              */
-            } elseif (Auth::user()->hasAnyRole("Admin")) {
-                /*
-                 * ticket create as admin start
-                */
-                $priorities = priority::where("admin_uuid", $id)->get();
-                $cats = case_type::where("admin_uuid", $id)->get();
-                return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities", "user_infos"));
-            /*
-             * end of admin
-             */
-            }elseif (Auth::user()->hasAnyRole("TicketAdmin")) {
+            }else{
                 /*
                  *  ticket admin start
                 */
@@ -84,16 +69,10 @@ class ticketController extends Controller
                  * end of admin
                  */
             }
-            elseif (Auth::user()->hasAnyRole("Employee")) {
-                $priorities = priority::where("admin_uuid", $id)->get();
-                $cats = case_type::where("admin_uuid", $id)->get();
-                return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities", "user_infos"));
-            }
         } else {
             $priorities = priority::where("admin_uuid", $id)->get();
             $cats = case_type::where("admin_uuid", $id)->get();
-            $user_infos = user_information::where("admin_id", $id)->get();
-            return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities", "user_infos"));
+            return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities"));
         }
     }
 
@@ -145,14 +124,13 @@ class ticketController extends Controller
         $ticket->user_id = $request->uuid;
         $ticket->case_type = $request->case_type;
         if (Auth::check()) {
-            if (Auth::user()->hasAnyRole("Agent")) {
-                $agent_admin = agent::where("agent_id", $name->id)->first();
-                $company_name = company::where("admin_id", $agent_admin->admin_id)->first();
-            } elseif (Auth::user()->hasAnyRole("Admin")) {
+               if (Auth::user()->hasAnyRole("Admin")) {
                 $company_name = company::where("admin_id", $name->id)->first();
             } else {
-                $company_name = company::where("admin_id", $name->id)->first();
+                  $auth_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
+                $company_name = company::where("admin_id", $auth_user->employee->admin_id)->first();
             }
+
         } else {
             $company_name = company::where("id", $emp->employee->company_id)->first();
         }
@@ -175,17 +153,6 @@ class ticketController extends Controller
         }
         $ticket->photo = json_encode($data);
         $ticket->save();
-//        $user=User::all();
-//        $users=[];
-//        foreach ($user as $u) {
-//            array_push($users,$u->email);
-////
-//        }
-//        if(!in_array($request->email, $users)) {
-//            $user=new User();
-//            $user->email=$request->email;
-//            $user->save();
-//        }
         return redirect()->back()->with("message", "Successful!");
     }
 

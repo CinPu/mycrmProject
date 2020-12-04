@@ -133,7 +133,7 @@
                                         {{csrf_field()}}
                                         <div class="form-group">
                                             <label for="type">Assign Type :</label>
-                                            <select class="form-control col-md-6 offset-md-2" id="type" name="assignType">
+                                            <select class="select form-control col-md-6 offset-md-2" id="type" name="assignType">
                                                 <option value="item0">Choose Assign Type</option>
                                                 <option value="dept">Assign To Department</option>
                                                 <option value="agent">Assign To Agent</option>
@@ -141,7 +141,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="size">Assign To :</label>
-                                            <select class="form-control col-md-6 offset-md-2" name="assign_id" id="size">
+                                            <select class="form-control " name="assign_id" id="size">
                                                 <option></option>
                                             </select>
                                         </div>
