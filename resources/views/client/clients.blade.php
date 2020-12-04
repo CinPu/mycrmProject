@@ -74,7 +74,11 @@
                     <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                         <div class="profile-widget">
                             <div class="profile-img">
+                                @if($client->profile==null)
                                 <a href="{{url("/profile/$client->id")}}" class="avatar"><img alt="" src="img/profiles/avatar-19.jpg"></a>
+                                @else
+                                <a href="{{url("/profile/$client->id")}}" ><img alt="" class="avatar" src="{{url(asset("profile/$client->profile"))}}"></a>
+                                    @endif
                             </div>
                             <div class="dropdown profile-action">
                                 <div class="pro-edit">

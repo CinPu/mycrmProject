@@ -16,18 +16,20 @@
     </style>
 </head>
 <body style="background-color: lightblue;background-image:url(./public/companylogo/logo.jpg);">
-<nav class=" navbar navbar-expand-lg navbar-light mt-2" id="pills-tab" role="tablist">
-   <a class="navbar-brand " href="#">Support Ticket</a>
-   <ul class="nav nav-pills offset-lg-8 offset-0" id="pills-tab" role="tablist">
-       <li class="nav-item">
-           <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa fa-lock mr-2"></i>Login</a>
+{{--<nav class=" navbar navbar-expand-lg navbar-light mt-2" id="pills-tab" role="tablist">--}}
+    <ul class="nav nav-pills mt-3 mr-5 ml-2" id="pills-tab" role="tablist">
+        <li class="nav-item float-left mr-5">
+        <a class="navbar-brand  nav-link" data-toggle="pill" href="#pills-home" role="tab">Support Ticket</a>
+        </li>
+       <li class="nav-item offset-md-9">
+           <a class="nav-link active"  id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa fa-lock mr-2"></i>Login</a>
        </li>
-       <li class="nav-item">
-           <a class="nav-link " id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa fa-envelope mr-2"></i>Sending</a>
-       </li>
+{{--       --}}
+{{--           <a class="nav-link " id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa fa-envelope mr-2"></i>Sending</a>--}}
+{{--       </li>--}}
 
    </ul>
-</nav>
+{{--</nav>--}}
        <div class="container-fluid">
            <div class="tab-content" id="pills-tabContent">
                <div class="tab-pane fade " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">

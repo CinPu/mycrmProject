@@ -85,10 +85,10 @@
 								</ul>
 							</li>
 
-					<li class="menu-title"><span>Client</span></li>
+					<li class="menu-title"><span>CRM</span></li>
 					<li class="submenu">
-						<a href="#"><i class="la la-user"></i>
-							<span> Client</span>
+						<a href="#"><i class="la la-users"></i>
+							<span> CRM</span>
 							<span class="menu-arrow"></span>
 						</a>
 						<ul style="display: none;">
