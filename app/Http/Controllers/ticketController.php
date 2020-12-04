@@ -93,7 +93,7 @@ class ticketController extends Controller
 
         ]);
 //        dd(public_path().'/imgs/');
-        dd($request->all());
+//        dd($request->all());
 //        var_dump($request->uuid);
         //user info store
         $user_info = user_information::where("email", $request->email)->first();
