@@ -19,7 +19,7 @@
 {{--<nav class=" navbar navbar-expand-lg navbar-light mt-2" id="pills-tab" role="tablist">--}}
     <ul class="nav nav-pills mt-3 mr-5 ml-2" id="pills-tab" role="tablist">
         <li class="nav-item float-left mr-5">
-        <a class="navbar-brand  nav-link" data-toggle="pill" href="#pills-home" role="tab">Support Ticket</a>
+        <a class="navbar-brand  nav-link" data-toggle="pill" href="#pills-home" role="tab">Ticket Create</a>
         </li>
        <li class="nav-item offset-md-9">
            <a class="nav-link active"  id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa fa-lock mr-2"></i>Login</a>
