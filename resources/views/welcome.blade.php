@@ -21,7 +21,7 @@
         <li class="nav-item float-left mr-5">
         <a class="navbar-brand  nav-link" data-toggle="pill" href="#pills-home" role="tab">Ticket Create</a>
         </li>
-       <li class="nav-item offset-md-9">
+       <li class="nav-item offset-lg-9 offset-sm-0">
            <a class="nav-link active"  id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa fa-lock mr-2"></i>Login</a>
        </li>
 {{--       --}}
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade offset-lg-1 show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="col-lg-4 col-sm-6 col-11 offset-lg-3 offset-sm-3">
+                    <div class="col-lg-4 col-sm-7 col-11 offset-lg-3 mt-5 offset-sm-2">
                         <h3 align="center">SIGN IN</h3>
                         <div class="card col-12 border-dark ml-3">
                             <div class="text-center mt-3">

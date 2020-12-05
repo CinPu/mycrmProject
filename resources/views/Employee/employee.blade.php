@@ -134,6 +134,19 @@
                             </div>
                         </div>
                         <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/emp/profile/$emp->id")}}">{{$emp->name}}</a></h4>
+                        @php
+                            $empuser=\App\user_employee::with("user")->where("emp_id",$emp->id)->first();
+                            $roles=\Spatie\Permission\Models\Role::all();
+                        @endphp
+                            @if(count($empuser->user->roles->pluck("name"))>0)
+                            @foreach($roles as $role)
+                                @if($empuser->user->hasRole($role->name))
+                                        <h5 class="text-muted">   {{$role->name}}</h5>
+                                @endif
+                            @endforeach
+                            @else
+                                <h5 class="text-muted">No Role</h5>
+                                @endif
                         <div class="small text-muted">{{$emp->position->emp_position}}</div>
                     </div>
                 </div>

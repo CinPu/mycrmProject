@@ -154,7 +154,7 @@
                             <label class="col-md-6 col-5">Status </label>   <!-- Button trigger modal -->
                             <span class="col-md-6 col-7">
                         : {{$ticket_info->status_type->status}}
-                                @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Admin"))
+                                @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("TicketAdmin"))
                                     <a href="" class="edit-icon mr-5" data-toggle="modal" data-target="#{{$ticket_info->status_type->status}}"><i class="fa fa-pencil"></i></a>
                                 @endif
                     </span>
@@ -176,7 +176,7 @@
                             <span class="col-7 col-md-6"> : {{$ticket_info->product}}</span>
                         </div>
                     </div>
-                @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Admin"))
+                @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("TicketAdmin"))
                     <!-- Modal  for status change-->
                         <div class="modal fade" id="{{$ticket_info->status_type->status}}" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -188,7 +188,7 @@
                                               class="form">
                                             <select class="custom-select co" name="status_change">
                                                 @foreach($statuses as $status)
-                                                    @if(Auth::user()->hasAnyRole("Admin"))
+                                                    @if(Auth::user()->hasAnyRole("TicketAdmin"))
                                                         <option value="{{$status->id}}">{{$status->status}}</option>
                                                     @else
                                                         @if($status->status!="Close")

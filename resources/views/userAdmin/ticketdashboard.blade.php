@@ -344,7 +344,7 @@
                                                     <form action="{{ url("/status/change/".$ticket->ticket_id) }}" method="GET" class="form">
                                                         <select class="custom-select" name="status_change">
                                                             @foreach($statuses as $status)
-                                                                @if(Auth::user()->hasAnyRole("Admin"))
+                                                                @if(Auth::user()->hasAnyRole("TicketAdmin"))
                                                                     <option value="{{$status->id}}">{{$status->status}}</option>
                                                                 @else
                                                                     @if($status->status!="Close")
