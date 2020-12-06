@@ -14,7 +14,7 @@
 <body>
     <div class="limiter">
         <div class="container-login100">
-            <div class="login100-more" style="background-image: url('img/logo.jp');"></div>
+            <div class="login100-more" style="background-image: url('img/logo.jpg');"></div>
             <div class="wrap-login100 p-l-30 p-r-50 p-t-30 p-b-50">
                 <form method="POST" action="{{ route('register') }}" class="login100-form validate-form">
                     {{csrf_field()}}
