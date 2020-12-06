@@ -30,7 +30,7 @@
 						Sign Up
 					</span>
                     <div class="wrap-input100 validate-input" data-validate="Name is required">
-                        <span class="label-input100">Full Name</span>
+                        <span class="label-input100">User Name</span>
                         <input id="name" type="text" class="input100  @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                         <span class="focus-input100"></span>
                     </div>
