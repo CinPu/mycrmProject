@@ -8,18 +8,27 @@
     <title>Register</title>
     <link rel="stylesheet" href="{{asset("/css/registermain.css")}}">
     <link rel="stylesheet" href="{{asset("/css/registerutil.css")}}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="{{url(asset("companylogo/mainlogo.png"))}}">
 </head>
 <body>
     <div class="limiter">
         <div class="container-login100">
-            <div class="login100-more" style="background-image: url('imgs/register.jpg');"></div>
+            <div class="login100-more" style="background-image: url('img/logo.jpg');"></div>
             <div class="wrap-login100 p-l-30 p-r-50 p-t-30 p-b-50">
                 <form method="POST" action="{{ route('register') }}" class="login100-form validate-form">
                     {{csrf_field()}}
+                    @if($errors)
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-warning alert-dismissible fade show">
+                                <strong>Warning!</strong>{{$error}}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        @endforeach
+                    @endif
 					<span class="login100-form-title p-b-20">
 						Sign Up
 					</span>
-
                     <div class="wrap-input100 validate-input" data-validate="Name is required">
                         <span class="label-input100">Full Name</span>
                         <input id="name" type="text" class="input100  @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -61,14 +70,11 @@
 {{--                    </div>--}}
 
                     <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button type="submit" class="login100-form-btn">
+                            <button type="submit" class="rounded-pill btn-lg col-md-5 mt-1 col-11 ml-2 btn btn-danger">
                                 Sign Up
                             </button>
-                        </div>
 
-                        <a href="{{url("/")}}" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
+                        <a href="{{url("/")}}" class="col-md-5  col-11 dis-block btn-lg btn btn-primary rounded-pill mt-1  ml-2  txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
                             Sign in
                             <i class="fa fa-long-arrow-right m-l-5"></i>
                         </a>
@@ -77,5 +83,7 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
