@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/profile/$client->id")}}">{{$client->customer_company->name}}</a></h4>
+                            <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("client/company/profile/".$client->customer_company->id)}}">{{$client->customer_company->name}}</a></h4>
                             <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/profile/$client->id")}}">{{$client->customer_name}}</a></h5>
                             <div class="small text-muted">{{$client->customer_position->emp_position}}</div>
                             <a href="chat" class="btn btn-white btn-sm m-t-10">Message</a>
@@ -133,7 +133,7 @@
                                     <td>{{$client->customer_name}}</td>
                                     <td>{{$client->email}}</td>
                                     <td>{{$client->phone}}</td>
-                                    <td>{{$client->customer_company->name}}</td>
+                                    <td><a href="{{url("client/company/profile/".$client->customer_company->id)}}">{{$client->customer_company->name}}</a></td>
                                     <td>{{$client->department}}</td>
                                     <td>{{$client->customer_position->emp_position}}</td>
                                     <td>{{$client->address}}</td>
