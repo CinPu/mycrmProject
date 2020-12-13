@@ -90,6 +90,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                         <ul class="nav nav-tabs nav-tabs-bottom">
                             <li class="nav-item col-sm-3"><a class="nav-link active" data-toggle="tab" href="#myprojects">About</a></li>
+                            <li class="nav-item col-sm-3"><a class="nav-link " data-toggle="tab" href="#staff">Staff</a></li>
                         </ul>
                     </div>
                 </div>
@@ -133,6 +134,48 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div id="staff" class="tab-pane fade">
+                            <div class="row">
+                                @foreach($staffs as $client)
+                                    <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
+                                        <div class="profile-widget">
+                                            <div class="profile-img">
+                                                @if($client->profile==null)
+                                                    <a href="{{url("/profile/$client->id")}}" class="avatar"><img alt="" src="img/profiles/avatar-19.jpg"></a>
+                                                @else
+                                                    <a href="{{url("/profile/$client->id")}}" ><img alt="" class="avatar" src="{{url(asset("profile/$client->profile"))}}"></a>
+                                                @endif
+                                            </div>
+                                            <div class="dropdown profile-action">
+                                                <div class="pro-edit">
+                                                    <button class="edit-icon"  href="#" data-toggle="modal" data-target="#delete{{$client->id}}"><i class="fa fa-trash-o"></i></button>
+                                                </div>
+                                            </div>
+                                            <div id="delete{{$client->id}}" class="modal custom-modal fade" role="dialog">
+                                                <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            Are you sure delete <b>{{$client->customer_name}}</b>?
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <div class="col-12">
+                                                                <a href="#" class=" btn btn-outline-warning text-center" data-dismiss="modal" aria-label="Close">No</a>
+                                                                <a href="{{url("/client/delete/$client->id")}}" class="btn btn-outline-danger text-center">Yes</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/profile/$client->id")}}">{{$client->customer_company->name}}</a></h4>
+                                            <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/profile/$client->id")}}">{{$client->customer_name}}</a></h5>
+                                            <div class="small text-muted">{{$client->customer_position->emp_position}}</div>
+                                            <a href="chat" class="btn btn-white btn-sm m-t-10">Message</a>
+                                            <a href="{{url("/profile/$client->id")}}" class="btn btn-white btn-sm m-t-10">View Profile</a>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

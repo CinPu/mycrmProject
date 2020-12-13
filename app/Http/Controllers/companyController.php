@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\company;
+use App\customer;
 use App\customerCompany;
 use App\Imports\companyimport;
 use App\user_employee;
@@ -79,7 +80,8 @@ class companyController extends Controller
     }
     public function profile($id){
         $company=customerCompany::where("id",$id)->first();
-        return view("company.company_profile",compact("company"));
+        $staffs=customer::with("customer_position","customer_company")->where("company_id",$id)->get();
+        return view("company.company_profile",compact("company","staffs"));
     }
     public function companyedit($id){
         $company=customerCompany::where("id",$id)->first();
