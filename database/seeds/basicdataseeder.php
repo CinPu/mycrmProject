@@ -3,6 +3,7 @@
 use App\position;
 use App\sources;
 use App\status;
+use App\tags_industry;
 use Illuminate\Database\Seeder;
 
 class basicdataseeder extends Seeder
@@ -33,5 +34,8 @@ class basicdataseeder extends Seeder
         position::create(['emp_position'=>'Senior Manager']);
         position::create(['emp_position'=>'Officer']);
         position::create(['emp_position'=>'COO']);
+        tags_industry::create(['tag_industry'=>'CRM Software']);
+        tags_industry::create(['tag_industry'=>'Health']);
+        tags_industry::create(['tag_industry'=>'Game and Sport']);
     }
 }

@@ -74,22 +74,26 @@ class leadController extends Controller
      */
     public function store(Request $request)
     {
-        $lead = new leadModel();
-        $lead->lead_id = $request->lead_id;
-        $lead->title = $request->lead_title;
-        $lead->company_id = $request->compay_id;
-        $lead->customer_id = $request->customer_id;
-        $lead->priority = $request->priority;
-        if ($request->qualified == 1) {
-            $lead->is_qualified = $request->qualified;
-        } else {
-            $lead->is_qualified = 0;
+        if($request->customer_id=="empty"||$request->tags=="empty"){
+            return redirect()->back()->with("message","You need to select customer name and industry");
+        }else {
+            $lead = new leadModel();
+            $lead->lead_id = $request->lead_id;
+            $lead->title = $request->lead_title;
+            $lead->company_id = $request->compay_id;
+            $lead->customer_id = $request->customer_id;
+            $lead->priority = $request->priority;
+            if ($request->qualified == 1) {
+                $lead->is_qualified = $request->qualified;
+            } else {
+                $lead->is_qualified = 0;
+            }
+            $lead->sale_man_id = $request->sale_man;
+            $lead->tags_id = $request->tags;
+            $lead->description = $request->description;
+            $lead->save();
+            return redirect()->back()->with("message", "Succssful");
         }
-        $lead->sale_man_id = $request->sale_man;
-        $lead->tags_id = $request->tags;
-        $lead->description = $request->description;
-        $lead->save();
-        return redirect()->back()->with("message", "Succssful");
 
     }
 

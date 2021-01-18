@@ -45,6 +45,7 @@
                            <div class="form-group col-md-4 col-xl-4 col-6">
                                <label for="">Customer Name</label>
                                <select name="customer_id" id="add_customer" class="select col-md-9">
+                                   <option value="empty">Select Customer Name</option>
                                    @foreach($allcustomers as $allcustomer)
                                        <option value="{{$allcustomer->id}}">{{$allcustomer->customer_name}}</option>
                                    @endforeach
@@ -55,6 +56,7 @@
                            <div class="form-group col-md-4 col-xl-4 col-6" id="tags_reload">
                                <label for="">Tag Industry</label>
                                <select name="tags" id="category" class="select">
+                                   <option value="empty">Select Industry</option>
                                    @foreach($tags as $tag)
                                        @if($tag->id==$last_tag->id)
                                            <option value="{{$tag->id}}" selected>{{$tag->tag_industry}}</option>
@@ -87,23 +89,20 @@
                </div>
         </div>
         <div id="add" class="modal custom-modal fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Category</h5>
+                        <h5 class="modal-title">Add New Industry</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                            <div class="col-12 mb-3">
-                                <div class="row">
-                                    <div class="form-group col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
                                         <label>Tags</label>
                                         <input type="text" id="tags" class="form-control" name="tags" >
-                                    </div>
-                                    <button  id="tags_create" data-dismiss="modal" class="btn btn-primary float-right">Save</button>
                                 </div>
+                        <button  id="tags_create" data-dismiss="modal" class="btn btn-primary float-right">Save</button>
                             </div>
                     </div>
                 </div>
