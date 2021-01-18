@@ -93,12 +93,23 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("client/company/import","companyController@import");
     Route::get("customer_company/delete/{id}","companyController@delete");
     Route::get("client","clientController@index");
-    Route::get("client/customer/create","clientController@create");
-    Route::post("client/customer/create","clientController@store");
+    Route::get("client/customer/create/{id}","clientController@create");
+    Route::post("client/customer/create/","clientController@store");
     Route::post("client/customer/update/{id}","clientController@update");
     Route::get("/profile/{client_id}","clientController@show");
     Route::get("/client/delete/{id}","clientController@destroy");
     Route::post("client/search","clientController@filter");
+    Route::get("/leads","leadController@index");
+    Route::get("/lead/create","leadController@create");
+    Route::post("lead/create","leadController@store");
+    Route::post("/tags/create","leadController@tag_add");
+    Route::get("lead/view/{lead_id}","leadController@show");
+    Route::post("/lead/post/comment","leadController@comment");
+    Route::get("lead/comment/delete/{id}","leadController@comment_delete");
+    Route::post("/lead/follower/add/{id}","leadController@lead_follower");
+    Route::post("/lead/update/{id}","leadController@update");
+    Route::get("/lead/edit/{id}","leadController@edit");
+    Route::get("/lead/delete/{id}","leadController@destroy");
     Route::get('/chat', function () {
         return view('chat');
     });

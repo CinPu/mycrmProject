@@ -37,7 +37,7 @@ class clientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
 
 //        dd($lastcustomer);
@@ -73,7 +73,7 @@ class clientController extends Controller
         }
         $position=position::all();
 //dd($company);
-        return  view("client.clientadd",compact("client_id","position","companies","company_id","admin_company"));
+        return  view("client.clientadd",compact("client_id","position","companies","company_id","admin_company","id"));
 
     }
 
@@ -104,7 +104,12 @@ class clientController extends Controller
         $client->report_to=$request->report_to;
         $client->admin_company_id=$request->admin_company;
         $client->save();
-        return redirect("/client")->with("message","Customer Create Success");
+        if($request->id==0){
+            return redirect("/client")->with("message","Customer Create Success");
+        }elseif ($request->id==1){
+            return redirect("/lead/create")->with("message","Customer Create Success and select new customer name");
+        }
+
     }
 
     /**

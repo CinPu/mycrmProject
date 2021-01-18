@@ -90,9 +90,9 @@
                     @endif
                 @endif
                 <div class="text-center">
-                <b id="days"></b> : <b id="hours"></b>
-                : <b id="mins"></b>
-                : <b id="secs"></b>
+                <b id="days"></b>  <b id="hours"></b>
+                 <b id="mins"></b>
+                 <b id="secs"></b>
                 </div>
                 {{--            @endif--}}
                 <span id="clock-placeholder"></span>
@@ -155,8 +155,9 @@
                             <span class="col-md-6 col-7">
                         : {{$ticket_info->status_type->status}}
                                 @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent")||\Illuminate\Support\Facades\Auth::user()->hasAnyRole("TicketAdmin"))
-                                    <a href="" class="edit-icon mr-5" data-toggle="modal" data-target="#{{$ticket_info->status_type->status}}"><i class="fa fa-pencil"></i></a>
+                                    <a href=""  data-toggle="modal" data-target="#{{$ticket_info->status_type->status}}"><i class="fa fa-pencil-square-o"></i></a>
                                 @endif
+
                     </span>
                         </div>
                         <div class="col-md-6 col-12">
@@ -305,24 +306,59 @@
                             @endforeach
                         </div>
                         <hr>
-                        <div class="comment-form">
-                            <form action="{{ url('comment') }}" method="POST" class="form ">
-                                {!! csrf_field() !!}
-                                <input type="hidden" name="ticket_id" value="{{ $ticket_info->id }}">
-                                <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }} col-md-12">
-                                    <input type="text" name="comment" class="form-control"
-                                           placeholder="Comment Here ..">
-                                    <div class="offset-md-7 offset-sm-8 offset-7 mt-2">
-                                        <button type="submit" class="btn btn-info"><i class="fa fa-send mr-2"></i>Comment
-                                        </button>
-                                    </div>
-                                    @if ($errors->has('comment'))
-                                        <span class="help-block">
+
+
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Note</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Reply</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="comment-form">
+                                    <form action="{{ url('comment') }}" method="POST" class="form ">
+                                        {!! csrf_field() !!}
+                                        <input type="hidden" name="ticket_id" value="{{ $ticket_info->id }}">
+                                        <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }} col-md-12">
+                                            <input type="text" name="comment" class="form-control"
+                                                   placeholder="Comment Here ..">
+                                            <div class="offset-md-7 offset-sm-8 offset-7 mt-2">
+                                                <button type="submit" class="btn btn-info"><i class="fa fa-send mr-2"></i>Comment
+                                                </button>
+                                            </div>
+                                            @if ($errors->has('comment'))
+                                                <span class="help-block">
                                                     <strong>{{ $errors->first('comment') }}</strong>
                                                 </span>
-                                    @endif
+                                            @endif
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="comment-form">
+                                    <form action="{{ url('reply') }}" method="POST" class="form ">
+                                        {!! csrf_field() !!}
+                                        <input type="hidden" name="complainer" value="{{$ticket_info->userinfo->email}}">
+                                        <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }} col-md-12">
+                                            <input type="text" name="comment" class="form-control"
+                                                   placeholder="Reply ..">
+                                            <div class="offset-md-8 offset-sm-9 offset-7 mt-2">
+                                                <button type="submit" class="btn btn-info"><i class="fa fa-send mr-2"></i>Reply
+                                                </button>
+                                            </div>
+                                            @if ($errors->has('comment'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('comment') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                         <span class="rounded follower ml-2"><b>Follower :</b>
                     @foreach($followers as $follower)
@@ -348,7 +384,7 @@
                                         <div class="form-group col-md-8">
                                              <label for="">Add Follower</label>
                                                 <select class="mul-select  md-form " name="follower[]" multiple="true">
-                    @foreach($employees as $emp)
+                                                    @foreach($employees as $emp)
                                                         <option value="{{$emp->user_id}}">{{$emp->employee->name}}</option>
                                                     @endforeach
                 </select>

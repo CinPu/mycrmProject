@@ -52,4 +52,7 @@ class employee extends Model
     public function emp_user(){
         return $this->hasMany(user_employee::class);
     }
+    public function lead(){
+        return $this->hasMany(leadModel::class);
+    }
 }

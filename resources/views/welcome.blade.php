@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade offset-lg-1 show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="col-lg-4 col-sm-7 col-11 offset-lg-3 mt-5 offset-sm-2">
+                    <div class="col-lg-4 col-sm-7 col-11 offset-lg-3  offset-sm-2">
                         <h3 align="center">SIGN IN</h3>
                         <div class="card col-12 border-dark ml-3">
                             <div class="text-center mt-3">

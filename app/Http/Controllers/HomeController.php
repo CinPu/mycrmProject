@@ -52,10 +52,10 @@ class HomeController extends Controller
                  * count number of employee
                 */
                 $admin_emp=employee::where("admin_id",Auth::user()->id)->get();
-                    $allemp=count($admin_emp);
-               /*
-               count number of client
-                */
+                $allemp=count($admin_emp);
+                /*
+                count number of client
+                 */
                 $company=company::where("admin_id",Auth::user()->id)->first();
                 $allclients=count(customer::where("admin_company_id",$company->id)->get());
 
@@ -69,20 +69,23 @@ class HomeController extends Controller
                     }
                 }
                 $tickets = [];
+                if($ticketAdmin!=null) {
+                $ticketadmin_uuid=$ticketAdmin[0]->user->uuid;
                 //admin's agent all ticket select
-                $agents = agent::with("user")->where("admin_id",$ticketAdmin[0]->user->id)->get();
+                    $agents = agent::with("user")->where("admin_id", $ticketAdmin[0]->user->id)->get();
 //                  dd($agents);
-                foreach ($agents as $agent) {
-                    $agents_tickets = ticket::with( "status_type")->where("user_id", $agent->user->uuid)->get();
-                    //all agents' ticket add to tickets[]
-                    foreach ($agents_tickets as $agent_ticket) {
-                        array_push($tickets, $agent_ticket);
+                    foreach ($agents as $agent) {
+                        $agents_tickets = ticket::with("status_type")->where("user_id", $agent->user->uuid)->get();
+                        //all agents' ticket add to tickets[]
+                        foreach ($agents_tickets as $agent_ticket) {
+                            array_push($tickets, $agent_ticket);
+                        }
                     }
-                }
-                //ticket for admin from user to admin
-                $user_tickets = ticket::with( "status_type")->where("user_id",$ticketAdmin[0]->user->uuid)->get();
-                foreach ($user_tickets as $user_ticket) {
-                    array_push($tickets, $user_ticket);
+                    //ticket for admin from user to admin
+                    $user_tickets = ticket::with("status_type")->where("user_id", $ticketAdmin[0]->user->uuid)->get();
+                    foreach ($user_tickets as $user_ticket) {
+                        array_push($tickets, $user_ticket);
+                    }
                 }
                 //count ticket each status;
                 $countallticket = count($tickets);
@@ -110,23 +113,6 @@ class HomeController extends Controller
                 }
                 return view("userAdmin.home",compact("allemp","allclients","countallticket","openticket","closeticket","pending","progress","complete","new"));
                 //end for admin user
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             }elseif (Auth::user()->hasAnyRole("TicketAdmin")){
                 //select admin's agent
@@ -193,7 +179,7 @@ class HomeController extends Controller
 
             }
             elseif (Auth::user()->hasAnyRole("Agent")) {
-                    return view("Agent.home");
+                return view("Agent.home");
             }elseif (Auth::user()->hasAnyRole("Employee")){
                 return view("Employee.employee_home");
             } else{

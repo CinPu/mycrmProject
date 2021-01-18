@@ -426,12 +426,14 @@ class ticketController extends Controller
 
     public function follower(Request $request, $id)
     {
-
         for ($i = 0; $i < count($request->follower); $i++) {
-            $ticket_follower = new ticketFollower();
-            $ticket_follower->ticket_id = $id;
-            $ticket_follower->emp_id = $request->follower[$i];
-            $ticket_follower->save();
+           $isfollowed=ticketFollower::where("emp_id",$request->follower[$i])->first();
+            if($isfollowed==null){
+                $ticket_follower = new ticketFollower();
+                $ticket_follower->ticket_id = $id;
+                $ticket_follower->emp_id = $request->follower[$i];
+                $ticket_follower->save();
+            }
         }
         return redirect()->back()->with("message", "Successful");
     }

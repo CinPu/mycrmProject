@@ -17,7 +17,7 @@
                             </ul>
                         </div>
                         <div class="col-auto float-right ml-auto">
-                            <a href="{{url("client/customer/create")}}" class="btn add-btn"><i class="fa fa-plus"></i> Add Client</a>
+                            <a href="{{url("client/customer/create/0")}}" class="btn add-btn"><i class="fa fa-plus"></i> Add Client</a>
                             <div class="view-icons">
                                 <ul class="nav" id="myTab" role="tablist">
                                     <li class="nav-item" role="presentation">

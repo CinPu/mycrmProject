@@ -72,4 +72,10 @@ class User extends Authenticatable
     public function customer(){
         return $this->hasMany(customer::class);
     }
+    public function lead_comment(){
+        return $this->hasMany(leead_comment::class);
+    }
+    public function lead_follower(){
+        return $this->hasMany(lead_follower::class);
+    }
 }

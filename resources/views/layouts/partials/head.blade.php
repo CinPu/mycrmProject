@@ -68,10 +68,10 @@
             }
             .buttons-collection{
                 background-color: white;
-                width: 120px;
+                width: 100px;
                 color: black;
                 border-radius: 6px;
-                padding: 8px 20px;
+                padding: 8px ;
                 border: 2px solid #4CAF50; /* Green */
                 transition-duration: 0.4s;
                 cursor: pointer;
