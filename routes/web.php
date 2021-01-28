@@ -110,6 +110,17 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("/lead/update/{id}","leadController@update");
     Route::get("/lead/edit/{id}","leadController@edit");
     Route::get("/lead/delete/{id}","leadController@destroy");
+    Route::get("/products","productController@index");
+    Route::get("/product/create","productController@create");
+    Route::post("/product/create","productController@store");
+    Route::get("/product/edit/{id}","productController@edit");
+    Route::post("product/update/{id}","productController@update");
+    Route::get("/product/delete/{id}","productController@destroy");
+    Route::post("/tax/create","productController@tax");
+    Route::post("/cat/create","productController@category");
+    Route::get("product/show/{id}","productController@show");
+    Route::get("/product/duplicate/{id}","productController@duplicate");
+    Route::post("/action/confirm","productController@action_confirm");
     Route::get('/chat', function () {
         return view('chat');
     });

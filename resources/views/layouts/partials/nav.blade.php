@@ -102,24 +102,25 @@
 
 							</ul>
 						</li>
+						<li class="{{ Request::is('products') ? 'active' : '' }}">
+							<a  href="{{ url('/products') }}"><i class="la la-folder-open-o"></i><span>Product</span></a></li>
+
+{{--						<li class="submenu">--}}
+{{--							<a href="#"><i class="la la-rocket"></i> <span> Projects</span> <span class="menu-arrow"></span></a>--}}
+{{--							<ul style="display: none;">--}}
+
+{{--								<li>--}}
+{{--									<a class="{{ Request::is('projects') ? 'active' : '' }}" href="{{ url('projects') }}">Projects</a></li>--}}
+
+{{--								<li>--}}
+{{--									<a class="{{ Request::is('tasks') ? 'active' : '' }}" href="{{ url('tasks') }}">Tasks</a></li>--}}
+
+{{--								<li>--}}
+{{--									<a class="{{ Request::is('task-board') ? 'active' : '' }}" href="{{ url('task-board') }}">Task Board</a></li>--}}
 
 
-						<li class="submenu">
-							<a href="#"><i class="la la-rocket"></i> <span> Projects</span> <span class="menu-arrow"></span></a>
-							<ul style="display: none;">
-
-								<li>
-									<a class="{{ Request::is('projects') ? 'active' : '' }}" href="{{ url('projects') }}">Projects</a></li>
-
-								<li>
-									<a class="{{ Request::is('tasks') ? 'active' : '' }}" href="{{ url('tasks') }}">Tasks</a></li>
-
-								<li>
-									<a class="{{ Request::is('task-board') ? 'active' : '' }}" href="{{ url('task-board') }}">Task Board</a></li>
-
-
-							</ul>
-						</li>
+{{--							</ul>--}}
+{{--						</li>--}}
 						<li class="{{ Request::is('leads') ? 'active' : '' }}">
 							<a  href="{{ url('/leads') }}"><i class="la la-user-secret"></i><span>Leads</span></a></li>
 						@php

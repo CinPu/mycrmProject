@@ -193,6 +193,9 @@ class leadController extends Controller
         $tag = new tags_industry();
         $tag->tag_industry = $request->tag_industry;
         $tag->save();
+        return response()->json([
+            'tags' => "success",
+        ]);
     }
 public function comment(Request $request){
     $comments = new leead_comment();

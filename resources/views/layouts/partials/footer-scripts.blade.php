@@ -2,7 +2,7 @@
 <!-- jQuery -->
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<!-- Bootstrap Core JS -->
-        <script src="{{url(asset("js/popper.min.js"))}}"></script>
+        <script src="{{url("js/popper.min.js")}}"></script>
         <script src="{{url(asset("js/bootstrap.min.js"))}}"></script>
 		
 		<!-- Slimscroll JS -->

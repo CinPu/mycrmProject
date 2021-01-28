@@ -35,7 +35,7 @@
                            </div>
                            <div class="form-group col-md-4 col-xl-4 col-6">
                                <label for="">Sale Man</label>
-                               <select name="sale_man" id="" class="select form-control">
+                               <select name="sale_man" id="saleman" class="select form-control">
                                    @foreach($allemployees as $allemp)
                                        <option value="{{$allemp->id}}">{{$allemp->name}}</option>
                                    @endforeach
@@ -53,18 +53,18 @@
                                </select>
                            </div>
 {{--                           <a href="{{url("client/customer/create")}}"><i class="fa fa-plus"></i></a>--}}
-                           <div class="form-group col-md-4 col-xl-4 col-6" id="tags_reload">
-                               <label for="">Tag Industry</label>
-                               <select name="tags" id="category" class="select">
+                           <div class="form-group col-md-4 col-xl-4 col-6" id="tagdiv" >
+                               <label for="category" >Tag Industry</label>
+                               <select name="tags" id="category" class="form-control">
                                    <option value="empty">Select Industry</option>
                                    @foreach($tags as $tag)
                                        @if($tag->id==$last_tag->id)
                                            <option value="{{$tag->id}}" selected>{{$tag->tag_industry}}</option>
                                        @else
-                                       <option value="{{$tag->id}}">{{$tag->tag_industry}}</option>
+                                           <option value="{{$tag->id}}">{{$tag->tag_industry}}</option>
                                        @endif
                                    @endforeach
-                                       <option value="category">Add</option>
+                                   <option value="categorys">Add</option>
                                </select>
                            </div>
                            <div class="form-group col-md-4 col-xl-4 col-6">
@@ -113,7 +113,7 @@
             $(document).ready(function(){ //Make script DOM ready
                 $('#category').change(function() { //jQuery Change Function
                     var opval = $(this).val(); //Get value from select element
-                    if(opval=="category"){ //Compare it and if true
+                    if(opval=="categorys"){ //Compare it and if true
                         $('#add').modal("show"); //Open Modal
                     }
                 });
@@ -128,7 +128,7 @@
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         success:function(data){
                             console.log(data);
-                            window.location.reload(true);
+                            $("#tagdiv").load(location.href + " #tagdiv>* ");
                         }
                     });
                 });
