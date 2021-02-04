@@ -27,7 +27,7 @@
 		
 		<!-- Datetimepicker CSS -->
 		<link rel="stylesheet" href="{{url(asset("css/bootstrap-datetimepicker.min.css"))}}">
-		
+
 		<!-- Calendar CSS -->
 		<link rel="stylesheet" href="{{url(asset("css/fullcalendar.min.css"))}}">
 

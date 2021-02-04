@@ -73,15 +73,22 @@
                     <label for="">Description</label>
                     <textarea name="description" cols="50" style="width: 100%;height: 100px;" ></textarea>
                 </div>
-                <div class="form-group col-md-4 col-6 offset-md-2">
+                <div class="form-group col-md-3 col-6 offset-md-2">
                     <label for="">Sale Price</label>
                     <input type="number" class="form-control" name="sale_price" required>
                 </div>
-                <div class="form-group col-md-4 col-6">
+                <div class="form-group col-md-3 col-6">
                     <label for="">Purchase Price</label>
                     <input type="number" class="form-control" name="purchase_price">
                 </div>
-                <div class="form-group col-md-4 col-6 offset-md-2" id="cat_div">
+                <div class="form-group col-md-2">
+                    <label for="">Unit</label>
+                <select name="unit" id="" class="select">
+                    <option value="MMK">MMK</option>
+                    <option value="USD">USD</option>
+                </select>
+                </div>
+                <div class="form-group col-md-3 col-6 offset-md-2" id="cat_div">
                     <label for="">Category</label>
                     <select name="cat_id" id="product_cat" class="form-control">
                         <option value="empty">Select Category</option>
@@ -95,12 +102,14 @@
                         <option value="cat">Add New Category</option>
                     </select>
                 </div>
-                <div class="form-group col-md-4 col-6">
+                <div class="form-group col-md-3 col-6">
                     <label for="">Picture</label>
                     <input type="file" accept="image/*" name="picture"  class=" offset-md-1" onchange="loadFile(event)">
-                    <img id="output" class="rounded offset-md-5 offset-4 mt-3" src="{{url(asset("/img/profiles/avatar-01.jpg"))}}" width="100px" height="100px;"><br>
                 </div>
-                <div class="form-group offset-md-2">
+                <div class="form-group col-md-2">
+                    <img id="output" class="rounded mt-3" src="{{url(asset("/img/profiles/avatar-01.jpg"))}}" width="100px" height="100px;">
+                </div>
+                <div class="form-group offset-md-2 ">
                     <input type="checkbox" name="enable" class="ml-3">
                     <label for="">Enable</label>
                 </div>

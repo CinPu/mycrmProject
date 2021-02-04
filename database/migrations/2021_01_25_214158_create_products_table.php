@@ -27,6 +27,7 @@ class CreateProductsTable extends Migration
             $table->bigInteger("company_id")->unsigned();
             $table->foreign("company_id")->references("id")->on("companies")->onDelete("cascade");
             $table->text("image");
+            $table->string("currency_unit");
             $table->timestamps();
         });
     }

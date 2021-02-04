@@ -10,8 +10,10 @@ use App\employee;
 use App\lead_follower;
 use App\leadModel;
 use App\leead_comment;
+use App\next_plan;
 use App\tags_industry;
 use App\user_employee;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,7 +60,7 @@ class leadController extends Controller
             $lastlead->lead_id++;
             $lead_id = $lastlead->lead_id;
         } else {
-            $lead_id = $admin_company->company_short_form . " - Lead" . "-00001";
+            $lead_id ="#Lead" . "-0001";
         }
         $tags = tags_industry::all();
         $last_tag = tags_industry::orderBy('id', 'desc')->first();
@@ -74,6 +76,7 @@ class leadController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         if($request->customer_id=="empty"||$request->tags=="empty"){
             return redirect()->back()->with("message","You need to select customer name and industry");
         }else {
@@ -92,6 +95,15 @@ class leadController extends Controller
             $lead->tags_id = $request->tags;
             $lead->description = $request->description;
             $lead->save();
+            if($request->checked=="on"){
+                $next_plan=new next_plan();
+                $next_plan->description=$request->next_plan_textarea;
+                $next_plan->to_date=Carbon::create($request->to_date);
+                $next_plan->from_date=Carbon::create($request->from_date);
+                $next_plan->lead_id=$lead->id;
+                $next_plan->work_done=0;
+                $next_plan->save();
+            }
             return redirect()->back()->with("message", "Succssful");
         }
 
@@ -122,7 +134,8 @@ class leadController extends Controller
         $lead = leadModel::with("customer", "saleMan", "tags")->where('id', $id)->first();
         $comments=leead_comment::with("user")->where("lead_id",$id)->get();
         $followers=lead_follower::with("user")->where("lead_id",$id)->get();
-        return view("lead.lead_view", compact("lead","comments","allemps","followers"));
+        $next_plan=next_plan::where("lead_id",$id)->first();
+        return view("lead.lead_view", compact("lead","comments","allemps","followers","next_plan"));
     }
 
     /**
@@ -146,7 +159,8 @@ class leadController extends Controller
         $tags = tags_industry::all();
         $last_tag = tags_industry::orderBy('id', 'desc')->first();
         $lead=leadModel::where("id",$id)->first();
-        return view("lead.edit", compact( "allemployees", "admin_company", "allcustomers", "tags", "last_tag","lead"));
+        $next_plan=next_plan::where("lead_id",$id)->first();
+        return view("lead.edit", compact( "allemployees", "admin_company", "allcustomers", "tags", "last_tag","lead","next_plan"));
     }
 
     /**
@@ -173,7 +187,30 @@ class leadController extends Controller
         $lead->tags_id = $request->tags;
         $lead->description = $request->description;
         $lead->update();
-        return redirect()->back()->with("message", "Succssful");
+        if($request->checked=="on"){
+            $next_plan=next_plan::where("lead_id",$id)->first();
+            if($next_plan!=null){
+                $next_plan->from_date=$request->from_date;
+                $next_plan->to_date=$request->to_date;
+                $next_plan->description=$request->next_plan_textarea;
+                $next_plan->update();
+
+            }else{
+                $validated = $request->validate([
+                    'from_date'=>'required',
+                    'to_date'=>'required',
+                    'next_plan_textarea'=>'required'
+                ]);
+                $new_next_plan=new next_plan();
+                $new_next_plan->from_date=$request->from_date;
+                $new_next_plan->to_date=$request->to_date;
+                $new_next_plan->description=$request->next_plan_textarea;
+                $new_next_plan->lead_id=$id;
+                $new_next_plan->work_done=0;
+                $new_next_plan->save();
+            }
+        }
+        return redirect("lead/view/$id")->with("message", "Succssful");
     }
 
     /**
@@ -185,7 +222,14 @@ class leadController extends Controller
     public function destroy($id)
     {
         $lead=leadModel::where("id",$id)->first();
-        dd($lead);
+        $lead->delete();
+        return redirect()->back()->with("message","Delete $lead->title successful");
+    }
+    public function qualified($id){
+        $lead=leadModel::where("id",$id)->first();
+        $lead->is_qualified=1;
+        $lead->update();
+        return redirect()->back()->with("message","$lead->title is qualified now!");
     }
 
     public function tag_add(Request $request)
@@ -222,5 +266,11 @@ public function comment(Request $request){
           }
         }
         return redirect()->back();
+    }
+    public function work_done($id){
+        $lead=next_plan::where("lead_id",$id)->first();
+        $lead->work_done=1;
+        $lead->update();
+        return redirect()->back()->with("message","Congratulations your next plan completed");
     }
 }

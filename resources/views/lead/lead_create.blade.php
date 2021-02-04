@@ -1,6 +1,15 @@
 @extends('layouts.mainlayout')
+@section("title","Lead Create")
 @section('content')
+    <style>
+        #cke_15,#cke_66,#cke_75,#cke_77,#cke_78,#cke_79,#cke_81,#cke_82,#cke_83,#cke_84,#cke_86,#cke_88,#cke_23,#cke_21,#cke_35,#cke_26,#cke_27,#cke_36,#cke_28,#cke_29,#cke_30,#cke_32,#cke_47{
+            visibility: hidden;
+        }
+    </style>
+
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>--}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />--}}
     <script src="{{asset("/js/rating.js")}}"></script>
     <!-- Page Wrapper -->
     <div class="page-wrapper">
@@ -44,7 +53,7 @@
                            </div>
                            <div class="form-group col-md-4 col-xl-4 col-6">
                                <label for="">Customer Name</label>
-                               <select name="customer_id" id="add_customer" class="select col-md-9">
+                               <select name="customer_id" id="add_customer" class="form-control">
                                    <option value="empty">Select Customer Name</option>
                                    @foreach($allcustomers as $allcustomer)
                                        <option value="{{$allcustomer->id}}">{{$allcustomer->customer_name}}</option>
@@ -54,9 +63,8 @@
                            </div>
 {{--                           <a href="{{url("client/customer/create")}}"><i class="fa fa-plus"></i></a>--}}
                            <div class="form-group col-md-4 col-xl-4 col-6" id="tagdiv" >
-                               <label for="category" >Tag Industry</label>
-                               <select name="tags" id="category" class="form-control">
-                                   <option value="empty">Select Industry</option>
+                               <label for="category" >Industry</label>
+                               <select name="tags" id="industry" class="form-control">
                                    @foreach($tags as $tag)
                                        @if($tag->id==$last_tag->id)
                                            <option value="{{$tag->id}}" selected>{{$tag->tag_industry}}</option>
@@ -64,7 +72,6 @@
                                            <option value="{{$tag->id}}">{{$tag->tag_industry}}</option>
                                        @endif
                                    @endforeach
-                                   <option value="categorys">Add</option>
                                </select>
                            </div>
                            <div class="form-group col-md-4 col-xl-4 col-6">
@@ -76,20 +83,41 @@
                                <input type="hidden" name="compay_id" value="{{$admin_company->id}}">
                            </div>
                        </div>
-                       <textarea name="description" id=""  rows="10" style="width:100%;">
+                       <textarea name="description" id="description"  rows="5" style="width:100%;" >
                     </textarea>
-                       <div class="form-group">
-                           <input type="checkbox" id="check" name="qualified" class="custom-checkbox" value="1"> Qualified
+                       <div class="form-group mt-2">
+                          <span data-toggle="collapse" data-target="#next_plan" >
+                            <input type="checkbox" name="checked">
+                            </span><span for="">Next Plan</span>
+                           <div class="sub-menu collapse border mt-3" id="next_plan">
+                               <h3 align="center" class="mt-3">Next Plan </h3>
+                               <div class="col-12 row mt-3">
+                                   <div class="form-group col-md-4 offset-md-2">
+                                       <label for="">From Date</label>
+                                       <input type="date" class="form-control" name="from_date">
+                                   </div>
+                                   <div class="form-group col-md-4">
+                                       <label for="">To Date</label>
+                                       <input type="date" class="form-control" name="to_date">
+                                   </div>
+                                   <div class="form-goup col-md-8 offset-2 mb-3">
+                                       <label for="">Description</label>
+                                       <textarea name="next_plan_textarea" id="next_plan_textarea"  rows="5" style="width: 100%;"></textarea>
+                                   </div>
+                               </div>
+                           </div>
                        </div>
+                       <div class="float-right">
+                           <input type="checkbox" id="check" name="qualified" class="custom-checkbox" value="1"><span id="qualified" class="ml-3">Qualified</span>
+                       </div><br>
                        <div id="button">
-                           <button  class='btn btn-outline-primary float-right mb-3' type='submit'>Save</button>
+                           <button  class='btn btn-outline-primary float-right mb-3 mt-3' type='submit'>Save</button>
                        </div>
-                       <div id="hh"></div>
                    </form>
                </div>
         </div>
-        <div id="add" class="modal custom-modal fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div id="add" class="modal custom-modal fade" tabindex="-1" role="dialog" style="overflow:hidden">
+            <div class="modal-dialog modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Add New Industry</h5>
@@ -109,14 +137,33 @@
             </div>
         </div>
     <!-- /Page Wrapper -->
+    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
         <script>
-            $(document).ready(function(){ //Make script DOM ready
-                $('#category').change(function() { //jQuery Change Function
-                    var opval = $(this).val(); //Get value from select element
-                    if(opval=="categorys"){ //Compare it and if true
-                        $('#add').modal("show"); //Open Modal
+            CKEDITOR.replace( 'description' );
+            CKEDITOR.replace( 'next_plan_textarea',{
+                height:100
+            } );
+
+            $(document).ready(function() {
+                $('#industry').select2({
+                        "language": {
+                            "noResults": function(){
+                                return "<a  href='#' data-toggle='modal' data-target='#add'>Add New </a>";
+                            }
+                        },
+                        escapeMarkup: function (markup) {
+                            return markup;
+                        }
                     }
-                });
+
+                );
+            });
+            $(document).ready(function() {
+                $(document).change(function (){
+                    var indust=$(".select2-search__field").val();
+                    $('#tags').val($('.select2-search__field').val());
+                })
+
             });
             $(document).ready(function() {
                 $(document).on('click', '#tags_create', function () {
@@ -136,7 +183,7 @@
 
             $("#review").rating({
                 "value": 0,
-                "color":"blue",
+                "stars": 3,
                 "click": function (e) {
                     console.log(e);
                     $("#starsInput").val(e.stars);
@@ -145,10 +192,11 @@
             $("#check").on("click", function(){
                 if($("#check").is(":checked")){
                     $("button").remove();
-                   $("#button").append("<button  class='btn btn-outline-primary float-right mb-3' type='submit'>Save and Qualified</button>");
+                   $("#button").append("<button  class='btn btn-outline-primary float-right mb-3 mt-3' type='submit'>Save and Qualified</button>");
                 }else {
                     $("button").remove();
-                    $("#button").append("<button  class='btn btn-outline-primary float-right mb-3' type='submit'>Save</button>");
+                    $("#button").append("<button  class='btn btn-outline-primary float-right mb-3 mt-3' type='submit'>Save</button>");
+
                 }
             });
             $(document).ready(function(){ //Make script DOM ready

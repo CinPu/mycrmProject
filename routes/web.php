@@ -121,6 +121,8 @@ Route::group(['middleware'=>'auth'],function () {
     Route::get("product/show/{id}","productController@show");
     Route::get("/product/duplicate/{id}","productController@duplicate");
     Route::post("/action/confirm","productController@action_confirm");
+    Route::get("work/done/{id}","leadController@work_done");
+    Route::get("/lead/qualified/{id}","leadController@qualified");
     Route::get('/chat', function () {
         return view('chat');
     });

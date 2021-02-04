@@ -208,7 +208,7 @@
                                     <script>
                                         $("#review{{$lead->id}}").rating({
                                             "value":$("#prioriyt{{$lead->id}}").val(),
-                                            "color":"blue",
+                                           "stars":3,
                                             "click": function (e) {
                                                 console.log(e);
                                                 $("#starsInput").val(e.stars);
