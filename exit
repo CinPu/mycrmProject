@@ -1,0 +1,533 @@
+[33mcommit 940b9b2abe28753a4d9bccfae041d6c0e2488267[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Thu Feb 4 18:20:59 2021 +0630
+
+    4 Feb2021
+
+[33mcommit 3d4c0db779b58d0b2869489d4987fe4f90581be0[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Thu Jan 28 12:06:33 2021 +0630
+
+    product_module
+
+[33mcommit 949f1c0666e1c2b5009b13b135cbfbfcd96273ae[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Mon Jan 18 21:11:57 2021 +0630
+
+    Jan 18 2021
+
+[33mcommit 3643a30ade719ab279094e5ad05ccac7b00a3b2b[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Mon Jan 18 20:47:44 2021 +0630
+
+    Jan 18 2021
+
+[33mcommit 616c9bce77777c63c3c7d1c34405cf188afc34c5[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 13 11:20:28 2020 +0630
+
+    clientblade update
+
+[33mcommit 973166d2ec1c3c3a090f756a5e33f12427b6e5b7[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 13 11:10:02 2020 +0630
+
+    company employee
+
+[33mcommit 7b1e14ac45d4ea73ed103007af35f514b9ee2b15[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:47:14 2020 +0630
+
+    change color
+
+[33mcommit 2983c1ed28090bad8aaf4017f8229e6d46a6a222[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:43:04 2020 +0630
+
+    joejs
+
+[33mcommit 2e3be02652a5678501a5a24e552f2c76dccf6378[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:41:05 2020 +0630
+
+    joejs
+
+[33mcommit 01072afb934a6c1df5cf996efad54ad887e4013d[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:38:23 2020 +0630
+
+    joejs
+
+[33mcommit 94d3346f6b5d3cbb0279bc3035dc239fa8f36952[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:36:45 2020 +0630
+
+    joejs
+
+[33mcommit 6a0c42f0e8c592ecfb05799dad9a92ab8e70d21b[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:35:53 2020 +0630
+
+    joejs
+
+[33mcommit c3453c0b531defb71130c21e661647007e3392ee[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:33:33 2020 +0630
+
+    joejs
+
+[33mcommit beb1c2ffb3c534d634079ac2a7eb16cda2d144f3[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:29:33 2020 +0630
+
+    joejs
+
+[33mcommit cf760af944868ea029538e9152c0d7df1439d9fa[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:26:46 2020 +0630
+
+    joejs
+
+[33mcommit 190c4ede5e0666e8963c0dc95692a6c97102a91f[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:24:52 2020 +0630
+
+    joejs
+
+[33mcommit b88be84a1b07ee7137deb7b9b741c05f90492483[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:20:25 2020 +0630
+
+    joejs
+
+[33mcommit c905d12c311d9159892df7bfbc6f2321bfb38db1[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 12:09:43 2020 +0630
+
+    6dec2020
+
+[33mcommit d97304da5f442b753787e509ced7a346c6f686b9[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 11:35:43 2020 +0630
+
+    6dec2020
+
+[33mcommit f67464d99823167b04ec490b740b879d69cdfff0[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sun Dec 6 11:35:18 2020 +0630
+
+    6Dec2020
+
+[33mcommit 70cc153e0b2a3be91d0aabc68055cee86706d15f[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Sat Dec 5 13:37:17 2020 +0630
+
+    5Dec2020
+
+[33mcommit 8391c7c593fd00de31d7fb0823a29e1666115881[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Fri Dec 4 14:55:42 2020 +0630
+
+    jojoo
+
+[33mcommit 5f0530aee0d46812d22760026826af2718770424[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Fri Dec 4 14:53:18 2020 +0630
+
+    jojoo
+
+[33mcommit 9d81d003b3db11b252f320dbb8210d89f223d622[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Fri Dec 4 13:12:02 2020 +0630
+
+    ticketcontrollerUpdate
+
+[33mcommit 4a1a13206da4aa369136adbaafad05485b7c69b3[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Fri Dec 4 13:11:17 2020 +0630
+
+    jte
+
+[33mcommit 3b6dd542e2ad490be1323cd1958b53532784efa1[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Fri Dec 4 13:02:07 2020 +0630
+
+    4Decnoon
+
+[33mcommit dcc7c3655e0b227446943ddcf52dd3f3ae922127[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Fri Dec 4 00:24:03 2020 +0630
+
+    repair
+
+[33mcommit c1bfb1a374a43101572706976839bc69040b1b86[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Fri Dec 4 00:13:37 2020 +0630
+
+    3Dec
+
+[33mcommit 02aab72a1790268519c268c7754c54aec7172c90[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Thu Dec 3 23:50:12 2020 +0630
+
+    3Dec
+
+[33mcommit b9803d734f362df237a602823bf8c8d56638a38c[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Thu Dec 3 23:22:45 2020 +0630
+
+    empProfile
+
+[33mcommit e7df39be18ed9429e890d20be40d8f7231c2b9d9[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Thu Dec 3 22:50:45 2020 +0630
+
+    empProfile
+
+[33mcommit 43d57e4128a46de9e9fe78c0b11941d0edede94e[m
+Author: Cin Suan Dal <cincin.com@gmail.com>
+Date:   Thu Dec 3 17:03:30 2020 +0630
+
+    jjj
+
+[33mcommit 7f724b93f164c750c9a32ad518786366442c0889[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Thu Dec 3 16:54:10 2020 +0630
+
+    3Dec2020
+
+[33mcommit 9035a9151c2a7f4efcba6eb3cc813ac73c70b0a3[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Thu Dec 3 16:21:43 2020 +0630
+
+    3Dec2020
+
+[33mcommit c75a78e285e9214384567b490e043a249888d8dc[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Thu Dec 3 15:42:17 2020 +0630
+
+    3Dec2020
+
+[33mcommit 2f43101becd9da82a962392f8e009a216401b2fa[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Nov 29 14:54:27 2020 +0630
+
+    29Nov2020 2:30pm
+
+[33mcommit e8b143385161a649b9c1d0e94247b1ff201cc7e6[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Nov 29 14:41:16 2020 +0630
+
+    29Nov2020 2:30pm
+
+[33mcommit a1bc6055ad6c7470b491eb85c55ee5eb238ad1a8[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Nov 29 14:33:45 2020 +0630
+
+    29Nov2020 2:30pm
+
+[33mcommit 209f9f530c0b716c9255fe06009b71822b533c45[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Nov 29 10:58:32 2020 +0630
+
+    29Nov2020
+
+[33mcommit 9657d94ff4752e1c27522e9f1d9bbae5793c5b30[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Nov 29 00:31:02 2020 +0630
+
+    28Nov2020 11:50pm
+
+[33mcommit 3f987b934c5cd7caf4978eeed9120dee110b5b24[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Nov 29 00:26:46 2020 +0630
+
+    28Nov2020 11:50pm
+
+[33mcommit c3b7eda330936f9b09658cdaf4341068cf616e78[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Nov 29 00:22:30 2020 +0630
+
+    28Nov2020 11:50pm
+
+[33mcommit 7687fe1731a5b4f1d03bc0f2cb5ef2b2b54daacc[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Nov 29 00:22:07 2020 +0630
+
+    28Nov2020 11:50pm
+
+[33mcommit a3c8792fea0467d7f37805b19cbb54e5b5cdf2d6[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sat Nov 28 23:51:28 2020 +0630
+
+    28Nov2020 11:50pm
+
+[33mcommit 4506fa8995af85b0a738e35097585b099fb5deef[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sat Nov 28 17:19:20 2020 +0630
+
+    Nov282020 5:19PM
+
+[33mcommit 73d720d4f22a7892d4c2dcc26efcb70c7216f2af[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sat Nov 28 12:44:33 2020 +0630
+
+    last
+
+[33mcommit 1c0927d39a381830ae834478a0d76e4e446dcd0c[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sat Nov 28 12:33:53 2020 +0630
+
+    Nov282020
+
+[33mcommit cf709d8f530cec3134eace964cd469dfb849b4fc[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Fri Nov 27 14:36:50 2020 +0630
+
+    27Nov2020
+
+[33mcommit 6c04fef91c6b2ae04ecc3f93c93ae1d01b087709[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Fri Nov 27 14:24:13 2020 +0630
+
+    ohoh
+
+[33mcommit ae4b77ade9f49c5bb3df7ddbcd5eefbea18689b3[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Fri Nov 27 12:38:04 2020 +0630
+
+    Nov272020
+
+[33mcommit 1536303e2fe9f01078b2bf68aad02566be186e04[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Wed Nov 25 01:12:51 2020 +0630
+
+    nowv
+
+[33mcommit eb1304e73b6c9fd08c534d34dee0a0f8273cc797[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Tue Nov 24 16:07:52 2020 +0630
+
+    ticketcrete page update
+
+[33mcommit e5281413b2eb1285a0d936c99733dbcf1b7bf115[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Tue Nov 24 16:02:20 2020 +0630
+
+    ticketcrete page update
+
+[33mcommit 438bb030272c1f5123574e97cd57f161d238ec69[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Tue Nov 24 15:52:54 2020 +0630
+
+    assign_dept_name add
+
+[33mcommit 378dc83c1ce242fe0cdf9a146e5af9cacc3d3d84[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Tue Nov 24 15:50:12 2020 +0630
+
+    24Nov2020 3:50pm
+
+[33mcommit 7bc380ad176db754be7a32e7af30cedfbd5d8046[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Tue Nov 24 15:45:25 2020 +0630
+
+    24Nov2020
+
+[33mcommit d2b0f93e901c23f6d6bef036c8fce6941680c8bf[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sat Nov 21 16:35:07 2020 +0630
+
+    21Nov2020
+
+[33mcommit 12f2227572f44a6fbad5b55f4b034471278ab48a[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Thu Nov 19 16:27:57 2020 +0630
+
+    19Nov2020
+
+[33mcommit 744649e55948c3818dac11ebb80354aec84ed925[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Wed Nov 18 16:04:10 2020 +0630
+
+    18Nov2020
+
+[33mcommit 625a92af6e448d4b62f84c602a198edd4abac544[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Mon Nov 16 21:28:24 2020 +0630
+
+    2020nov16
+
+[33mcommit 4ad72da282d43b68c2f44579015f8dd3f0d03924[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Mon Nov 16 18:14:51 2020 +0630
+
+    agent Detail
+
+[33mcommit 6d8f2cdf34332036f0915fc95ed30d2c962ae5ea[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Mon Nov 16 17:44:44 2020 +0630
+
+    welcome page
+
+[33mcommit ed26683842ac1d7358933fc58536513a90792c75[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Mon Nov 16 15:52:11 2020 +0630
+
+    16 Nov 2020
+
+[33mcommit 297c31ebee492d35891f8b24fb8c61f46006007a[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Mon Nov 16 15:21:38 2020 +0630
+
+    New Template
+
+[33mcommit 5f18a4b51b28335e90a22931c7008b86cf6dcdb4[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Fri Nov 13 22:46:18 2020 +0630
+
+    First Template
+
+[33mcommit a10331acc5472a0c48b70d49e76873e1b270ee7f[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Thu Oct 29 22:06:52 2020 +0630
+
+    20 Oct 2020
+
+[33mcommit b4a173ac2e67d90c1a8313329c1a45b60ad94869[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Mon Oct 19 14:38:53 2020 +0630
+
+    Update 19 OCt 2020
+
+[33mcommit c180c08ebce8ece2fd307e7ccd64ef568fd14b40[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Tue Oct 13 17:41:57 2020 +0630
+
+    13 Oct 2020
+
+[33mcommit 7a3292315f9c24ac7fbca590e2ac5f22fd7aed37[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Tue Oct 13 17:26:31 2020 +0630
+
+    13 Oct 2020
+
+[33mcommit e7f17383400ca1facfa253ace9ef70fa711157bc[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Tue Oct 13 17:03:51 2020 +0630
+
+    13 Oct 2020
+
+[33mcommit a7bd9a23bb70b55fd308be4eb69e246d3699c576[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Tue Oct 13 17:01:51 2020 +0630
+
+    13 Oct 2020
+
+[33mcommit a31e8242e81d562329ac7bcd1bb8b45b50432ed2[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Tue Oct 13 16:51:45 2020 +0630
+
+    13 Oct 2020
+
+[33mcommit f7a1cae028243d7b7a64f500bb2b77d18b7e537c[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Oct 11 16:03:19 2020 +0630
+
+    comment
+
+[33mcommit a32ccce3ea877ac024db2f7372126d3b6901d783[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Oct 11 13:15:55 2020 +0630
+
+    layout edit
+
+[33mcommit 46af4fc73e0d5da37e4be06ffc6271ceb786798a[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Oct 11 13:13:28 2020 +0630
+
+    11 Oct 1:13pm
+
+[33mcommit 131b6b6de5a6d62663f9e87fab1c929a2188e6b7[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Sun Oct 11 10:22:02 2020 +0630
+
+    Cmt Delete
+
+[33mcommit c9aba68836a3eb7fe62fdd72d69d5d9933cc1924[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Fri Oct 9 23:09:18 2020 +0630
+
+    Zawgyi Unicode
+
+[33mcommit f4187f19dad477ff924dff9882f0de853d72a2ef[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Fri Oct 9 23:03:24 2020 +0630
+
+    Zawgyi Unicode
+
+[33mcommit 727d1271fb89b2c8db26725aefe3d4d89c70b9ea[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Thu Oct 8 18:44:29 2020 +0630
+
+    Update Guest User History
+
+[33mcommit a582f242933cde7a6bf3de9ac9de8d2c2cf8ffa3[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Thu Oct 8 18:40:48 2020 +0630
+
+    User Info Upadate
+
+[33mcommit e89d84b933aedb6bb70d6f1ea749e550d28c3269[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Wed Oct 7 20:32:02 2020 +0630
+
+    Update Footer
+
+[33mcommit e0762398791e2f5a5d813a43f027bb1d0e509609[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Wed Oct 7 20:20:37 2020 +0630
+
+    7 Oct 2020
+
+[33mcommit 652738f7697da1040943e73577a90911711ea99d[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Wed Oct 7 19:39:21 2020 +0630
+
+    7 Oct 2020
+
+[33mcommit 8335e341587645a0f243604892e483814db79fac[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Wed Oct 7 19:35:19 2020 +0630
+
+    7 Oct 2020
+
+[33mcommit 67ed047fa4defb958f3af09c67b060f0ddd3d0db[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Wed Sep 9 21:44:39 2020 +0630
+
+    9 Sep 2020
+
+[33mcommit 3ac08303a38e268226620d33afb0027cdfa2862a[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Wed Sep 2 13:22:28 2020 +0630
+
+    Sep 2,2020 Push
+
+[33mcommit ea48cac5506966a0b10ecd378490080bdfc70efe[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Mon Aug 17 16:50:07 2020 +0630
+
+    Aug 17 2020 Contain Donut Chart Report
+
+[33mcommit a0bee54c6dfbd0b4493ba94348ee53eafd6cb16e[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Thu Aug 13 16:53:16 2020 +0630
+
+    Updated at 13August2020
+
+[33mcommit 96082b3be3bf9291b3ddd41391d64fb59c15472d[m
+Author: CinPu <cincin.com@gmail.com>
+Date:   Wed Aug 12 22:59:24 2020 +0630
+
+    Support Ticket 12Aug2020

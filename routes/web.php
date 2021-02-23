@@ -24,6 +24,7 @@ Route::get('/',function (){
     return view('welcome',compact("ticket_admin"));
 });
 
+
 Auth::routes();
 Route::group(['middleware'=>'auth'],function () {
     Route::get("/logout", "Auth\LoginController@logout");
@@ -84,7 +85,7 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("/employee/filter","employeeController@filterResult");
     Route::post("/dept/import","departmentController@import");
     Route::get("/engaged/company","companyController@engagedCompany");
-    Route::post("client/company/create","companyController@create");
+    Route::post("client/company/create/{type}","companyController@create");
     Route::get("client/company/profile/{id}","companyController@profile");
     Route::get("client/company/delete/{id}","companyController@destory");
     Route::post("client/company/update/{id}","companyController@companyupdate");
@@ -123,6 +124,14 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("/action/confirm","productController@action_confirm");
     Route::get("work/done/{id}","leadController@work_done");
     Route::get("/lead/qualified/{id}","leadController@qualified");
+    Route::get("deal","dealController@index");
+    Route::get("deal/add","dealController@create");
+    Route::post("/deal/add/{type}","dealController@store");
+    Route::post("deal/full/form/save","dealController@full_form");
+    Route::post("/camping/add","dealController@camping");
+    Route::get("/deal/edit/{id}","dealController@edit");
+    Route::post("/deal/update/","dealController@update");
+    Route::get("deal/show/{id}","dealController@show");
     Route::get('/chat', function () {
         return view('chat');
     });

@@ -9,22 +9,22 @@
         <meta name="robots" content="noindex, nofollow">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield("title")</title>
-		
+
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="{{url(asset("companylogo/mainlogo.png"))}}">
-		
+
 		<!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{{url(asset("css/bootstrap.min.css"))}}">
-		
+
 		<!-- Fontawesome CSS -->
         <link rel="stylesheet" href="{{url(asset("/css/font-awesome.min.css"))}}">
-		
+
 		<!-- Lineawesome CSS -->
         <link rel="stylesheet" href="{{url("css/line-awesome.min.css")}}">
-		
+
         	<!-- Select2 CSS -->
 		<link rel="stylesheet" href="{{asset("css/select2.min.css")}}">
-		
+
 		<!-- Datetimepicker CSS -->
 		<link rel="stylesheet" href="{{url(asset("css/bootstrap-datetimepicker.min.css"))}}">
 
@@ -36,7 +36,7 @@
 
 		<!-- Datatable CSS -->
 		<link rel="stylesheet" href="{{url(asset("css/dataTables.bootstrap4.min.css"))}}">
-        
+
 		<!-- Chart CSS -->
 		<link rel="stylesheet" href="{{url(asset("plugins/morris/morris.css"))}}">
 		<!-- Summernote CSS -->
@@ -47,6 +47,7 @@
     <!-- Main CSS -->
         <link rel="stylesheet" href="{{url(asset("css/style.css"))}}">
         <script src="{{url(asset("js/jquery-3.2.1.min.js"))}}"></script>
+
         <style>
             .dataTables_filter{
                 display: none;

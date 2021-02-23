@@ -11,6 +11,7 @@ use App\lead_follower;
 use App\leadModel;
 use App\leead_comment;
 use App\next_plan;
+use App\position;
 use App\tags_industry;
 use App\user_employee;
 use Carbon\Carbon;
@@ -49,10 +50,17 @@ class leadController extends Controller
             $admin_company = company::where("admin_id", $authenticate_user->employee->admin_id)->first();
             $allemployees = employee::where("admin_id", $authenticate_user->employee->admin_id)->get();
             $allcustomers = customer::where("admin_company_id", $admin_company->id)->get();
+            $lastcustomer=customer::orderBy('id', 'desc')->where("admin_company_id",$admin_company->id)->first();
+            $companies=customerCompany::where("admin_id",$authenticate_user->employee->admin_id)->get();
+            $lastcompany=customerCompany::orderBy('id', 'desc')->where("admin_id",$authenticate_user->employee->admin_id)->first();
+
         } else {
             $admin_company = company::where("admin_id", Auth::user()->id)->first();
             $allemployees = employee::where("admin_id", Auth::user()->id)->get();
             $allcustomers = customer::where("admin_company_id", $admin_company->id)->get();
+            $lastcustomer=customer::orderBy('id', 'desc')->where("admin_company_id",$admin_company->id)->first();
+            $lastcompany=customerCompany::orderBy('id', 'desc')->where("admin_id",Auth::user()->id)->first();
+            $companies=customerCompany::where("admin_id",Auth::user()->id)->get();
         }
         $lastlead = leadModel::orderBy('id', 'desc')->where("company_id", $admin_company->id)->first();
         if (isset($lastlead)) {
@@ -62,10 +70,26 @@ class leadController extends Controller
         } else {
             $lead_id ="#Lead" . "-0001";
         }
+        if (isset($lastcustomer)) {
+            // Sum 1 + last id
+            $lastcustomer->customer_id ++;
+            $client_id = $lastcustomer->customer_id;
+        } else {
+            $client_id= $admin_company->company_short_form." - Client"."-00001";
+        }
+
+        if (isset($lastcompany)) {
+            // Sum 1 + last id
+            $lastcompany->company_id ++;
+            $company_id = $lastcompany->company_id;
+        } else {
+            $company_id="Company"."-00001";
+        }
         $tags = tags_industry::all();
         $last_tag = tags_industry::orderBy('id', 'desc')->first();
+        $position=position::all();
 
-        return view("lead.lead_create", compact("lead_id", "allemployees", "admin_company", "allcustomers", "tags", "last_tag"));
+        return view("lead.lead_create", compact("lead_id","position","companies","company_id","client_id", "allemployees", "admin_company", "allcustomers", "tags", "last_tag"));
     }
 
     /**

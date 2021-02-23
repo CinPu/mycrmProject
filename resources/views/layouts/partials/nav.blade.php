@@ -123,7 +123,9 @@
 {{--						</li>--}}
 						<li class="{{ Request::is('leads') ? 'active' : '' }}">
 							<a  href="{{ url('/leads') }}"><i class="la la-user-secret"></i><span>Leads</span></a></li>
-						@php
+                        <li class="{{ Request::is('deal') ? 'active' : '' }}">
+                            <a  href="{{ url('/deal') }}"><i class="la la-file-archive-o"></i><span>Deal</span></a></li>
+                        @php
 							$all_auth_emp=\App\user_employee::with("employee","user")->get();
                                 $ticketAdmin=[];
                            foreach ($all_auth_emp as $auth_emp){
@@ -519,4 +521,3 @@
 </div>
 
 
-			

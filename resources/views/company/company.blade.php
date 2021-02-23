@@ -1,4 +1,4 @@
-@extends("layouts.app")
+@extends("layouts.mainlayout")
 @section("content")
     <div class="card col-md-6 offset-2 my-5">
         <form action="{{url("/company/create")}}" method="POST" enctype="multipart/form-data">

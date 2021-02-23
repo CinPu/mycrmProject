@@ -24,11 +24,13 @@ class clientController extends Controller
             $companies=customerCompany::where("admin_id",Auth::user()->id)->get();
             $company=company::where("admin_id",Auth::user()->id)->first();
             $allclients=customer::with("customer_position","customer_company")->where("admin_company_id",$company->id)->get();
-        }else{
+        }elseif (Auth::user()->hasAnyRole("TicketAdmin")||Auth::user()->hasAnyRole("Employee"))
+            {
             $authenticate_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
             $companies=customerCompany::where("admin_id",$authenticate_user->employee->admin_id)->get();
-            $allclients=customer::with("customer_position","customer_company")->where("admin_id",Auth::user()->id)->get();
-        }
+            $auth_emp=employee::where("id",$authenticate_user->emp_id)->first();
+            $allclients=customer::with("customer_position","customer_company")->where("admin_id",$auth_emp->admin_id)->get();
+            }
         return  view("client.clients",compact("allclients","companies"));
     }
 
@@ -104,10 +106,16 @@ class clientController extends Controller
         $client->report_to=$request->report_to;
         $client->admin_company_id=$request->admin_company;
         $client->save();
-        if($request->id==0){
-            return redirect("/client")->with("message","Customer Create Success");
-        }elseif ($request->id==1){
-            return redirect("/lead/create")->with("message","Customer Create Success and select new customer name");
+        if($request->type=="ajax"){
+            return response()->json([
+                'contact' => "success",
+            ]);
+        }else {
+            if ($request->id == 0) {
+                return redirect("/client")->with("message", "Customer Create Success");
+            } elseif ($request->id == 1) {
+                return redirect("/lead/create")->with("message", "Customer Create Success and select new customer name");
+            }
         }
 
     }

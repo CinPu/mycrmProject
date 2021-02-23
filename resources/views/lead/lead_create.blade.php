@@ -53,13 +53,19 @@
                            </div>
                            <div class="form-group col-md-4 col-xl-4 col-6">
                                <label for="">Customer Name</label>
-                               <select name="customer_id" id="add_customer" class="form-control">
-                                   <option value="empty">Select Customer Name</option>
-                                   @foreach($allcustomers as $allcustomer)
-                                       <option value="{{$allcustomer->id}}">{{$allcustomer->customer_name}}</option>
-                                   @endforeach
-                                       <option value="Add">Add Customer</option>
-                               </select>
+                              <div class="col-12">
+                                  <div class="row " id="customer">
+                                      <select name="customer_id" id="add_customer" class="form-control col-md-10">
+                                          <option value="empty">Select Customer Name</option>
+                                          @foreach($allcustomers as $allcustomer)
+                                              <option value="{{$allcustomer->id}}">{{$allcustomer->customer_name}}</option>
+                                          @endforeach
+                                      </select>
+                                      <div class="col-md-2 col-2 mt-1">
+                                          <a  href='#' data-toggle='modal' class="btn btn-outline-dark" data-target='#add_new_ustomer'><i class="fa fa-plus"></i></a>
+                                      </div>
+                                  </div>
+                              </div>
                            </div>
 {{--                           <a href="{{url("client/customer/create")}}"><i class="fa fa-plus"></i></a>--}}
                            <div class="form-group col-md-4 col-xl-4 col-6" id="tagdiv" >
@@ -98,9 +104,9 @@
                                    </div>
                                    <div class="form-group col-md-4">
                                        <label for="">To Date</label>
-                                       <input type="date" class="form-control" name="to_date">
+                                       <input type="datetime-local" class="form-control" name="to_date">
                                    </div>
-                                   <div class="form-goup col-md-8 offset-2 mb-3">
+                                   <div class="form-group col-md-8 offset-2 mb-3">
                                        <label for="">Description</label>
                                        <textarea name="next_plan_textarea" id="next_plan_textarea"  rows="5" style="width: 100%;"></textarea>
                                    </div>
@@ -116,9 +122,9 @@
                    </form>
                </div>
         </div>
-        <div id="add" class="modal custom-modal fade" tabindex="-1" role="dialog" style="overflow:hidden">
+        <div id="add" class="modal custom-modal fade" data-backdrop="false" tabindex="-1" role="dialog" style="overflow:hidden">
             <div class="modal-dialog modal-dialog modal-sm">
-                <div class="modal-content">
+                <div class="modal-content" style="background-color: #dee0e0">
                     <div class="modal-header">
                         <h5 class="modal-title">Add New Industry</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -135,7 +141,108 @@
                     </div>
                 </div>
             </div>
+        <div class="modal custom-modal rounded"  id="add_new_ustomer">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Contact</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="container " >
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group row col-md-6">
+                                    <div class="col-lg-4 col-sm-4 col-12 ">
+                                        <label class="col-form-label">Customer ID <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-lg-8 col-sm-8 col-12 ">
+                                        <input class="form-control" name="customer_id" id="customer_id" type="text" value="{{$client_id}}">
+                                    </div>
+                                </div>
+                                <div class="form-group row col-md-6">
+                                    <div class="col-lg-4 col-sm-4 col-12 ">
+                                        <label class="col-form-label">Customer Name</label>
+                                    </div>
+                                    <div class="col-lg-8 col-sm-8 col-12 ">
+                                        <input class="form-control" id="customer_name" name="name" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row col-md-6">
+                                    <div class="col-lg-4 col-sm-4 col-12 ">
+                                        <label class="col-form-label">Phone <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-lg-8 col-sm-8 col-12 ">
+                                        <input class="form-control" id="customer_phone" name="phone" type="number">
+                                    </div>
+                                </div>
+                                <div class="form-group row col-md-6">
+                                    <div class="col-lg-4 col-sm-4 col-12 ">
+                                        <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-lg-8 col-sm-8 col-12 ">
+                                        <input class="form-control floating" id="customer_email" name="email" type="email">
+                                    </div>
+                                </div>
+                                <div class="form-group row col-md-6">
+                                    <div class="col-lg-4 col-sm-4 col-12 ">
+                                        <label class="col-form-label">Company</label>
+                                    </div>
+                                    <div class="col-lg-8 col-sm-8 col-12 ">
+                                        <select name="company_id" id="customer_company" class="form-control " style="width: 100%">
+                                            @foreach($companies as $company)
+                                                <option value="{{$company->id}}">{{$company->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row col-md-6">
+                                    <div class="col-lg-4 col-sm-4 col-12 ">
+                                        <label class="col-form-label">Position</label>
+                                    </div>
+                                    <div class="col-lg-8 col-sm-8 col-12 ">
+                                        <select name="position" id="customer_position" class="form-control" style="width: 100%;">
+                                            @foreach($position as $post)
+                                                <option value="{{$post->id}}">{{$post->emp_position}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row col-md-6">
+                                    <div class="col-lg-4 col-sm-4 col-12 ">
+                                        <label class="col-form-label">Department<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-lg-8 col-sm-8 col-12 ">
+                                        <input class="form-control floating" id="customer_dept" name="department" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row col-md-6">
+                                    <div class="col-lg-4 col-sm-4 col-12 ">
+                                        <label class="col-form-label">Report To </label>
+                                    </div>
+                                    <div class="col-lg-8 col-sm-8 col-12 ">
+                                        <input type="text" class="form-control" id="customer_report_to" name="report_to">
+                                    </div>
+                                </div>
+                                    <div class="form-group row col-md-6">
+                                        <div class="col-lg-4 col-sm-4 col-12 ">
+                                        <label class="col-form-label">Address</label>
+                                            </div>
+                                        <div class="col-lg-8 col-sm-8 col-12">
+                                        <input class="form-control" name="address" id="customer_address" type="text">
+                                            </div>
+                                    </div>
+                            </div>
+                            <input type="hidden" id="customer_admin_company" name="admin_company" value="{{$admin_company->id}}">
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" data-dismiss="modal" class="btn">Close</a>
+                            <a href="#" id="add_contact" data-dismiss="modal" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
     <!-- /Page Wrapper -->
     <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
         <script>
@@ -144,6 +251,12 @@
                 height:100
             } );
 
+            $(document).ready(function() {
+                $('#customer_company').select2();
+            });
+            $(document).ready(function() {
+                $('#customer_position').select2();
+            });
             $(document).ready(function() {
                 $('#industry').select2({
                         "language": {
@@ -154,10 +267,67 @@
                         escapeMarkup: function (markup) {
                             return markup;
                         }
+
                     }
 
                 );
             });
+            $(document).ready(function() {
+                $(document).on('click', '#add_contact', function () {
+
+                    var customer_id=$("#customer_id").val();
+                    var customer_name =$("#customer_name ").val();
+                    var customer_phone=$("#customer_phone").val();
+                    var customer_email=$("#customer_email").val();
+                    var customer_company=$("#customer_company").val();
+                    var customer_dept=$("#customer_dept").val();
+                    var customer_position=$("#customer_position option:selected").val();
+                    var customer_report_to=$("#customer_report_to").val();
+                    var customer_address=$("#customer_address").val();
+                    var customer_admin_company=$("#customer_admin_company").val();
+                    var type="ajax";
+                    $.ajax({
+                        data : {
+                            customer_id:customer_id,
+                            name:customer_name,
+                            phone:customer_phone,
+                            email:customer_email,
+                            company_id:customer_company,
+                            department:customer_dept,
+                            position:customer_position,
+                            report_to:customer_report_to,
+                            address:customer_address,
+                            admin_company:customer_admin_company,
+                            type:type
+                        },
+                        type:'POST',
+                        url:"{{url("client/customer/create/")}}",
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        success:function(data){
+                            console.log(data);
+                            $("#customer").load(location.href + " #customer>* ");
+                            $("#add_customer").load(location.href + " #add_customer>* ");
+
+                        }
+                    });
+                });
+            });
+            $(document).ready(function() {
+                $('#add_customer').select2({
+                        "language": {
+                            "noResults": function(){
+                                return "<i class='text-danger'>This Customer doesn't exist now! Add New !<i>";
+                            }
+                        },
+                        escapeMarkup: function (markup) {
+                            return markup;
+                        }
+
+                    }
+
+                );
+            });
+
             $(document).ready(function() {
                 $(document).change(function (){
                     var indust=$(".select2-search__field").val();
@@ -198,17 +368,6 @@
                     $("#button").append("<button  class='btn btn-outline-primary float-right mb-3 mt-3' type='submit'>Save</button>");
 
                 }
-            });
-            $(document).ready(function(){ //Make script DOM ready
-                $('#add_customer').change(function() { //jQuery Change Function
-                    var opval = $(this).val(); //Get value from select element
-                        var urlmenu = document.getElementById( 'add_customer' );
-                        urlmenu.onchange = function() {
-                            if(opval=="Add"){
-                            window.open( "{{url("/client/customer/create/1")}}" );
-                        };
-                    }
-                });
             });
         </script>
 @endsection

@@ -28,4 +28,7 @@ class customerCompany extends Model
     public function customer(){
         return $this->hasMany(customer::class);
     }
+    public function deal(){
+        return $this->hasMany(deal::class);
+    }
 }

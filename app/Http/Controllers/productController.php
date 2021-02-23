@@ -58,6 +58,7 @@ class productController extends Controller
        $product=new product();
        $product->name=$request->name;
        $product->tax=$request->tax;
+       $product->currency_unit=$request->unit;
        $product->description=$request->description;
        $product->sale_price=$request->sale_price;
        $product->purchase_price=$request->purchase_price;

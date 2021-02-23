@@ -7,6 +7,7 @@ use App\customer;
 use App\customerCompany;
 use App\Imports\companyimport;
 use App\user_employee;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -45,7 +46,8 @@ class companyController extends Controller
         $allcompany=customerCompany::where("admin_id",Auth::user()->id)->get();
         return view("company.engagedCompany",compact("allcompany","company_id"));
     }
-    public function create(Request $request){
+    public function create(Request $request,$type){
+//        dd($request->all());
         $company=new customerCompany();
         if(Auth::user()->hasAnyRole("Admin")){
             $company->admin_id=Auth::user()->id;
@@ -60,12 +62,6 @@ class companyController extends Controller
         $company->hotline=$request->hotline;
         $company->company_website=$request->web_link;
         $company->company_address=$request->address;
-        $image=$request->file("logo");
-        if($image!=null) {
-            $name = $image->getClientOriginalName();
-            $request->logo->move(public_path() . '/companylogo/', $name);
-            $company->logo = $name;
-        }
         $company->company_registry=$request->company_retistry;
         $company->company_mission=$request->mission;
         $company->company_vision=$request->vision;
@@ -74,8 +70,23 @@ class companyController extends Controller
         $company->facebookpage=$request->facebook_page;
         $company->linkedin=$request->linked_in;
         $company->parent_company=$request->parent;
-        $company->save();
-        return redirect()->back()->with("message","Company Create Successful!");
+
+        if($type=="ajax"){
+            $company->save();
+            return response()->json([
+                'company_add' => "success",
+            ]);
+        }else {
+            $image=$request->file("logo");
+            if($image!=null) {
+                $name = $image->getClientOriginalName();
+                $request->logo->move(public_path() . '/companylogo/', $name);
+                $company->logo = $name;
+
+            }
+            $company->save();
+            return redirect()->back()->with("message", "Company Create Successful!");
+        }
 
     }
     public function profile($id){

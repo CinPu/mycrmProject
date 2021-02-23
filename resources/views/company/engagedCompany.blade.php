@@ -97,7 +97,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{url("client/company/create")}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{url("client/company/create/route")}}" method="POST" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="col-12 mb-3">
                                 <div>

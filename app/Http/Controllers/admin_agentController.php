@@ -30,12 +30,14 @@ class admin_agentController extends Controller
     {
         $employees=[];
         $agents=agent::with("user","dept")->where("admin_id",Auth::user()->id)->get();
-        $depts=department::where("admin_uuid",Auth::user()->uuid)->get();
+        $authenticate_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
+        $auth_emp=employee::where("id",$authenticate_user->emp_id)->first();
+        $depts=department::where("admin_uuid",$auth_emp->admin_id)->get();
         $emp_user=user_employee::with("employee","user")->get();
         $ticket_admin=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
         $system_admin=User::where("id",$ticket_admin->employee->admin_id)->first();
         foreach ($emp_user as $emp){
-            if($emp->employee->admin_id==$system_admin->id && $ticket_admin->emp_id!=$emp->emp_id && !$emp->user->hasAnyRole("Agent")){
+            if($emp->employee->admin_id==$system_admin->id && !$emp->user->hasAnyRole("Agent") && $ticket_admin->emp_id!=$emp->emp_id){
                 array_push($employees,$emp);
             }
         }

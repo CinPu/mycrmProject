@@ -1,22 +1,27 @@
 
 <!-- jQuery -->
+        <script src="{{url(asset("js/jquery-3.2.1.min.js"))}}"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<!-- Bootstrap Core JS -->
-        <script src="{{url("js/popper.min.js")}}"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="{{url(asset("js/popper.min.js"))}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
         <script src="{{url(asset("js/bootstrap.min.js"))}}"></script>
-		
+
 		<!-- Slimscroll JS -->
 		<script src="{{url(asset("js/jquery.slimscroll.min.js"))}}"></script>
+
 		<!-- Select2 JS -->
 		<script src="{{url(asset("js/select2.min.js"))}}"></script>
 
 		<script src="{{url(asset("js/jquery-ui.min.js"))}}"></script>
 		<script src="{{url(asset("js/jquery.ui.touch-punch.min.js"))}}"></script>
-		
+
 		<!-- Datetimepicker JS -->
 		<script src="{{url(asset("js/moment.min.js"))}}"></script>
 		<script src="{{url(asset("js/bootstrap-datetimepicker.min.js"))}}"></script>
-		
+
 		<!-- Calendar JS -->
 		<script src="{{url(asset("js/jquery-ui.min.js"))}}"></script>
         <script src="{{url(asset("js/fullcalendar.min.js"))}}"></script>
@@ -31,8 +36,8 @@
 
 		<!-- Summernote JS -->
 		<script src="{{url(asset("plugins/summernote/dist/summernote-bs4.min.js"))}}"></script>
-		
-			
+
+
 		<script src="{{url(asset("plugins/sticky-kit-master/dist/sticky-kit.min.js"))}}"></script>
 
 		<!-- Task JS -->
@@ -49,30 +54,25 @@
 
 		<script src="https://cdn.datatables.net/colreorder/1.5.2/js/dataTables.colReorder.min.js"></script>
 
-		<!-- Dropfiles JS
-		<script src="js/dropfiles.js"></script> -->
+		<!-- Dropfiles JS-->
+{{--		<script src="js/dropfiles.js"></script>--}}
 
 		<!-- Custom JS -->
 		<script src="{{url(asset("js/app.js"))}}"></script>
 		<script>
 		 $(document).ready(function(){
-
-		
-
-
-
-        // Read value on page load
+		     // Read value on page load
         $("#result b").html($("#customRange").val());
 
         // Read value on change
         $("#customRange").change(function(){
             $("#result b").html($(this).val());
         });
-    });        
+    });
 		$(".header").stick_in_parent({
-			
+
 		});
-		// This is for the sticky sidebar    
+		// This is for the sticky sidebar
 		$(".stickyside").stick_in_parent({
 			offset_top: 60
 		});
@@ -142,4 +142,3 @@
 			}
 		});
 		</script>
-	

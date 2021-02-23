@@ -64,9 +64,9 @@
                                     <span class="ml-3">{{$product->name}}</span></a></td>
                             <td>{{$product->category->name}}</td>
                             <td>
-                                {{$product->sale_price}}
+                                {{$product->sale_price}} {{$product->currency_unit}}
                             </td>
-                            <td>{{$product->purchase_price}}</td>
+                            <td>{{$product->purchase_price}} {{$product->currency_unit}}</td>
                             <td>@if($product->enable==1)
                             Enable
                                 @else

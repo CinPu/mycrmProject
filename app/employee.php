@@ -55,4 +55,7 @@ class employee extends Model
     public function lead(){
         return $this->hasMany(leadModel::class);
     }
+    public function deal(){
+        return $this->hasMany(deal::class);
+    }
 }
