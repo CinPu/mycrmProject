@@ -4,6 +4,7 @@
 /public/profile/*
 /public/imgs/*
 /public/companylogo/*
+/public/product_picture/*
 /storage/*.key
 /vendor
 .env
