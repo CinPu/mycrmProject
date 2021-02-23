@@ -337,7 +337,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal custom-modal" id="orginazation">
+            <div class="modal custom-modal"  id="orginazation">
                 <div class="modal-dialog modal-xl" >
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1138,23 +1138,17 @@
         //         });
         //     });
         // });
-        $(document).on({
-            'show.bs.modal': function () {
-                var zIndex = 1040 + (10 * $('.modal:visible').length);
-                $(this).css('z-index', zIndex);
-                setTimeout(function() {
-                    $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
-                }, 0);
-            },
-            'hidden.bs.modal': function() {
-                if ($('.modal:visible').length > 0) {
-                    setTimeout(function() {
-                        $(document.body).addClass('modal-open');
-                    }, 0);
-                }
-            }
-
-        }, '.modal');
+        $(document).ready(function() {
+            $('.modal').on('show.bs.modal', function(event) {
+                var idx = $('.modal:visible').length;
+                $(this).css('z-index', 1040 + (10 * idx));
+            });
+            $('.modal').on('shown.bs.modal', function(event) {
+                var idx = ($('.modal:visible').length) -1; // raise backdrop after animation.
+                $('.modal-backdrop').not('.stacked').css('z-index', 1039 + (10 * idx));
+                $('.modal-backdrop').not('.stacked').addClass('stacked');
+            });
+        });
 
 
     </script>

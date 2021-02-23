@@ -6,7 +6,7 @@
 
         <!-- Bootstrap Core JS -->
         <script src="{{url(asset("js/popper.min.js"))}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
         <script src="{{url(asset("js/bootstrap.min.js"))}}"></script>
 
 		<!-- Slimscroll JS -->
