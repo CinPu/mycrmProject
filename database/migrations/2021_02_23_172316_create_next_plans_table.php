@@ -18,8 +18,8 @@ class CreateNextPlansTable extends Migration
             $table->bigInteger("lead_id")->unsigned();
             $table->foreign("lead_id")->references("id")->on("lead_models")->onDelete("cascade");
             $table->text("description");
-            $table->timestamp("to_date");
-            $table->timestamp("from_date");
+            $table->dateTime("to_date");
+            $table->dateTime("from_date");
             $table->tinyInteger("work_done");
             $table->timestamps();
         });
