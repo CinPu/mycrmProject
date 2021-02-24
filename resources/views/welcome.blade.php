@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="shortcut icon" type="image/x-icon" href="{{url(asset("companylogo/mainlogo.png"))}}">
+    <link rel="shortcut icon" class="avatar avatar-xs" type="image/x-icon" href="{{url(asset("companylogo/mainlogo.png"))}}">
     <title>CloudArk</title>
     <style>
         body{
@@ -59,7 +59,7 @@
                         <h3 align="center">SIGN IN</h3>
                         <div class="card col-12 border-dark ml-3">
                             <div class="text-center mt-3">
-                            <img src="{{url(asset("/companylogo/mainlogo.png"))}}" alt="" width="30%" height="30%;">
+                            <img class="rounded-circle" src="{{url(asset("/companylogo/mainlogo.png"))}}" alt="" width="30%" height="30%;">
                             </div>
                             <form method="POST" action="{{url("login")}}" class="col-12 my-3">
                                 {{csrf_field()}}
