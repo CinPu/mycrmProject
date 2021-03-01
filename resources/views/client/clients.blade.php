@@ -2,10 +2,10 @@
 @section('content')
 <!-- Page Wrapper -->
 <div class="page-wrapper">
-			
+
             <!-- Page Content -->
             <div class="content container-fluid">
-            
+
                 <!-- Page Header -->
                 <div class="page-header">
                     <div class="row align-items-center">
@@ -32,18 +32,18 @@
                     </div>
                 </div>
                 <!-- /Page Header -->
-                
+
                 <!-- Search Filter -->
                 <form action="{{url("/client/search")}}" method="POST">
                     {{csrf_field()}}
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
                             <input type="text" name="client_id" class="form-control floating">
                             <label class="focus-label">Client ID</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">  
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
                             <input type="text" name="client_name" class="form-control floating">
                             <label class="focus-label">Client Name</label>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus select-focus">
-                            <select class="select floating" name="company">
+                            <select class="form-control" name="company" id="company_search">
                                 <option>Select Company</option>
                                 @foreach($companies as $company)
                                     <option value="{{$company->id}}">{{$company->name}}</option>
@@ -60,7 +60,7 @@
                             <label class="focus-label">Company</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">  
+                    <div class="col-sm-6 col-md-3">
                         <button type="submit" class="btn btn-success btn-block"> Search </button>
                     </div>
                 </div>
@@ -100,8 +100,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("client/company/profile/".$client->customer_company->id)}}">{{$client->customer_company->name}}</a></h4>
-                            <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/profile/$client->id")}}">{{$client->customer_name}}</a></h5>
+                            <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("/profile/$client->id")}}">{{$client->customer_name}}</a></h4>
+                            <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{url("client/company/profile/".$client->customer_company->id)}}">{{$client->customer_company->name}}</a></h5>
                             <div class="small text-muted">{{$client->customer_position->emp_position}}</div>
                             <a href="chat" class="btn btn-white btn-sm m-t-10">Message</a>
                             <a href="{{url("/profile/$client->id")}}" class="btn btn-white btn-sm m-t-10">View Profile</a>
@@ -168,10 +168,19 @@
                 </div>
             </div>
             <!-- /Page Content -->
-            
+
         </div>
         <!-- /Page Wrapper -->
 <script>
+    $(document).ready(function() {
+        $('#company_search').select2({
+                "language": {},
+                escapeMarkup: function (markup) {
+                    return markup;
+                }
+            }
+        );
+    });
     var loadFile = function(event) {
         var reader = new FileReader();
         reader.onload = function(){

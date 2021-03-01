@@ -4,7 +4,7 @@
 @php
     use App\user_employee;use Illuminate\Support\Facades\Auth;
 if (Auth::user()->hasAnyRole("Admin")){
-    $company=\App\company::where("admin_id",Auth::user()->id)->first();
+    $company=\App\company::where("admin_id",Auth::user()->id)->where("is_admin_company",1)->first();
     $profile=Auth::user()->profile;
    }else{
         $user_emp=user_employee::where("user_id",Auth::user()->id)->first();
@@ -22,8 +22,8 @@ if (Auth::user()->hasAnyRole("Admin")){
                     </a>
                 @else
                     @if($company!=null)
-                        <a href="{{url("/home")}}" class="logo">
-                                <img src="{{asset("/companylogo/$company->company_logo")}}" alt="Logo" width="40px" height="40px;" class="rounded-circle mr-2">
+                        <a href="{{url("client/company/profile/$company->id")}}" class="logo">
+                                <img src="{{asset("/companylogo/$company->logo")}}" alt="Logo" width="40px" height="40px;" class="rounded-circle mr-2">
 
                         </a>
                     @else
@@ -43,18 +43,17 @@ if (Auth::user()->hasAnyRole("Admin")){
                     <span></span>
                 </span>
             </a>
-            
+
             <!-- Header Title -->
             <div class="page-title-box">
-                <span class="text-white"> {{strtoupper($company->company_name)}}</span>
+                <span class="text-white"> {{strtoupper($company->name)}}</span>
             </div>
             <!-- /Header Title -->
-            
+
             <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
-            
+
             <!-- Header Menu -->
             <ul class="nav user-menu">
-            
                 <!-- Search -->
                 <li class="nav-item">
                     <div class="top-nav-search">
@@ -68,7 +67,7 @@ if (Auth::user()->hasAnyRole("Admin")){
                     </div>
                 </li>
                 <!-- /Search -->
-            
+
                 <!-- Flag -->
                 <li class="nav-item dropdown has-arrow flag-nav">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
@@ -90,7 +89,7 @@ if (Auth::user()->hasAnyRole("Admin")){
                     </div>
                 </li>
                 <!-- /Flag -->
-            
+
                 <!-- Notifications -->
                 <li class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
@@ -176,7 +175,7 @@ if (Auth::user()->hasAnyRole("Admin")){
                     </div>
                 </li>
                 <!-- /Notifications -->
-                
+
                 <!-- Message Notifications -->
                 <li class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
@@ -316,7 +315,7 @@ if (Auth::user()->hasAnyRole("Admin")){
                 </li>
             </ul>
             <!-- /Header Menu -->
-            
+
             <!-- Mobile Menu -->
             <div class="dropdown mobile-user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>

@@ -311,22 +311,20 @@
                                     @if($ticket->isassign==1)
                                         @foreach($assign_name as $assignName)
                                             @if($assignName->ticket_id==$ticket->id)
-                                                @php
-                                                    $emp=\App\employee::where("id",$assignName->employee->emp_id)->first();
-                                                @endphp
-                                                @if($emp->emp_profile!=null)
-                                                    <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                    {{$emp->name}}
+                                              @if($assignName->type_of_assign==0)
+                                                    @php
+                                                        $emp=\App\employee::where("id",$assignName->employee->emp_id)->first();
+                                                    @endphp
+                                                    @if($emp->emp_profile!=null)
+                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                        {{$emp->name}}
+                                                    @else
+                                                        <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                        {{$emp->name}}
+                                                    @endif
                                                 @else
-                                                    <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                    {{$emp->name}}
+                                                  {{$assignName->dept->dept_name}}
                                                 @endif
-                                            @endif
-                                        @endforeach
-                                        @foreach($assign_dept_name as $dept_name)
-                                            @if($dept_name->ticket_id==$ticket->id)
-                                                <i class="fa fa-users"></i>
-                                                {{$dept_name->dept->dept_name}}
                                             @endif
                                         @endforeach
                                     @elseif($ticket->isassign==0)
@@ -461,23 +459,24 @@
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($emp->emp_profile!=null)
-                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$emp->name}}
+                                                    @if($assignName->type_of_assign==0)
+                                                        @php
+                                                            $emp=\App\employee::where("id",$assignName->employee->emp_id)->first();
+                                                        @endphp
+                                                        @if($emp->emp_profile!=null)
+                                                            <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                            {{$emp->name}}
+                                                        @else
+                                                            <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                            {{$emp->name}}
+                                                        @endif
                                                     @else
-                                                        <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$emp->name}}
+                                                        {{$assignName->dept->dept_name}}
                                                     @endif
                                                 @endif
                                             @endforeach
-                                            @foreach($assign_dept_name as $dept_name)
-                                                @if($dept_name->ticket_id==$ticket->id)
-                                                    <i class="fa fa-users"></i>
-                                                    {{$dept_name->dept->dept_name}}
-                                                @endif
-                                            @endforeach
                                         @elseif($ticket->isassign==0)
-                                            <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                            <a href="{{url("isassign/2")}}" class="btn btn-outline-warning">Unassigned </a> @endif
                                     </td>
                                     <td>{{$ticket->status_type->status}}</td>
                                     <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
@@ -576,28 +575,27 @@
                                     </th>
                                     <td scope="row" >{{$ticket->title}}</td>
                                     <td>
-
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($emp->emp_profile!=null)
-                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$emp->name}}
+                                                    @if($assignName->type_of_assign==0)
+                                                        @php
+                                                            $emp=\App\employee::where("id",$assignName->employee->emp_id)->first();
+                                                        @endphp
+                                                        @if($emp->emp_profile!=null)
+                                                            <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                            {{$emp->name}}
+                                                        @else
+                                                            <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                            {{$emp->name}}
+                                                        @endif
                                                     @else
-                                                        <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$emp->name}}
+                                                        {{$assignName->dept->dept_name}}
                                                     @endif
                                                 @endif
                                             @endforeach
-                                            @foreach($assign_dept_name as $dept_name)
-                                                @if($dept_name->ticket_id==$ticket->id)
-                                                    <i class="fa fa-users"></i>
-                                                    {{$dept_name->dept->dept_name}}
-                                                @endif
-                                            @endforeach
                                         @elseif($ticket->isassign==0)
-                                            <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a>
-                                        @endif
+                                            <a href="{{url("isassign/2")}}" class="btn btn-outline-warning">Unassigned </a> @endif
                                     </td>
                                     <td>{{$ticket->status_type->status}}</td>
                                     <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
@@ -697,23 +695,24 @@
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($emp->emp_profile!=null)
-                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$emp->name}}
+                                                    @if($assignName->type_of_assign==0)
+                                                        @php
+                                                            $emp=\App\employee::where("id",$assignName->employee->emp_id)->first();
+                                                        @endphp
+                                                        @if($emp->emp_profile!=null)
+                                                            <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                            {{$emp->name}}
+                                                        @else
+                                                            <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                            {{$emp->name}}
+                                                        @endif
                                                     @else
-                                                        <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$emp->name}}
+                                                        {{$assignName->dept->dept_name}}
                                                     @endif
                                                 @endif
                                             @endforeach
-                                            @foreach($assign_dept_name as $dept_name)
-                                                @if($dept_name->ticket_id==$ticket->id)
-                                                    <i class="fa fa-users"></i>
-                                                    {{$dept_name->dept->dept_name}}
-                                                @endif
-                                            @endforeach
                                         @elseif($ticket->isassign==0)
-                                            <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                            <a href="{{url("isassign/2")}}" class="btn btn-outline-warning">Unassigned </a> @endif
                                     </td>
                                     <td>{{$ticket->status_type->status}}</td>
                                     <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
@@ -814,23 +813,24 @@
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($emp->emp_profile!=null)
-                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$emp->name}}
+                                                    @if($assignName->type_of_assign==0)
+                                                        @php
+                                                            $emp=\App\employee::where("id",$assignName->employee->emp_id)->first();
+                                                        @endphp
+                                                        @if($emp->emp_profile!=null)
+                                                            <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                            {{$emp->name}}
+                                                        @else
+                                                            <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                            {{$emp->name}}
+                                                        @endif
                                                     @else
-                                                        <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$emp->name}}
+                                                        {{$assignName->dept->dept_name}}
                                                     @endif
                                                 @endif
                                             @endforeach
-                                            @foreach($assign_dept_name as $dept_name)
-                                                @if($dept_name->ticket_id==$ticket->id)
-                                                    <i class="fa fa-users"></i>
-                                                    {{$dept_name->dept->dept_name}}
-                                                @endif
-                                            @endforeach
                                         @elseif($ticket->isassign==0)
-                                            <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                            <a href="{{url("isassign/2")}}" class="btn btn-outline-warning">Unassigned </a> @endif
                                     </td>
                                     <td>{{$ticket->status_type->status}}</td>
                                     <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
@@ -929,23 +929,24 @@
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($emp->emp_profile!=null)
-                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$emp->name}}
+                                                    @if($assignName->type_of_assign==0)
+                                                        @php
+                                                            $emp=\App\employee::where("id",$assignName->employee->emp_id)->first();
+                                                        @endphp
+                                                        @if($emp->emp_profile!=null)
+                                                            <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                            {{$emp->name}}
+                                                        @else
+                                                            <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                            {{$emp->name}}
+                                                        @endif
                                                     @else
-                                                        <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$emp->name}}
+                                                        {{$assignName->dept->dept_name}}
                                                     @endif
                                                 @endif
                                             @endforeach
-                                            @foreach($assign_dept_name as $dept_name)
-                                                @if($dept_name->ticket_id==$ticket->id)
-                                                    <i class="fa fa-users"></i>
-                                                    {{$dept_name->dept->dept_name}}
-                                                @endif
-                                            @endforeach
                                         @elseif($ticket->isassign==0)
-                                            <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                            <a href="{{url("isassign/2")}}" class="btn btn-outline-warning">Unassigned </a> @endif
                                     </td>
                                     <td>{{$ticket->status_type->status}}</td>
                                     <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>
@@ -1046,23 +1047,24 @@
                                         @if($ticket->isassign==1)
                                             @foreach($assign_name as $assignName)
                                                 @if($assignName->ticket_id==$ticket->id)
-                                                    @if($emp->emp_profile!=null)
-                                                        <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
-                                                        {{$emp->name}}
+                                                    @if($assignName->type_of_assign==0)
+                                                        @php
+                                                            $emp=\App\employee::where("id",$assignName->employee->emp_id)->first();
+                                                        @endphp
+                                                        @if($emp->emp_profile!=null)
+                                                            <img src="{{url(asset("/profile/".$emp->emp_profile))}}" alt="" width="30px" height="30px;" class="rounded-circle">
+                                                            {{$emp->name}}
+                                                        @else
+                                                            <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
+                                                            {{$emp->name}}
+                                                        @endif
                                                     @else
-                                                        <img src="{{asset("assets/img/user.png")}}" alt="" width="30px" height="30px">
-                                                        {{$emp->name}}
+                                                        {{$assignName->dept->dept_name}}
                                                     @endif
                                                 @endif
                                             @endforeach
-                                            @foreach($assign_dept_name as $dept_name)
-                                                @if($dept_name->ticket_id==$ticket->id)
-                                                    <i class="fa fa-users"></i>
-                                                    {{$dept_name->dept->dept_name}}
-                                                @endif
-                                            @endforeach
                                         @elseif($ticket->isassign==0)
-                                            <a href="{{url("isassign/2")}}" class="btn btn-facebook">Unassigned </a> @endif
+                                            <a href="{{url("isassign/2")}}" class="btn btn-outline-warning">Unassigned </a> @endif
                                     </td>
                                     <td>{{$ticket->status_type->status}}</td>
                                     <td><button type="button" class="btn btn-{{$ticket->priority_type->color}}">{{$ticket->priority_type->priority}}</button></td>

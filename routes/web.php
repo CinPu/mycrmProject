@@ -26,22 +26,7 @@ Route::get('/',function (){
 
 
 Auth::routes();
-Route::group(['middleware'=>'auth'],function () {
-    Route::get("/logout", "Auth\LoginController@logout");
-    Route::get('/home', 'HomeController@index');
-    Route::get("/ticket/dashboard","ticketController@dashboard");
-    Route::get("/company/profile","companyController@index");
-    Route::post("/company/profile","companyController@store");
-    Route::post("/role/assign/{uid}", "RolemangeControllerController@insertRole");
-    Route::post("/role/remove/{uid}", "RolemangeControllerController@removeRole");
-    Route::get("/department", "departmentController@index");
-    Route::post("/dept/create", "departmentController@store");
-    Route::post("/dept/edit/{id}", "departmentController@update");
-    Route::get("/dept/delete/{id}", "departmentController@destroy");
-    Route::post("/department/change/{id}", "departmentController@dept_change");
-    Route::get("/agent", "admin_agentController@index");
-    Route::post("/agent/create", "admin_agentController@store");
-    Route::get("/delete/agent/{id}", "admin_agentController@destroy");
+Route::group(['middleware'=>'ticket_admin'],function (){
     Route::get("/case_type", "case_typeController@index");
     Route::post("/case_type/create", "case_typeController@store");
     Route::post("/case_type/update/{id}", "case_typeController@update");
@@ -50,29 +35,50 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("/priority/create", "priorityController@store");
     Route::post("/priority/update/{id}", "priorityController@update");
     Route::get("priority/delete/{id}", "priorityController@destroy");
+    Route::get("/ticket/dashboard","ticketController@dashboard");
+    Route::get("/agent", "admin_agentController@index");
+    Route::post("/agent/create", "admin_agentController@store");
+    Route::get("/delete/agent/{id}", "admin_agentController@destroy");
+    Route::get("/agent/detail/{id}","admin_agentController@agentDetail");
+    Route::get("/isassign/{name}","assignticketController@isassign");
+    Route::get("/piechart","piechartController@index");
+    Route::post("/search","piechartController@filterBy");
+    Route::get("/guestUser","userinfoController@index");
+    Route::post("/ticket/search","searchController@ticket");
+    Route::get("/guestuser/sending/{id}","userinfoController@sendinghistory");
+});
+Route::group(['middleware'=>'admin_access'],function (){
+    Route::get("/role","RolemangeControllerController@index");
+    Route::post("/role/assign/{uid}", "RolemangeControllerController@insertRole");
+    Route::post("/role/remove/{uid}", "RolemangeControllerController@removeRole");
+});
+Route::group(['middleware'=>'auth'],function () {
+    Route::get("/logout", "Auth\LoginController@logout");
+    Route::get('/home', 'HomeController@index');
+    Route::get("/company/profile","companyController@index");
+    Route::post("/company/profile","companyController@store");
+    Route::get("/department", "departmentController@index");
+    Route::post("/department/head/add","departmentController@emp_dept_haad");
+    Route::post("/dept/create", "departmentController@store");
+    Route::post("/dept/edit/{id}", "departmentController@update");
+    Route::get("/dept/delete/{id}", "departmentController@destroy");
+    Route::post("/department/change/{id}", "departmentController@dept_change");
+    Route::post("/dept/import","departmentController@import");
+    Route::post("/dept/head/{id}","departmentController@set_dept_head");
+    Route::get("/dept/showmember/{id}","departmentController@showMember");
     Route::get("/tickets/{ticket_id}","ticketController@show");
     Route::get("/status/change/{ticket_id}","ticketController@statusChange");
     Route::post("/assign","ticketController@assigned");
     Route::post("/reassigned","ticketController@reassign");
     Route::get("/countdown/{ticket_id}","ticketController@countdown");
     Route::post("comment","ticketController@postcomment");
-    Route::get("/agent/detail/{id}","admin_agentController@agentDetail");
-    Route::get("/isassign/{name}","assignticketController@isassign");
-    Route::get("/piechart","piechartController@index");
-    Route::post("/search","piechartController@filterBy");
-    Route::get("/dept/showmember/{id}","departmentController@showMember");
-    Route::get("/guestUser","userinfoController@index");
-    Route::get("/guestuser/sending/{id}","userinfoController@sendinghistory");
     Route::get("/comment/delete/{id}","ticketController@cmtDelete");
     Route::get("/user/setting","admin_agentController@setting");
     Route::post("/user/setting","admin_agentController@agentInfo_update");
     Route::get("/pp/change","admin_agentController@ppchange");
     Route::post("pp/change","admin_agentController@profileChange");
-    Route::post("/ticket/search","searchController@ticket");
     Route::get("/employee","employeeController@index");
     Route::post("/employee/create","employeeController@store");
-    Route::post("/dept/head/{id}","departmentController@set_dept_head");
-    Route::get("/role","RolemangeControllerController@index");
     Route::post("/add/follower/{id}","ticketController@follower");
     Route::get("/follower/remove/{id}","ticketController@removefollower");
     Route::get("/emp/profile/{emp_id}","employeeController@profile");
@@ -83,7 +89,6 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("/employee/import","employeeController@emp_Import");
     Route::get("/agent/ticket","admin_agentController@agentTicket");
     Route::post("/employee/filter","employeeController@filterResult");
-    Route::post("/dept/import","departmentController@import");
     Route::get("/engaged/company","companyController@engagedCompany");
     Route::post("client/company/create/{type}","companyController@create");
     Route::get("client/company/profile/{id}","companyController@profile");

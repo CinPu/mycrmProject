@@ -8,6 +8,8 @@ use App\assignwithdept;
 use App\case_type;
 use App\department;
 use App\ticket;
+use App\User;
+use App\user_employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +22,6 @@ class assignticketController extends Controller
      */
     public function isassign($name)
     {
-
         $tickets = [];
         //admin's agent all ticket select
         $agents = agent::with("user")->where("admin_id", Auth::user()->id)->get();
@@ -40,7 +41,9 @@ class assignticketController extends Controller
         $unassign_tickets=[];
         $assign_tickets=[];
         $allcases=case_type::where("admin_uuid",Auth::user()->uuid)->get();
-        $depts=department::where("admin_uuid",Auth::user()->uuid)->get();
+        $emp_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
+        $admin=User::where("id",$emp_user->employee->admin_id)->first();
+        $depts=department::where("admin_uuid",$admin->uuid)->get();
         foreach ($tickets as $ticket){
             if($ticket->isassign==0){
             array_push($unassign_tickets,$ticket);
@@ -57,13 +60,10 @@ class assignticketController extends Controller
         }
         $assign_to=[];
         foreach ($assign_tickets as $assign_ticket){
-            $assign_to_agent=assign_ticket::with("agent","ticket")->where("ticket_id",$assign_ticket->id)->first();
+            $assign_to_agent=assign_ticket::with("agent","ticket","dept")->where("ticket_id",$assign_ticket->id)->first();
 //            dd($assign_to_agent);
             if($assign_to_agent!=null){
                 array_push($assign_to,$assign_to_agent);
-            }else{
-                $assign_to_dept=assignwithdept::with("dept","ticket")->where("ticket_id",$assign_ticket->id)->first();
-                array_push($assign_to,$assign_to_dept);
             }
         }
         return view("ticket.isassign", compact("allcases","agents","depts","assign_tickets","unassign_tickets","assign","unassign","assign_to"));

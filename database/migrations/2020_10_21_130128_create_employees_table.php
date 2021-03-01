@@ -31,8 +31,8 @@ class CreateEmployeesTable extends Migration
             $table->foreign("report_to")->references("id")->on("users")->onDelete("cascade");
             $table->bigInteger("dept_id")->unsigned();
             $table->foreign("dept_id")->references("id")->on("departments")->onDelete("cascade");
-            $table->double("phone");
-            $table->bigInteger("dept_head")->unsigned();
+            $table->string("phone");
+            $table->bigInteger("dept_head")->unsigned()->nullable();
             $table->foreign("dept_head")->references("id")->on("users")->onDelete("cascade");
             $table->bigInteger("company_id")->unsigned();
             $table->foreign("company_id")->references("id")->on("companies")->onDelete("cascade");

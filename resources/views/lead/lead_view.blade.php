@@ -31,9 +31,9 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="{{url("/lead/edit/$lead->id")}}" class="btn add-btn"><i class="fa fa-edit"></i> Edit Project</a>
+                        <a href="{{url("/lead/edit/$lead->id")}}" class="btn add-btn"><i class="fa fa-edit"></i> Edit Lead</a>
                        @if($lead->is_qualified==1)
-                            <a href="" class="btn add-btn mr-2"><i class="fa fa-check"></i>Qualified</a>
+                            <a href="{{url("deal/add")}}" class="btn add-btn mr-2"><i class="fa fa-check"></i>Qualified</a>
                            @else
                         <a href="{{url("/lead/qualified/$lead->id")}}" class="btn add-btn mr-2"><i class="fa fa-square"></i>Unqualified</a>
                     @endif

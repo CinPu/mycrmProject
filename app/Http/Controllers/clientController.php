@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\company;
 use App\customer;
-use App\customerCompany;
 use App\employee;
 use App\position;
 use App\user_employee;
@@ -21,13 +20,13 @@ class clientController extends Controller
     public function index()
     {
         if(Auth::user()->hasAnyRole("Admin")){
-            $companies=customerCompany::where("admin_id",Auth::user()->id)->get();
-            $company=company::where("admin_id",Auth::user()->id)->first();
+            $companies=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->get();
+            $company=company::where("admin_id",Auth::user()->id)->where("is_admin_company",1)->first();
             $allclients=customer::with("customer_position","customer_company")->where("admin_company_id",$company->id)->get();
         }elseif (Auth::user()->hasAnyRole("TicketAdmin")||Auth::user()->hasAnyRole("Employee"))
             {
             $authenticate_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
-            $companies=customerCompany::where("admin_id",$authenticate_user->employee->admin_id)->get();
+            $companies=company::where("admin_id",$authenticate_user->employee->admin_id)->where("is_admin_company",0)->get();
             $auth_emp=employee::where("id",$authenticate_user->emp_id)->first();
             $allclients=customer::with("customer_position","customer_company")->where("admin_id",$auth_emp->admin_id)->get();
             }
@@ -46,15 +45,15 @@ class clientController extends Controller
         if(Auth::user()->hasAnyRole("Employee")||Auth::user()->hasAnyRole("TicketAdmin")){
 
             $auth_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
-            $lastcompany=customerCompany::orderBy('id', 'desc')->where("admin_id",$auth_user->employee->admin_id)->first();
+            $lastcompany=company::orderBy('id', 'desc')->where("admin_id",$auth_user->employee->admin_id)->where("is_admin_company",0)->first();
             $authenticate_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
-            $admin_company=company::where("admin_id",$authenticate_user->employee->admin_id)->first();
+            $admin_company=company::where("admin_id",$authenticate_user->employee->admin_id)->where("is_admin_company",1)->first();
             $lastcustomer=customer::orderBy('id', 'desc')->where("admin_company_id",$admin_company->id)->first();
-            $companies=customerCompany::where("admin_id",$authenticate_user->employee->admin_id)->get();
+            $companies=company::where("admin_id",$authenticate_user->employee->admin_id)->where("is_admin_company",0)->get();
         }else{
             $admin_company=company::where("admin_id",Auth::user()->id)->first();
-            $lastcompany=customerCompany::orderBy('id', 'desc')->where("admin_id",Auth::user()->id)->first();
-            $companies=customerCompany::where("admin_id",Auth::user()->id)->get();
+            $lastcompany=company::orderBy('id', 'desc')->where("admin_id",Auth::user()->id)->where("is_admin_company",0)->first();
+            $companies=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->get();
             $lastcustomer=customer::orderBy('id', 'desc')->where("admin_company_id",$admin_company->id)->first();
 
         }
@@ -63,7 +62,7 @@ class clientController extends Controller
             $lastcustomer->customer_id ++;
             $client_id = $lastcustomer->customer_id;
         } else {
-            $client_id= $admin_company->company_short_form." - Client"."-00001";
+            $client_id="Client"."-00001";
         }
 
         if (isset($lastcompany)) {
@@ -129,10 +128,10 @@ class clientController extends Controller
     public function show($id)
     {
         if(Auth::user()->hasAnyRole("Admin")){
-            $companies=customerCompany::where("admin_id",Auth::user()->id)->get();
+            $companies=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->get();
         }else{
             $authenticate_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
-            $companies=customerCompany::where("admin_id",$authenticate_user->employee->admin_id)->get();
+            $companies=company::where("admin_id",$authenticate_user->employee->admin_id)->where("is_admin_company",0)->get();
         }
         $customer=customer::with("customer_company","customer_position","user")->where("id",$id)->first();
         $position=position::all();

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\agent;
 use App\assign_ticket;
-use App\assignwithdept;
 use App\case_type;
 use App\department;
 use App\employee;
@@ -37,7 +36,7 @@ class admin_agentController extends Controller
         $ticket_admin=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
         $system_admin=User::where("id",$ticket_admin->employee->admin_id)->first();
         foreach ($emp_user as $emp){
-            if($emp->employee->admin_id==$system_admin->id && !$emp->user->hasAnyRole("Agent") && $ticket_admin->emp_id!=$emp->emp_id){
+            if($emp->employee->admin_id==$system_admin->id && !$emp->user->hasAnyRole("Agent") && Auth::user()->id!=$emp->user->id){
                 array_push($employees,$emp);
             }
         }
@@ -292,26 +291,32 @@ class admin_agentController extends Controller
         $tickets=ticket::with("priority_type","cases","status_type","sources_type")->where("user_id",Auth::user()->uuid)->get();
 //            dd($tickets);
         $noOfmyticket=count($tickets);
-
-        $assign=assign_ticket::with("ticket")->where("agent_id",Auth::user()->id)->get();
+        $userOfdepts=agent::with("dept")->where("agent_id",Auth::user()->id)->first();
+        $assign=assign_ticket::with("ticket")->OrWhere("dept_id",$userOfdepts->dept_id)->OrWhere("agent_id",Auth::user()->id)->get();
         $assignticket=[];
-        foreach ($assign as $sign){
-            $ticket=ticket::with("priority_type","cases","status_type","sources_type")->where("id",$sign->ticket_id)->first();
-            array_push($assignticket,$ticket);
+        $ticket_assign_dept=[];
+        foreach ($assign as $sign) {
+            $ticket = ticket::with("priority_type", "cases", "status_type", "sources_type")->where("id", $sign->ticket_id)->first();
+            if ($sign->type_of_assign == 0){
+                array_push($assignticket, $ticket);
+        }else{
+                array_push($ticket_assign_dept, $ticket);
+            }
         }
         $noOfassign=count($assignticket);
-        $userOfdepts=agent::with("dept")->where("agent_id",Auth::user()->id)->first();
+
         $admin=User::where("id",$userOfdepts->admin_id)->first();
         $allcases = case_type::where("admin_uuid",$admin->uuid)->get();
-        $assingwithDepts=assignwithdept::with("ticket")->where("dept_id",$userOfdepts->dept->id)->get();
+
 
 //            dd($assingwithDepts);
-        $noOfassign_withdept=count($assingwithDepts);
+        $noOfassign_withdept=count($ticket_assign_dept);
         $auth_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
         $system_admin=User::where("id",$auth_user->employee->admin_id)->first();
         $depts=department::where("admin_uuid",$system_admin->uuid)->get();
         $admin_agents=agent::with("user")->where("admin_id",$admin->id)->get();
-        return view("Agent.agentTicket", compact("noOfassign","noOfassign_withdept","assingwithDepts","admin_agents","depts","noOfmyticket","tickets", "allcases","assignticket"));
+        return view("Agent.agentTicket", compact("noOfassign","noOfassign_withdept","ticket_assign_dept","admin_agents","depts","noOfmyticket","tickets", "allcases","assignticket"));
+
 
     }
 }

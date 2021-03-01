@@ -4,7 +4,6 @@
 			<div id="sidebar-menu" class="sidebar-menu">
 				@if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Admin"))
 					<ul>
-						<li class="menu-title"><span>Main</span></li>
 						<li><a href="{{url("/home")}}"><i class="la la-dashboard"></i> <span> Dashboard</span> </a></li>
 						{{--							<li class="submenu">--}}
 						{{--								<a href="#"><i class="la la-cube"></i> <span> Apps</span> <span class="menu-arrow"></span></a>--}}
@@ -46,9 +45,8 @@
 						{{--								--}}
 						{{--								</ul>--}}
 						{{--							</li>--}}
-						<li class="menu-title"><span>Employees</span></li>
 						<li class="submenu"><a href="#"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a><ul style="display: none;">
-								<li class="{{ Request::is('employees') ? 'active' : '' }}"><a  href="{{ url('/employee') }}">All Employees</a></li>
+
 
 								{{--		<li>--}}
 								{{--        <a class="{{ Request::is('holidays') ? 'active' : '' }}" href="{{ url('holidays') }}">Holidays</a></li>	--}}
@@ -71,6 +69,7 @@
 								<li class="{{ Request::is('department') ? 'active' : '' }}">
 									<a  href="{{ url('/department') }}">Departments</a>
 								</li>
+                                <li class="{{ Request::is('employees') ? 'active' : '' }}"><a  href="{{ url('/employee') }}">Employees</a></li>
 
 								{{--									<li>--}}
 
@@ -85,7 +84,6 @@
 							</ul>
 						</li>
 
-						<li class="menu-title"><span>CRM</span></li>
 						<li class="submenu">
 							<a href="#"><i class="la la-users"></i>
 								<span> CRM</span>
@@ -96,6 +94,10 @@
 								<li class="{{ Request::is('client') ? 'active' : '' }}">
 									<a  href="{{ url('/client') }}">Clients</a>
 								</li>
+                                <li class="{{ Request::is('leads') ? 'active' : '' }}">
+                                    <a  href="{{ url('/leads') }}"><span>Leads</span></a></li>
+                                <li class="{{ Request::is('deal') ? 'active' : '' }}">
+                                    <a  href="{{ url('/deal') }}"><span>Deal</span></a></li>
 								{{--							<li class="{{ Request::is('agent') ? 'active' : '' }}" >--}}
 								{{--								<a href="{{ url('/agent') }}">Agent</a>--}}
 								{{--							</li>--}}
@@ -121,10 +123,7 @@
 
 {{--							</ul>--}}
 {{--						</li>--}}
-						<li class="{{ Request::is('leads') ? 'active' : '' }}">
-							<a  href="{{ url('/leads') }}"><i class="la la-user-secret"></i><span>Leads</span></a></li>
-                        <li class="{{ Request::is('deal') ? 'active' : '' }}">
-                            <a  href="{{ url('/deal') }}"><i class="la la-file-archive-o"></i><span>Deal</span></a></li>
+
                         @php
 							$all_auth_emp=\App\user_employee::with("employee","user")->get();
                                 $ticketAdmin=[];
@@ -136,7 +135,7 @@
 						@endphp
 						<li>
 							@if($ticketAdmin!=null)
-								<a  href="{{url("/ticket/create/".$ticketAdmin[0]->user->uuid)}}"><i class="la la-ticket"></i><span>Ticket</span></a></li>
+								<a  href="{{url("/ticket/create/".$ticketAdmin[0]->user->uuid)}}"><i class="la la-ticket"></i><span>Ticket Create</span></a></li>
 						@endif
 						<li>
 							<a  href="{{ url('/role') }}"><i class="la la-user-secret"></i><span>Role & Permission</span></a></li>
@@ -491,12 +490,26 @@
 							<a  href="{{ url('guestUser') }}"><i class="la la-user-times"></i><span>Complainer</span></a></li>
 						<li class="{{ Request::is('isassign/2') ? 'active' : '' }}" >
 							<a href="{{ url('isassign/2') }}"><i class="la la-ticket"></i><span>Assign Ticket</span></a></li>
-						<li class="{{ Request::is('client') ? 'active' : '' }}">
-							<a  href="{{ url('/client') }}"><i class="la la-user"></i><span>Clients</span></a>
-						</li>
-						<li class="{{ Request::is('leads') ? 'active' : '' }}">
-							<a  href="{{ url('/leads') }}"><i class="la la-user-secret"></i><span>Leads</span></a>
-						</li>
+                        <li class="submenu">
+                            <a href="#"><i class="la la-users"></i>
+                                <span> CRM</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul style="display: none;">
+                                <li class="{{ Request::is('engaged/company') ? 'active' : '' }}"><a  href="{{ url('/engaged/company') }}">Company</a></li>
+                                <li class="{{ Request::is('client') ? 'active' : '' }}">
+                                    <a  href="{{ url('/client') }}">Clients</a>
+                                </li>
+                                <li class="{{ Request::is('leads') ? 'active' : '' }}">
+                                    <a  href="{{ url('/leads') }}"><span>Leads</span></a></li>
+                                <li class="{{ Request::is('deal') ? 'active' : '' }}">
+                                    <a  href="{{ url('/deal') }}"><span>Deal</span></a></li>
+                                {{--							<li class="{{ Request::is('agent') ? 'active' : '' }}" >--}}
+                                {{--								<a href="{{ url('/agent') }}">Agent</a>--}}
+                                {{--							</li>--}}
+
+                            </ul>
+                        </li>
 					</ul>
 				@elseif(\Illuminate\Support\Facades\Auth::user()->hasAnyRole("Agent"))
 					<ul>
@@ -507,11 +520,26 @@
 					<ul>
 						<li><a  href="{{ url('/home') }}"><i class="fa fa-home"></i><span>Home</span></a></li>
 						<li><a  href="{{url("/employee/tag/tickets")}}"><i class="fa fa-ticket"></i><span>Tags Ticket</span></a></li>
-						<li class="{{ Request::is('client') ? 'active' : '' }}">
-							<a  href="{{ url('/client') }}"><i class="fa fa-users"></i><span>Clients</span></a>
-						</li>
-						<li class="{{ Request::is('leads') ? 'active' : '' }}">
-							<a  href="{{ url('/leads') }}"><i class="la la-user-secret"></i><span>Leads</span></a></li>
+                        <li class="submenu">
+                            <a href="#"><i class="la la-users"></i>
+                                <span> CRM</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul style="display: none;">
+                                <li class="{{ Request::is('engaged/company') ? 'active' : '' }}"><a  href="{{ url('/engaged/company') }}">Company</a></li>
+                                <li class="{{ Request::is('client') ? 'active' : '' }}">
+                                    <a  href="{{ url('/client') }}">Clients</a>
+                                </li>
+                                <li class="{{ Request::is('leads') ? 'active' : '' }}">
+                                    <a  href="{{ url('/leads') }}"><span>Leads</span></a></li>
+                                <li class="{{ Request::is('deal') ? 'active' : '' }}">
+                                    <a  href="{{ url('/deal') }}"><span>Deal</span></a></li>
+                                {{--							<li class="{{ Request::is('agent') ? 'active' : '' }}" >--}}
+                                {{--								<a href="{{ url('/agent') }}">Agent</a>--}}
+                                {{--							</li>--}}
+
+                            </ul>
+                        </li>
 					</ul>
 				@endif
 

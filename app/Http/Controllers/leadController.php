@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\comment;
 use App\company;
 use App\customer;
-use App\customerCompany;
 use App\employee;
 use App\lead_follower;
 use App\leadModel;
@@ -47,20 +46,20 @@ class leadController extends Controller
     {
         if (Auth::user()->hasAnyRole("Employee") || Auth::user()->hasAnyRole("TicketAdmin")) {
             $authenticate_user = user_employee::with("employee")->where("user_id", Auth::user()->id)->first();
-            $admin_company = company::where("admin_id", $authenticate_user->employee->admin_id)->first();
+            $admin_company = company::where("admin_id", $authenticate_user->employee->admin_id)->where("is_admin_company",1)->first();
             $allemployees = employee::where("admin_id", $authenticate_user->employee->admin_id)->get();
             $allcustomers = customer::where("admin_company_id", $admin_company->id)->get();
             $lastcustomer=customer::orderBy('id', 'desc')->where("admin_company_id",$admin_company->id)->first();
-            $companies=customerCompany::where("admin_id",$authenticate_user->employee->admin_id)->get();
-            $lastcompany=customerCompany::orderBy('id', 'desc')->where("admin_id",$authenticate_user->employee->admin_id)->first();
+            $companies=company::where("admin_id",$authenticate_user->employee->admin_id)->where("is_admin_company",0)->get();
+            $lastcompany=company::orderBy('id', 'desc')->where("admin_id",$authenticate_user->employee->admin_id)->where("is_admin_company",0)->first();
 
         } else {
-            $admin_company = company::where("admin_id", Auth::user()->id)->first();
+            $admin_company = company::where("admin_id", Auth::user()->id)->where("is_admin_company",1)->first();
             $allemployees = employee::where("admin_id", Auth::user()->id)->get();
             $allcustomers = customer::where("admin_company_id", $admin_company->id)->get();
             $lastcustomer=customer::orderBy('id', 'desc')->where("admin_company_id",$admin_company->id)->first();
-            $lastcompany=customerCompany::orderBy('id', 'desc')->where("admin_id",Auth::user()->id)->first();
-            $companies=customerCompany::where("admin_id",Auth::user()->id)->get();
+            $lastcompany=company::orderBy('id', 'desc')->where("admin_id",Auth::user()->id)->where("is_admin_company",0)->first();
+            $companies=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->get();
         }
         $lastlead = leadModel::orderBy('id', 'desc')->where("company_id", $admin_company->id)->first();
         if (isset($lastlead)) {
@@ -128,7 +127,7 @@ class leadController extends Controller
                 $next_plan->work_done=0;
                 $next_plan->save();
             }
-            return redirect()->back()->with("message", "Succssful");
+            return redirect("/leads")->back()->with("message", "Succssful");
         }
 
     }
@@ -172,11 +171,11 @@ class leadController extends Controller
     {
         if (Auth::user()->hasAnyRole("Employee") || Auth::user()->hasAnyRole("TicketAdmin")) {
             $authenticate_user = user_employee::with("employee")->where("user_id", Auth::user()->id)->first();
-            $admin_company = company::where("admin_id", $authenticate_user->employee->admin_id)->first();
+            $admin_company = company::where("admin_id", $authenticate_user->employee->admin_id)->where("is_admin_company",1)->first();
             $allemployees = employee::where("admin_id", $authenticate_user->employee->admin_id)->get();
             $allcustomers = customer::where("admin_company_id", $admin_company->id)->get();
         } else {
-            $admin_company = company::where("admin_id", Auth::user()->id)->first();
+            $admin_company = company::where("admin_id", Auth::user()->id)->where("is_admin_company")->first();
             $allemployees = employee::where("admin_id", Auth::user()->id)->get();
             $allcustomers = customer::where("admin_company_id", $admin_company->id)->get();
         }
@@ -253,7 +252,7 @@ class leadController extends Controller
         $lead=leadModel::where("id",$id)->first();
         $lead->is_qualified=1;
         $lead->update();
-        return redirect()->back()->with("message","$lead->title is qualified now!");
+        return redirect("/deal/add")->with("message","$lead->title is qualified now!");
     }
 
     public function tag_add(Request $request)

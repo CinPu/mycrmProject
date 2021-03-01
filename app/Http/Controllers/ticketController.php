@@ -54,7 +54,15 @@ class ticketController extends Controller
                     $admins = User::whereId($agent_admins->admin_id)->first();
                     $cats = case_type::where("admin_uuid", $admins->uuid)->get();
                     $priorities = priority::where("admin_uuid", $admins->uuid)->get();
-                return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities"));
+                    $last_ticket=ticket::orderBy('id', 'desc')->where("user_id",$admins->uuid)->first();
+                if (isset($last_ticket)) {
+                    // Sum 1 + last id
+                    $last_ticket->ticket_id ++;
+                    $ticket_id = $last_ticket->ticket_id;
+                } else {
+                    $ticket_id="Ticket"."-00001";
+                }
+                return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities","ticket_id"));
             /*
              * end of ticket create for agent
              */
@@ -64,15 +72,31 @@ class ticketController extends Controller
                 */
                 $priorities = priority::where("admin_uuid", $id)->get();
                 $cats = case_type::where("admin_uuid", $id)->get();
-                return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities"));
+                $last_ticket=ticket::orderBy('id', 'desc')->where("user_id",$id)->first();
+                if (isset($last_ticket)) {
+                    // Sum 1 + last id
+                    $last_ticket->ticket_id ++;
+                    $ticket_id = $last_ticket->ticket_id;
+                } else {
+                    $ticket_id="Ticket"."-00001";
+                }
+                return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities","ticket_id"));
                 /*
                  * end of admin
                  */
             }
         } else {
+            $last_ticket=ticket::orderBy('id', 'desc')->where("user_id",$id)->first();
+            if (isset($last_ticket)) {
+                // Sum 1 + last id
+                $last_ticket->ticket_id ++;
+                $ticket_id = $last_ticket->ticket_id;
+            } else {
+                $ticket_id="Ticket"."-00001";
+            }
             $priorities = priority::where("admin_uuid", $id)->get();
             $cats = case_type::where("admin_uuid", $id)->get();
-            return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities"));
+            return view("ticket.create", compact("cats", "statuses", "sources", "id", "priorities","ticket_id"));
         }
     }
 
@@ -132,9 +156,9 @@ class ticketController extends Controller
             }
 
         } else {
-            $company_name = company::where("id", $emp->employee->company_id)->first();
+            $company_name = company::where("id", $emp->employee->company_id)->where("is_admin_company",1)->first();
         }
-        $ticket->ticket_id = $company_name->company_name . " - " . strtoupper(Str::random(12));
+        $ticket->ticket_id = $request->ticket_id;
         $ticket->status = $request->status;
         $ticket->product = $request->product;
         $ticket->userinfo_id = $user_info->id;
@@ -153,7 +177,16 @@ class ticketController extends Controller
         }
         $ticket->photo = json_encode($data);
         $ticket->save();
-        return redirect()->back()->with("message", "Successful!");
+        if(Auth::check()){
+            if (Auth::user()->hasAnyRole("Admin")){
+                return redirect("home")->with("Message","Ticket Post Successful");
+            }elseif (Auth::user()->hasAnyRole("TicketAdmin")){
+                return redirect("home")->with("Message","Ticket Post Successful");
+            }else{
+                return redirect("home")->with("Message","Ticket Post Successful");
+            }
+        }
+        return redirect("login")->with("message", "Successful!");
     }
 
     /**
@@ -216,7 +249,8 @@ class ticketController extends Controller
             $agents = agent::where("agent_id", Auth::user()->id)->get();
             foreach ($agents as $agent) {
                 $admin = agent::with("user")->where("admin_id", $agent->admin_id)->get();
-                $admin_user = User::whereId($agent->admin_id)->first();
+                $system_admin =user_employee::with("employee")->where("user_id",$agent->agent_id)->first();
+                $admin_user = User::whereId($system_admin->employee->admin_id)->first();
                 $depts = department::where("admin_uuid", $admin_user->uuid)->get();
             }
             $employees = [];
@@ -324,7 +358,6 @@ class ticketController extends Controller
 
     public function assigned(Request $request)
     {
-        if ($request->assignType == "agent") {
             $tickets = assign_ticket::all();
             $ticket_id = [];
             foreach ($tickets as $ticket) {
@@ -332,78 +365,44 @@ class ticketController extends Controller
             }
             for ($i = 0; $i < count($request->ticket_id); $i++) {
                 if (!in_array($request->ticket_id[$i], $ticket_id)) {
-                    $assign_ticket = new assign_ticket();
-                    $assign_ticket->agent_id = $request->assign_id;
-                    $assign_ticket->ticket_id = $request->ticket_id[$i];
-                    $assign_ticket->save();
-                    $ticket = ticket::where("id", $request->ticket_id[$i])->first();
-                    $ticket->isassign = 1;
-                    $ticket->update();
-                }
+                        $assign_ticket = new assign_ticket();
+                    if ($request->assignType == "agent") {
+                        $assign_ticket->agent_id = $request->assign_id;
+                        $assign_ticket->ticket_id = $request->ticket_id[$i];
+                        $assign_ticket->type_of_assign = 0;
+                    }else
+                        {
+                            $assign_ticket->dept_id = $request->assign_id;
+                            $assign_ticket->ticket_id = $request->ticket_id[$i];
+                            $assign_ticket->type_of_assign = 1;
+                        }
+                        $assign_ticket->save();
+                        $ticket = ticket::where("id", $request->ticket_id[$i])->first();
+                        $ticket->isassign = 1;
+                        $ticket->update();
+                    }
             }
             return redirect()->back()->with("message", "Successful!");
-        } elseif ($request->assignType == "dept") {
-//            dd($request->all());
-            $tickets = assignwithDept::all();
-//            dd($tickets);
-            $isassigned = [];
-            foreach ($tickets as $ticket) {
-                array_push($isassigned, $ticket->ticket_id);
-            }
-//            dd($request->all());
-
-            for ($i = 0; $i < count($request->ticket_id); $i++) {
-                if (!in_array($request->ticket_id, $isassigned)) {
-                    $assigntodept = new assignwithdept();
-                    $assigntodept->dept_id = $request->assign_id;
-                    $assigntodept->ticket_id = $request->ticket_id[$i];
-//                dd($assigntodept);
-                    $assigntodept->save();
-                    $ticket = ticket::where("id", $request->ticket_id[$i])->first();
-                    $ticket->isassign = 1;
-                    $ticket->update();
-                }
-            }
-//                dd($isassigned);
-            return redirect()->back();
         }
-    }
+
 
     public function reassign(Request $request)
     {
-//        dd($request->all());
-        if ($request->assignType == "agent") {
             $agentass = assign_ticket::where("ticket_id", $request->ticket_id)->first();
-            if (isset($agentass)) {
-                $agentass->agent_id = $request->assign_id;
-                $agentass->update();
-            } else {
-                $agentass = new assign_ticket();
-                $agentass->agent_id = $request->assign_id;
-                $agentass->ticket_id = $request->ticket_id;
-                $agentass->save();
-                $deptass = assignwithdept::where("ticket_id", $request->ticket_id)->first();
-                $deptass->delete();
-            }
+                if ($request->assignType == "agent") {
+                    $agentass->agent_id = $request->assign_id;
+                    $agentass->dept_id=null;
+                    $agentass->type_of_assign=0;
+                    $agentass->update();
+                }else{
+                    $agentass->agent_id = null;
+                    $agentass->dept_id=$request->assign_id;
+                    $agentass->type_of_assign=1;
+                    $agentass->update();
+                }
 
             return redirect()->back()->with("message", "Ticket Reassigned Successful!");
-        } elseif ($request->assignType == "dept") {
-            $deptass = assignwithdept::where("ticket_id", $request->ticket_id)->first();
-//            dd($deptass);
-            if (isset($deptass)) {
-                $deptass->dept_id = $request->assign_id;
-                $deptass->update();
-            } else {
-                $deptass = new assignwithdept();
-                $deptass->dept_id = $request->assign_id;
-                $deptass->ticket_id = $request->ticket_id;
-                $deptass->save();
-                $agentass = assign_ticket::where("ticket_id", $request->ticket_id)->first();
-                $agentass->delete();
-            }
 
-        }
-        return redirect()->back()->with("message", "Ticket Reassigned Successful!");
     }
 
     public function postcomment(Request $request)

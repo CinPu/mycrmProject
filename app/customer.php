@@ -10,7 +10,7 @@ class customer extends Model
         return $this->belongsTo(position::class,'position',"id");
     }
     public function customer_company(){
-        return $this->belongsTo(customerCompany::class,'company_id',"id");
+        return $this->belongsTo(company::class,'company_id',"id");
     }
     public function user(){
         return $this->belongsTo(User::class,"admin_id","id");

@@ -15,14 +15,24 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("admin_id")->unsigned();
-            $table->foreign("admin_id")->references("id")->on("users")->onDelete("cascade");
-            $table->string("company_name");
-            $table->string("company_short_form");
-            $table->text("company_logo");
+            $table->string("company_id");
+            $table->string("name");
+            $table->text("logo")->nullable();
+            $table->text("company_registry");
+            $table->text("company_mission");
+            $table->text("company_vision");
+            $table->string("type_of_business");
+            $table->string("name_of_ceo");
+            $table->text("facebookpage");
+            $table->text("linkedin");
+            $table->string("parent_company");
+            $table->string("phone");
+            $table->string("hotline");
+            $table->string("email")->unique();
+            $table->text("company_website");
+            $table->tinyInteger("is_admin_company");
             $table->text("company_address");
-            $table->string("company_email");
-            $table->double("company_phone");
+            $table->bigInteger("admin_id")->unsigned();
             $table->timestamps();
         });
     }

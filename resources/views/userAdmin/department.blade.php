@@ -63,74 +63,8 @@
                             </div>
                                 <div class="form-group">
                                 <label for="dept_name" > Depatment Name:</label><br>
-                                <input type="text" id="dept_name" class="form-control mb-3"  name="dept_name">
+                                <input type="text" id="dept_name" class="form-control mb-3"  name="dept_name" required>
                             </div>
-                                <div class="form-group">
-                                <label for="dept_head" > Depatment Head:</label><br>
-                                <div class="row" data-toggle="collapse" data-target="#dept_head_info" >
-                                <input type="text" class="form-control dept_head mr-3  ml-3">
-                                </div>
-                            </div>
-                                <div class="sub-menu collapse border mt-3" id="dept_head_info">
-                                <h5 align="center" class="mt-3">Head Of Department </h5>
-                                    <div class="col-12 form-group row mt-3">
-                                    <div class="col-md-6">
-                                        <label for="">Employee ID</label>
-                                        <input type="text" name="emp_id" class="form-control" value="{{$emp_id}}">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="">Department Head Name</label>
-                                        <input type="text" name="dept_headName" class="dept_head form-control" required>
-                                    </div>
-                                </div>
-                                    <div class="col-12 form-group row mt-3">
-                                        <div class="col-6">
-                                        <label for="">Gender</label><br>
-                                        <input type="radio"name="gender" class="mr-3" value="Male"><label for="">Male</label>
-                                        <input type="radio"name="gender" class="mr-2 ml-2" value="Female"><label for="">Female</label>
-                                    </div>
-                                        <div class="col-md-6">
-                                        <label for="">NRC No.</label>
-                                        <input type="text" name="nrc" class="form-control">
-                                    </div>
-                                    </div>
-                                    <div class="col-12 form-group row mt-3">
-                                    <div class="col-md-6">
-                                        <label for="">Password</label>
-                                        <input type="password" name="password" class="form-control">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="">Confirm Password</label>
-                                        <input type="password" name="confirm_password" class="form-control">
-                                    </div>
-                                </div>
-                                    <div class="col-12 form-group row mt-3">
-
-                                    <div class="col-md-6">
-                                        <label for="">Phone</label>
-                                        <input type="number" name="phone" class="form-control">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="">Email</label>
-                                        <input type="email" name="email" class="form-control">
-                                    </div>
-                                </div>
-                                    <div class="col-12 form-group row mt-3">
-                                    <div class="col-md-6">
-                                    <label for="">Position</label>
-                                    <select name="position" class="form-control" id="">
-                                        @foreach($positions as $position)
-                                            <option value="{{$position->id}}">{{$position->emp_position}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                    <div class="col-md-6">
-                                        <label for="">Join Date</label>
-                                        <input type="date" name="join_date" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                                <input type="hidden" value="{{$company->id}}" name="company">
                                 <input type="hidden" name="uuid" value="{{Str::uuid()->toString()}}">
                                 <button type="submit" class="btn btn-success float-right mr-2">Save</button>
                                 <button type="button" class="btn btn-danger float-right mr-2" data-dismiss="modal">Close</button>
@@ -150,43 +84,132 @@
                     <tbody>
                         @foreach($depts as $dept)
                         <tr>
-                            <th>#{{$dept->dept_id}}</th>
+
+                            <th><a href="{{url("/dept/showmember/$dept->id")}}">#{{$dept->dept_id}}</a></th>
                             <td>{{$dept->dept_name}}</td>
                             <td>
+                                @if($dept->dept_head==null)
+                                    <a href="#" data-toggle="modal" data-target="#add_employee{{$dept->id}}"  style="width: 20%"><i class="fa fa-plus-circle" style="font-size: 20px;"></i></a>
+                                @else
                                 {{$dept->department_head->name}}
-                                <div class="modal fade" id="{{$dept->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered ">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Set {{$dept->dept_name}} Head</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{url("/dept/head/$dept->id")}}" method="POST">
-                                                {{csrf_field()}}
-                                                <div class="form-group">
-                                                    <label for="dept_name">Choose Department Head:</label><br>
-                                                    <select name="dept_head" id="" class="form-control">
-
-                                                        @foreach($agents as $agent)
-                                                            @if($agent->dept_id==$dept->id)
-                                                        <option value="{{$agent->user->id}}">{{$agent->user->name}}</option>
-                                                            @else
-                                                                <option value="0">Doesn't have Agent</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
+                                @endif
+                                    <div id="add_employee{{$dept->id}}" class="modal custom-modal fade" role="dialog">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Add Employee</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
-                                                <button type="submit" class="btn btn-success float-right mr-2">Set</button>
-                                                <button type="button" class="btn btn-danger float-right mr-2" data-dismiss="modal">Close</button>
+                                                <div class="modal-body">
+                                                    <form action="{{url("/department/head/add")}}" method="POST" method="POST" enctype="multipart/form-data">
+                                                        {{csrf_field()}}
+                                                    <div>
+                                                        <div class="text-center" >
+                                                            <h4>Profile Picture</h4>
+                                                            <img id="output" class="rounded-circle" src="{{url(asset("/img/profiles/avatar-01.jpg"))}}" width="100px" height="100px;"><br>
+                                                            <input type="file" accept="image/*" name="profile"  class="offset-md-1" onchange="loadFile(event)">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row mt-3">
+                                                        <div class="col-md-6">
+                                                            <label for="name">Name</label>
+                                                            <input type="text" id="name" name="name" class="form-control">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="email">Email</label>
+                                                            <input type="email" id="email" name="email" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row mt-3">
+                                                        <div class="col-6">
+                                                            <label for="">Gender</label><br>
+                                                            <input type="radio"name="gender" class="mr-3" value="Male" checked><label for="">Male</label>
+                                                            <input type="radio"name="gender" class="mr-3 ml-5" value="Female"><label for="">Female</label>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label for="">Marital Status</label>
+                                                            <select name="marital_status" id="" class="form-control">
+                                                                <option value="Single">Single</option>
+                                                                <option value="Married">Married</option>
+                                                                <option value="Widowed">Widowed</option>
+                                                                <option value="Separated">Separated</option>
+                                                                <option value="Divorced">Divorced</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row mt-3">
+                                                        <div class="col-md-6">
+                                                            <label for="">NRC No.</label>
+                                                            <input type="text" name="nrc" class="form-control">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="">Nationality</label>
+                                                            <input type="text" name="nationality" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row mt-3">
+                                                        <div class="col-md-6">
+                                                            <label for="">Employee ID</label>
+                                                            <input type="text" name="emp_id" class="form-control" value="{{$emp_id}}">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="">Phone</label>
+                                                            <input type="number" name="phone" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row mt-3">
+                                                        <div class="col-md-6">
+                                                            <label for="">Company</label>
+                                                            <select name="company" id="company" class="form-control">
+                                                                <option value="{{$company->id}}">{{$company->name}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="">Join Date</label>
+                                                            <input type="date" name="join_date" class="form-control">
+                                                        </div>
 
-                                            </form>
+                                                    </div>
+                                                    <div class="form-group row mt-3">
+                                                        <div class="col-md-6">
+                                                            <label for="type">Department</label>
+                                                            <select name="dept_id" id="" class="form-control">
+                                                                <option value="{{$dept->id}}">{{$dept->dept_name}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="">Position</label>
+                                                            <select name="position" class="form-control" id="">
+                                                                @foreach($positions as $position)
+                                                                    <option value="{{$position->id}}">{{$position->emp_position}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                   <div class="row">
+                                                       <div class="form-group col-md-6">
+                                                           <label for="">Password</label>
+                                                           <input type="password" name="password" class="form-control">
+                                                       </div>
+                                                       <div class="form-group col-md-6">
+                                                           <label for="">Confirm Password</label>
+                                                           <input type="password" name="confirm_password" class="form-control">
+                                                       </div>
+                                                   </div>
+                                                    <div class="col-12 form-group row mt-3">
+                                                            <input type="hidden" name="uuid" value="{{Str::uuid()->toString()}}">
+                                                        </div>
+                                                    <div class="modal-footer mt-3">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                </div>
                             </td>
                             <td>
                                 <div class="dropdown ">
@@ -213,6 +236,25 @@
                                                 <label for="dept_name">Depatment Name:</label><br>
                                                 <input type="text" id="dept_name" class="form-control mb-3"  name="dept_name" value="{{$dept->dept_name}}">
                                             </div>
+                                            <div class="form-group">
+                                                @php
+                                                $members=\App\employee::where("dept_id",$dept->id)->get();
+
+                                                $dept_member=[];
+                                                foreach ($members as $item) {
+                                                     $user_emp=\App\user_employee::with("user")->where("emp_id",$item->id)->first();
+                                                     if($user_emp!=null){
+                                                         array_push($dept_member,$user_emp);
+                                                     }
+                                                }
+                                                @endphp
+                                                <label for="">Department Head</label>
+                                               <select name="dept_head" id="" class="select">
+                                                    @foreach($dept_member as $member)
+                                                    <option value="{{$member->user_id}}">{{$member->user->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                             <button type="submit" class="btn btn-success float-right mr-2">Save</button>
                                             <button type="button" class="btn btn-danger float-right mr-2" data-dismiss="modal">Close</button>
 
@@ -229,14 +271,31 @@
             </div>
         </div>
     </div>
+
     <script>
         $(document).ready(function() {
-            $(".dept_head").keyup(function() {
-                $(".dept_head").val($(this).val());
-            });
+            $('#dept').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+
+                        {
+                            extend: 'collection',
+                            text: '<i class="fa fa-download mr-2"></i>Export',
+                            buttons: [
+                                'copy', 'csv', 'excel', 'pdf', 'print'
+                            ]
+                        }
+                    ],
+                });
         });
-        $(document).ready(function() {
-            $('#dept').DataTable();
-        });
+
+        var loadFile = function(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('output');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
     </script>
 @endsection

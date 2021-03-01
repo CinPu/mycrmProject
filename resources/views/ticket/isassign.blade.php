@@ -226,7 +226,7 @@
                            </a>
                        </td>
                        <td>{{$assign->ticket->title}}</td>
-                       <td>@if(@isset($assign["agent_id"]))
+                       <td>@if($assign->type_of_assign==0)
                                {{$assign->agent->name}}
                            @else
                            {{$assign->dept->dept_name}}

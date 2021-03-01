@@ -15,4 +15,7 @@ class assign_ticket extends Model
     public function employee(){
         return $this->belongsTo(user_employee::class,"agent_id","user_id");
     }
+    public function dept(){
+        return $this->belongsTo(department::class,"dept_id","id");
+    }
 }

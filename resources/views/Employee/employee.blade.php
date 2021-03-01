@@ -1,6 +1,7 @@
 @extends("layouts.mainlayout")
 @section("title","Employee")
 @section("content")
+
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -215,17 +216,27 @@
                                 <div class="form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="name">Name</label>
-                                        <input type="text" id="name" name="name" class="form-control">
+                                        <input type="text" id="name" name="name" class="form-control @error('email') is-invalid @enderror" required >
+                                        @if ($errors->has('name'))
+                                            <span class="help-block">
+                                        <strong class="text-danger text-center">Name field required. </strong>
+                                        </span>
+                                        @endif
                                     </div>
                                     <div class="col-md-6">
                                         <label for="email">Email</label>
-                                        <input type="email" id="email" name="email" class="form-control">
+                                        <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" required>
+                                        @if ($errors->has('email'))
+                                            <span class="help-block">
+                                        <strong class="text-danger text-center">{{ $errors->first('email') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group row mt-3">
                                     <div class="col-6">
                                         <label for="">Gender</label><br>
-                                        <input type="radio"name="gender" class="mr-3" value="Male"><label for="">Male</label>
+                                        <input type="radio"name="gender" class="mr-3" value="Male" checked><label for="">Male</label>
                                         <input type="radio"name="gender" class="mr-3 ml-5" value="Female"><label for="">Female</label>
                                     </div>
                                     <div class="col-6">
@@ -242,33 +253,33 @@
                                 <div class="form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="">NRC No.</label>
-                                        <input type="text" name="nrc" class="form-control">
+                                        <input type="text" name="nrc" class="form-control" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="">Nationality</label>
-                                        <input type="text" name="nationality" class="form-control">
+                                        <input type="text" name="nationality" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="">Employee ID</label>
-                                        <input type="text" name="emp_id" class="form-control" value="{{$emp_id}}">
+                                        <input type="text" name="emp_id" class="form-control" value="{{$emp_id}}" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="">Phone</label>
-                                        <input type="number" name="phone" class="form-control">
+                                        <input type="number" name="phone" min="0" oninput="validity.valid||(value='');" class="form-control" required placeholder="0 9 x x x x x x x x x">
                                     </div>
                                 </div>
                                 <div class="form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="">Company</label>
                                         <select name="company" id="company" class="form-control">
-                                            <option value="{{$company->id}}">{{$company->company_name}}</option>
+                                            <option value="{{$company->id}}">{{$company->name}}</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="">Join Date</label>
-                                        <input type="date" name="join_date" class="form-control">
+                                        <input type="date" name="join_date" class="form-control" required>
                                     </div>
 
                                 </div>
@@ -303,9 +314,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="size">Department Head</label>
-                                        <select class="form-control " name="dept_head" id="size">
+                                        <select class="form-control @error('dept_head') is-invalid @enderror" name="dept_head" id="size">
                                             <option></option>
                                         </select>
+                                        @if ($errors->has('dept_head'))
+                                            <span class="help-block">
+                                        <strong class="text-danger text-center">Department head field required.You need to select department first!</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <hr>
@@ -318,11 +334,17 @@
                                     <div class="col-12 form-group row mt-3">
                                         <div class="col-md-6">
                                             <label for="">Password</label>
-                                            <input type="password" name="password" class="form-control">
+                                            <input type="password" name="password" class="form-control ">
+
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">Confirm Password</label>
-                                            <input type="password" name="confirm_password" class="form-control">
+                                            <input type="password" name="confirm_password" class="form-control @error('password') is-invalid @enderror">
+                                            @if ($errors->has('password'))
+                                                <span class="help-block">
+                                        <strong class="text-danger text-center">Confirm Password does not match!</strong>
+                                        </span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-12 form-group row mt-3">
@@ -399,7 +421,7 @@
                     var val = $(this).val();
                     @foreach($depts as $dept)
                     if (val =={{$dept->id}} ) {
-                        $("#size").html("<option value='{{$dept->dept_head}}'>{{$dept->department_head->name}}</option>");
+                        $("#size").html("@if($dept->dept_head!=null)<option value='{{$dept->dept_head}}'>{{$dept->department_head->name}}</option> @endif");
                     }else if(val=="item0") {
                         $("#size").html( "<option></option>");
                     }

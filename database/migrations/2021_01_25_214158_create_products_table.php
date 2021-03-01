@@ -20,6 +20,11 @@ class CreateProductsTable extends Migration
             $table->foreign("tax")->references("id")->on("product_taxes")->onDelete("cascade");
             $table->text("description");
             $table->double("sale_price");
+            $table->string("model_no");
+            $table->string("serial_no");
+            $table->string("part_no");
+            $table->string("sku");
+            $table->double("available_stock");
             $table->double("purchase_price");
             $table->bigInteger("cat_id")->unsigned();
             $table->foreign("cat_id")->references("id")->on("product_categories")->onDelete("cascade");

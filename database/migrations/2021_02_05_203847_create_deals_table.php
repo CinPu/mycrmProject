@@ -21,7 +21,7 @@ class CreateDealsTable extends Migration
             $table->bigInteger("admin_company")->unsigned();
             $table->foreign("admin_company")->references("id")->on("companies")->onDelete("cascade");
             $table->bigInteger("org_name")->unsigned();
-            $table->foreign("org_name")->references("id")->on("customer_companies")->onDelete("cascade");
+            $table->foreign("org_name")->references("id")->on("companies")->onDelete("cascade");
             $table->bigInteger("contact")->unsigned()->nullable();
             $table->foreign("contact")->references("id")->on("customers")->onDelete("cascade");
             $table->bigInteger("camping_id")->unsigned()->nullable();

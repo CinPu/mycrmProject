@@ -18,7 +18,7 @@ class CreateDepartmentsTable extends Migration
             $table->string("dept_name");
             $table->string("admin_uuid");
             $table->string("dept_id");
-            $table->bigInteger("dept_head")->unsigned();
+            $table->bigInteger("dept_head")->unsigned()->nullable();
             $table->foreign("dept_head")->references("id")->on("users")->onDelete("cascade");
             $table->timestamps();
         });

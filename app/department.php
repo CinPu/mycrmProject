@@ -12,9 +12,6 @@ class department extends Model
     public function agent(){
         return $this->hasMany(agent::class);
     }
-    public  function assign_with_dept(){
-        return $this->hasMany(assignwithdept::class);
-    }
     public function employee(){
         return $this->hasMany(employee::class);
     }
@@ -23,5 +20,8 @@ class department extends Model
     }
     public function emp(){
         return $this->hasMany(employee::class);
+    }
+    public function assign(){
+        return $this->hasMany(assign_ticket::class);
     }
 }

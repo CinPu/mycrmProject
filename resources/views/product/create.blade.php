@@ -51,14 +51,16 @@
             <form action="{{url("product/create")}}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 {{csrf_field()}}
             <div class="row">
-                <div class="form-group col-md-4 col-6 offset-md-2">
-                    <label for="">Name</label>
+                <div class="form-group col-md-4 col-12 offset-md-2">
+                    <label for="">Product Name</label>
                     <input type="text" class="form-control" name="name" required>
                 </div>
-                <div class="form-group col-md-4 col-6 " id="tax_div">
-                    <label for="">Tax</label>
+                <div class=" col-md-4 col-12 " id="tax_div">
+                    <div class="form-group">
+                        <label for="">Tax</label>
+                        <div class="row ">
+                       <div class="col-md-10 col-10">
                     <select name="tax" id="product_tax" class="form-control">
-                        <option value="empty">Select Industry</option>
                         @foreach($taxes as $tax)
                             @if($tax->id == $lasttax->id)
                                 <option value="{{$tax->id}}" selected >{{$tax->name}}({{$tax->rate}}%)</option>
@@ -66,20 +68,46 @@
                                 <option value="{{$tax->id}}">{{$tax->name}}({{$tax->rate}}%)</option>
                             @endif
                         @endforeach
-                        <option value="tax">Add New</option>
                     </select>
+                       </div>
+                       <div class="col-md-2 col-2">
+                    <a href="" data-toggle="modal" data-target="#add" class="btn btn-outline-dark"><i class="fa fa-plus"></i></a>
+                       </div>
+                   </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 col-12 offset-md-2">
+                    <label for="">Model No.</label>
+                    <input type="text" class="form-control" name="model_no" required>
+                </div>
+                <div class="form-group col-md-4 col-12 ">
+                    <label for="">Serial No.</label>
+                    <input type="text" class="form-control" name="serial_no" required>
                 </div>
                 <div class="form-group col-md-8 col-12 offset-md-2">
                     <label for="">Description</label>
-                    <textarea name="description" cols="50" style="width: 100%;height: 100px;" ></textarea>
+                    <textarea name="description" cols="50" style="width: 100%;height: 100px;"  required></textarea>
                 </div>
-                <div class="form-group col-md-3 col-6 offset-md-2">
+                <div class="form-group col-md-3 col-12 offset-md-2">
+                    <label for="">SKU</label>
+                    <input type="text" class="form-control" name="sku" required>
+                </div>
+                <div class="form-group col-md-3 col-12">
+                    <label for="">Part No.</label>
+                    <input type="text" class="form-control" name="part_no" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="">Available Stock</label>
+                    <input type="number" class="form-control" name="aval_stock" value="0" required>
+                </div>
+
+                <div class="form-group col-md-3 col-12 offset-md-2">
                     <label for="">Sale Price</label>
-                    <input type="number" class="form-control" name="sale_price" required>
+                    <input type="number" class="form-control " min="0" name="sale_price" oninput="validity.valid||(value='');" required>
                 </div>
-                <div class="form-group col-md-3 col-6">
+                <div class="form-group col-md-3 col-12">
                     <label for="">Purchase Price</label>
-                    <input type="number" class="form-control" name="purchase_price">
+                    <input type="number" class="form-control " min="0" name="purchase_price" oninput="validity.valid||(value='');" required>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="">Unit</label>
@@ -88,10 +116,12 @@
                     <option value="USD">USD</option>
                 </select>
                 </div>
-                <div class="form-group col-md-3 col-6 offset-md-2" id="cat_div">
+                <div class=" col-md-3 col-12 offset-md-2" id="cat_div">
+                   <div class="form-group">
                     <label for="">Category</label>
-                    <select name="cat_id" id="product_cat" class="form-control">
-                        <option value="empty">Select Category</option>
+                    <div class="row">
+                        <div class="col-md-10 col-8">
+                    <select name="cat_id" id="product_cat" class="form-control" required>
                         @foreach($allcat as $cat)
                             @if($cat->id==$lastcat->id)
                                 <option value="{{$cat->id}}" selected>{{$cat->name}}</option>
@@ -99,8 +129,13 @@
                                 <option value="{{$cat->id}}">{{$cat->name}}</option>
                             @endif
                         @endforeach
-                        <option value="cat">Add New Category</option>
                     </select>
+                        </div>
+                        <div class="col-md-2 col-2">
+                            <a href="" data-toggle="modal" data-target="#cat_add" class="btn btn-outline-dark"><i class="fa fa-plus"></i></a>
+                        </div>
+                    </div>
+                   </div>
                 </div>
                 <div class="form-group col-md-3 col-6">
                     <label for="">Picture</label>
@@ -159,7 +194,7 @@
                             <label>Category Name</label>
                             <input type="text" id="cat_name" class="form-control" name="cat_name" >
                         </div>
-                        <button  id="cat_create" data-dismiss="modal" class="btn btn-primary float-right">Add</button>
+                        <button   id="cat_create" data-dismiss="modal" class="btn btn-primary float-right">Add</button>
                     </div>
                 </div>
             </div>
@@ -176,15 +211,28 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         };
-
-        $(document).ready(function(){ //Make script DOM ready
-            $('#product_tax').change(function() { //jQuery Change Function
-                var opval = $(this).val(); //Get value from select element
-                if(opval=="tax"){ //Compare it and if true
-                    $('#add').modal("show"); //Open Modal
+        $(document).ready(function() {
+            $('#product_tax').select2({
+                    "language": {
+                    },
+                    escapeMarkup: function (markup) {
+                        return markup;
+                    }
                 }
-            });
+
+            );
+            $('#product_cat').select2({
+                    "language": {
+                    },
+                    escapeMarkup: function (markup) {
+                        return markup;
+                    }
+                }
+
+            );
+
         });
+
         $(document).ready(function() {
             $(document).on('click', '#tax_create', function () {
                 var name=$("#p_tax").val();
@@ -202,14 +250,6 @@
             });
         });
 
-        $(document).ready(function(){ //Make script DOM ready
-            $('#product_cat').change(function() { //jQuery Change Function
-                var opval = $(this).val(); //Get value from select element
-                if(opval=="cat"){ //Compare it and if true
-                    $('#cat_add').modal("show"); //Open Modal
-                }
-            });
-        });
         $(document).ready(function() {
             $(document).on('click', '#cat_create', function () {
                 var name=$("#cat_name").val();

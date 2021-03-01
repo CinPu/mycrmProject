@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\agent;
+use App\customer;
 use App\ticket;
 use App\User;
 use App\user_information;
@@ -45,15 +46,15 @@ class userinfoController extends Controller
      */
     public function store(Request $request,$id)
     {
-        $user=user_information::all();
+        $user=customer::all();
         $users=[];
         foreach ($user as $u) {
             array_push($users,$u->email);
 //
         }
         if(!in_array($request->email, $users)) {
-            $user_info=new user_information();
-            $user_info->name=$request->user_name;
+            $user_info=new customer();
+            $user_info->customer_name=$request->user_name;
             $user_info->email=$request->email;
             if(Auth::check()){
                 if(Auth::user()->hasAnyRole("Agent")) {

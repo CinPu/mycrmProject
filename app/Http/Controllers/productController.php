@@ -54,7 +54,6 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
        $product=new product();
        $product->name=$request->name;
        $product->tax=$request->tax;
@@ -63,6 +62,11 @@ class productController extends Controller
        $product->sale_price=$request->sale_price;
        $product->purchase_price=$request->purchase_price;
        $product->cat_id=$request->cat_id;
+       $product->model_no=$request->model_no;
+       $product->serial_no=$request->serial_no;
+       $product->sku=$request->sku;
+       $product->part_no=$request->part_no;
+       $product->available_stock=$request->aval_stock;
       if(isset($request->enable))
       {
           $product->enable=1;

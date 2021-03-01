@@ -133,6 +133,7 @@
                     </div>
                 </div>
                 <div id="map"></div>
+                <input type="hidden" name="ticket_id" value="{{$ticket_id}}" >
                 <div class="form-group">
                 <button type="submit" id="submit-all" class="btn btn-primary float-right mt-3"><i class="fa fa-paper-plane mr-3"></i>Submit</button>
                 </div>

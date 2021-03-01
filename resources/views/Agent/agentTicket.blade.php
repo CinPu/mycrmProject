@@ -195,22 +195,23 @@
 
                             <tbody>
                             @foreach($assignticket as $aticket)
-                                <tr>
-                                    <th scope="row" >{{$aticket->title}}</th>
-                                    <td >
-                                        <a href="{{ url('tickets/'.$aticket->ticket_id) }}">
-                                            {{ $aticket->ticket_id }}
-                                        </a>
-                                    </td>
-                                    <td>{!!$aticket->message!!}</td>
-                                    <td >{{$aticket->status_type->status}}</td>
-                                    <td ><button type="button" class="btn btn-{{$aticket->priority_type->color}}">{{$aticket->priority_type->priority}}</button></td>
-                                    <td >
-                                        {{$aticket->cases->name}}
-                                    </td>
-                                    <td >{{$aticket->created_at->toFormattedDateString()}}</td>
+                                   <tr>
+                                       <th scope="row" >{{$aticket->title}}</th>
+                                       <td >
+                                           <a href="{{ url('tickets/'.$aticket->ticket_id) }}">
+                                               {{ $aticket->ticket_id }}
+                                           </a>
+                                       </td>
+                                       <td>{!!$aticket->message!!}</td>
+                                       <td >{{$aticket->status_type->status}}</td>
+                                       <td ><button type="button" class="btn btn-{{$aticket->priority_type->color}}">{{$aticket->priority_type->priority}}</button></td>
+                                       <td >
+                                           {{$aticket->cases->name}}
+                                       </td>
+                                       <td >{{$aticket->created_at->toFormattedDateString()}}</td>
 
-                                </tr>
+                                   </tr>
+
                             @endforeach
                             </tbody>
                         </table>
@@ -259,23 +260,24 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($assingwithDepts as $assignwithdept)
-                                    <tr>
-                                        <th scope="row">{{$assignwithdept->ticket->title}}</th>
-                                        <td>
-                                            <a href="{{ url('tickets/'.$assignwithdept->ticket->ticket_id) }}">
-                                                {{ $assignwithdept->ticket->ticket_id }}
-                                            </a>
-                                        </td>
-                                        <td>{!!$assignwithdept->ticket->message!!}</td>
-                                        <td>{{$assignwithdept->ticket->status_type->status}}</td>
-                                        <td><button type="button" class="btn btn-{{$assignwithdept->ticket->priority_type->color}}">{{$assignwithdept->ticket->priority_type->priority}}</button></td>
-                                        <td>
-                                            {{$assignwithdept->ticket->cases->name}}
-                                        </td>
-                                        <td>{{$assignwithdept->ticket->created_at->toFormattedDateString()}}</td>
+                                @foreach($ticket_assign_dept as $assignwithdept)
+                                       <tr>
+                                           <th scope="row">{{$assignwithdept->title}}</th>
+                                           <td>
+                                               <a href="{{ url('tickets/'.$assignwithdept->ticket_id) }}">
+                                                   {{ $assignwithdept->ticket_id }}
+                                               </a>
+                                           </td>
+                                           <td>{!!$assignwithdept->message!!}</td>
+                                           <td>{{$assignwithdept->status_type->status}}</td>
+                                           <td><button type="button" class="btn btn-{{$assignwithdept->priority_type->color}}">{{$assignwithdept->priority_type->priority}}</button></td>
+                                           <td>
+                                               {{$assignwithdept->cases->name}}
+                                           </td>
+                                           <td>{{$assignwithdept->created_at->toFormattedDateString()}}</td>
 
-                                    </tr>
+                                       </tr>
+
                                 @endforeach
                                 </tbody>
                             </table>

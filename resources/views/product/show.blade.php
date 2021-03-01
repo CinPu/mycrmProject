@@ -51,28 +51,33 @@
             <div class=" col-md-10 offset-md-1">
                 <div class="row">
                     <div class="col-md-5 card">
-                        <div class="offset-md-3 mt-3">
+                        <h4 align="center" class=" mt-3">{{$product->name}}</h4>
+                        <div class="offset-md-3">
                         <img src="{{url(asset("/product_picture/$product->image"))}}" class="rounded "  height="200px;" alt="">
                         </div>
                         <div class="row mb-5 mt-3 ">
-                            <div class="col-md-5 mt-2">Product Name</div>
-                            <div class="col-md-7 mt-2">: {{$product->name}}</div>
-                            <div class="col-md-5 mt-2">Sale Price</div>
-                            <div class="col-md-7 mt-2">: {{$product->sale_price}}</div>
-                            <div class="col-md-5 mt-2">Purchase Price</div>
-                            <div class="col-md-7 mt-2">: {{$product->purchase_price}}</div>
+                            <div class="col-md-5 mt-2">Model Number</div>
+                            <div class="col-md-7 mt-2">: {{$product->model_no}}</div>
+                            <div class="col-md-5 mt-2">Serial Number</div>
+                            <div class="col-md-7 mt-2">: {{$product->serial_no}}</div>
+                            <div class="col-md-5 mt-2">Available Stock</div>
+                            <div class="col-md-7 mt-2">: {{$product->available_stock}}</div>
                         </div>
                     </div>
                     <div class="col-md-7 card">
-                      <div class="my-3">
-                          <h4>Product Description</h4>
-                        <textarea rows="7" style="width: 100%">{{ $product->description}}</textarea>
-                      </div>
-                        <div class="row">
+                        <div class="row my-5">
                             <div class="col-md-4 mt-2">Category</div>
                             <div class="col-md-8 mt-2">: {{$product->category->name}}</div>
                             <span class="col-md-4 mt-2">Tax Type(Rate)</span>
                             <span class="col-md-8 mt-2">: {{$product->taxes->name}}( {{$product->taxes->rate}} % )</span>
+                            <div class="col-md-4 mt-2">Sale Price</div>
+                            <div class="col-md-8 mt-2">: {{$product->sale_price}} {{$product->currency_unit}}</div>
+                            <div class="col-md-4 mt-2">Purchased Price</div>
+                            <div class="col-md-8 mt-2">: {{$product->purchase_price}} {{$product->currency_unit}}</div>
+                            <div class="col-md-4 mt-2">SKU</div>
+                            <div class="col-md-8 mt-2">: {{$product->sku}}</div>
+                            <div class="col-md-4 mt-2">Part Number</div>
+                            <div class="col-md-8 mt-2">: {{$product->part_no}}</div>
                             <span class="col-md-4 mt-2">Status</span>
                             <span class="col-md-8 mt-2">@if($product->enable==1)
                                       : Enable
@@ -80,6 +85,16 @@
                                     : Disable
                             @endif
                             </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card row">
+                    <div class="card-header">
+                        <h4>Product Description</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="my-3">
+                            {{ $product->description}}
                         </div>
                     </div>
                 </div>

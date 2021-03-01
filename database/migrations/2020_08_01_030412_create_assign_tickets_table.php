@@ -15,10 +15,13 @@ class CreateAssignTicketsTable extends Migration
     {
         Schema::create('assign_tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger("agent_id")->unsigned();
+            $table->bigInteger("agent_id")->unsigned()->nullable();
             $table->bigInteger("ticket_id")->unsigned();
             $table->foreign("agent_id")->references('id')->on('users')->onDelete('cascade');;
             $table->foreign("ticket_id")->references('id')->on('tickets')->onDelete('cascade');;
+            $table->bigInteger('dept_id')->unsigned()->nullable();
+            $table->foreign("dept_id")->references("id")->on("departments")->onDelete('cascade');
+            $table->tinyInteger("type_of_assign");
             $table->timestamps();
         });
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\agent;
 use App\assign_ticket;
-use App\assignwithdept;
 use App\case_type;
 use App\company;
 use App\customer;
@@ -170,10 +169,9 @@ class HomeController extends Controller
 
 //            dd($tickets);
                 $depts = department::where("admin_uuid", Auth::user()->uuid)->get();
-                $assign_name = assign_ticket::with("employee")->get();
+                $assign_name = assign_ticket::with("employee","dept")->get();
                 $employee = employee::where("admin_id", Auth::user()->id)->get();
-                $assign_dept_name = assignwithdept::with("dept")->get();
-                return view("userAdmin.ticketdashboard", compact("agents", "assigned", "unassigned", "depts", "pending", "allcases", "progress", "countallticket", "tickets", "openticket", "closeticket", "complete", "new", "countAgent", "priorities", "statuses", "assign_name", "assign_dept_name", "employee"));
+                return view("userAdmin.ticketdashboard", compact("agents", "assigned", "unassigned", "depts", "pending", "allcases", "progress", "countallticket", "tickets", "openticket", "closeticket", "complete", "new", "countAgent", "priorities", "statuses", "assign_name", "employee"));
                 //end for admin user
 
 

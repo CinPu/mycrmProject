@@ -16,8 +16,10 @@ use App\user_employee;
 use App\userprofile;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 
@@ -34,13 +36,13 @@ class employeeController extends Controller
         $employees=employee::with("report_to_user","department","company","position")->where("admin_id",Auth::user()->id)->get();
         $positions=position::all();
         $lastemployee        =   employee::orderBy('created_at', 'desc')->where("admin_id",Auth::user()->id)->first();
-        $company=company::where("admin_id",Auth::user()->id)->first();
+        $company=company::where("admin_id",Auth::user()->id)->where("is_admin_company",1)->first();
         if (isset($lastemployee)) {
             // Sum 1 + last id
             $lastemployee->employee_id ++;
             $emp_id = $lastemployee->employee_id;
         } else {
-            $emp_id= $company->company_short_form."-00001";
+            $emp_id= "Emp"."-00001";
         }
         $roles= $roles=Role::all();
         $report_to=[];
@@ -72,9 +74,21 @@ class employeeController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
-        $users=User::where("email",$request->email)->first();
-        if($users==null) {
+        if($request->login=="on") {
+            $validator = Validator::make($request->all(), [
+                "email" => "required|email|unique:employees",
+                "dept_head" => "required",
+                'password'=>'required|confirmed'
+            ]);
+        }else {
+            $validator = Validator::make($request->all(), [
+                "email" => "required|email|unique:employees",
+                "dept_head" => "required",
+            ]);
+        }
+        if($validator->fails()) {
+            return Redirect::back()->withErrors($validator);
+        }
             $employee = new employee();
             $employee->employee_id = $request->emp_id;
             $employee->name=$request->name;
@@ -112,9 +126,6 @@ class employeeController extends Controller
                 $user_emp->save();
             }
             return redirect()->back()->with("message","Successful");
-        }else{
-            return redirect()->back()->with("delete","Email already Exist");
-        }
 
 
     }
@@ -202,8 +213,8 @@ class employeeController extends Controller
     public function destroy($emp_id)
     {
         $user_emp=user_employee::where("emp_id",$emp_id)->first();
-        $agent=agent::where("agent_id",$user_emp->user_id)->first();
-        $agent->delete();
+       $user=User::where("id",$user_emp->user_id)->first();
+       $user->delete();
        $employee=employee::where("id",$emp_id)->first();
        $employee->delete();
        return redirect()->back()->with("delete","Employee Delete Successful!");
