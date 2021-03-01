@@ -74,18 +74,11 @@ class employeeController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->login=="on") {
-            $validator = Validator::make($request->all(), [
-                "email" => "required|email|unique:employees",
-                "dept_head" => "required",
-                'password'=>'required|confirmed'
-            ]);
-        }else {
+
             $validator = Validator::make($request->all(), [
                 "email" => "required|email|unique:employees",
                 "dept_head" => "required",
             ]);
-        }
         if($validator->fails()) {
             return Redirect::back()->withErrors($validator);
         }
