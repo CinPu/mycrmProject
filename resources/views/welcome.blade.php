@@ -43,10 +43,10 @@
                                     <div class="card  rounded shadow">
                                         <div class="card-body text-center">
                                             @php
-                                            $company=\App\company::where("id",$admin->employee->company_id)->first();
+                                            $company=\App\company::where("id",$admin->employee->company_id)->where("is_admin_company",1)->first();
                                             @endphp
-                                            <img src="{{url(asset("companylogo/$company->company_logo"))}}" class="rounded-circle mb-3" width="50%" height="50%;">
-                                            <br><b align="center" style="font-size:100%">{{$company->company_name}}</b>
+                                            <img src="{{url(asset("companylogo/$company->logo"))}}" class="rounded-circle mb-3" width="50%" height="50%;">
+                                            <br><b align="center" style="font-size:100%">{{$company->name}}</b>
                                         </div>
                                     </div>
                                  </a>
