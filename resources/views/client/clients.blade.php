@@ -18,6 +18,30 @@
                         </div>
                         <div class="col-auto float-right ml-auto">
                             <a href="{{url("client/customer/create/0")}}" class="btn add-btn"><i class="fa fa-plus"></i> Add Client</a>
+                            <button type="button" class="btn btn-outline-secondary mr-2" data-toggle="modal" data-target="#importcustomer">
+                                <i class="fa fa-upload mr-2"></i>Import
+                            </button>
+                            <div class="modal fade" id="importcustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Import Customer</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{url("client/company/import")}}" method="POST" enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <input type="file" name="file" >
+                                                <br>
+                                                <button class="btn btn-outline-success float-right"><i class="fa fa-upload mr-2"></i>Import Customer</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="view-icons">
                                 <ul class="nav" id="myTab" role="tablist">
                                     <li class="nav-item" role="presentation">
@@ -172,6 +196,21 @@
         </div>
         <!-- /Page Wrapper -->
 <script>
+    $(document).ready(function (){
+        $("#customer").DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+
+                {
+                    extend: 'collection',
+                    text: '<i class="fa fa-download mr-2"></i>Export',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                }
+            ],
+        });
+    });
     $(document).ready(function() {
         $('#company_search').select2({
                 "language": {},

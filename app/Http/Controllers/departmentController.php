@@ -17,6 +17,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 
@@ -99,6 +101,15 @@ class departmentController extends Controller
         return redirect()->back()->with("message","Successful");
     }
     public function emp_dept_haad(Request $request){
+        $validator = Validator::make($request->all(), [
+            "email" => "required|email|unique:employees",
+            "name"=>"required",
+            "phone"=>"required|min:11",
+
+        ]);
+        if($validator->fails()) {
+            return Redirect::back()->withErrors($validator);
+        }
 
 //        dd($request->all());
         $users=User::where("email",$request->email)->first();
@@ -109,14 +120,13 @@ class departmentController extends Controller
             $user->password = Hash::make($request->password);
             $user->uuid = $request->uuid;
             $user->save();
-            $lastuser = User::orderBy('created_at', 'desc')->first();
             $employee = new employee();
             $employee->employee_id = $request->emp_id;
             $employee->name = $request->name;
             $employee->marital_status = $request->marital_status;
             $employee->email = $request->email;
             $employee->report_to = Auth::user()->id;
-            $employee->dept_id = $request->dept_id;
+            $employee->dept_id = $request->department;
             $employee->emp_post = $request->position;
             $employee->gender = $request->gender;
             $employee->nrc = $request->nrc;
@@ -137,7 +147,8 @@ class departmentController extends Controller
             $user_emp->emp_id = $employee->id;
             $user_emp->save();
             $user->assignRole("Employee");
-            $dept=department::where("id","$request->dept_id")->first();
+            $dept=department::where("id","$request->department")->first();
+            $lastuser = User::orderBy('created_at', 'desc')->first();
             $dept->dept_head=$lastuser->id;
             $dept->update();
             return redirect("/department")->with("message","Successful");

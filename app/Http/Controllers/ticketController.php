@@ -109,8 +109,6 @@ class ticketController extends Controller
     public function store(Request $request, $id)
     {
         $this->validate($request, [
-
-            'files' => 'required',
             'files.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'title' => 'required',
             'message' => 'required',

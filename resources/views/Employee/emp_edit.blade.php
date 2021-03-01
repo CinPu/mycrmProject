@@ -110,7 +110,7 @@
                     <div class="form-group col-md-6 col-12 ">
                         <div class="row">
                             <span for="" class="col-md-4 col-10 ml-3">Phone</span>
-                            <input type="number" name="phone" class="form-control col-md-6 col-10 offset-1"   value="{{$employees->phone}}">
+                            <input type="number" name="phone" min="0" oninput="validity.valid||(value='');" class="form-control col-md-6 col-10 offset-1"   value="{{$employees->phone}}">
                         </div>
                     </div>
                 </div>

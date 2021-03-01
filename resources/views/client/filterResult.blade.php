@@ -10,11 +10,11 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Clients</h3>
+                        <h3 class="page-title">Clients Search Results</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{url("home")}}">Dashboard</a></li>
                             <li class="breadcrumb-item active"><a href="{{url("client")}}">Clients</a></li>
-                            <li class="breadcrumb-item active">Filter Result</li>
+                            <li class="breadcrumb-item active">Search Result</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade " id="listview" role="tabpanel" aria-labelledby="home-tab" style="overflow-x: auto">
-                    <table class="table" id="customer">
+                    <table class="table" id="search_customer">
                         <thead>
                         <tr>
                             <th scope="col">Customer ID</th>
@@ -143,5 +143,20 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         };
+        $(document).ready(function (){
+            $("#search_customer").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+
+                    {
+                        extend: 'collection',
+                        text: '<i class="fa fa-download mr-2"></i>Export',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ]
+                    }
+                ],
+            });
+        });
     </script>
 @endsection

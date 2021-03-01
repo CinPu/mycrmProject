@@ -14,33 +14,30 @@
 
         }
     </style>
-</head>
-<body style="background-color: lightblue;background-image:url(./public/companylogo/logo.jpg);">
-{{--<nav class=" navbar navbar-expand-lg navbar-light mt-2" id="pills-tab" role="tablist">--}}
-    <ul class="nav nav-pills mt-3 mr-5 ml-2" id="pills-tab" role="tablist">
-        <li class="nav-item float-left mr-5">
-        <a class="navbar-brand  nav-link" data-toggle="pill" href="#pills-home" role="tab">Ticket Create</a>
+    <ul class="nav nav-pills bg-dark" id="pills-tab" role="tablist">
+        <li class="nav-item  my-2 ml-3 float-right">
+            <a class="nav-link active "  id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa fa-lock mr-2"></i>Login</a>
         </li>
-       <li class="nav-item offset-lg-9 offset-sm-0">
-           <a class="nav-link active"  id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa fa-lock mr-2"></i>Login</a>
-       </li>
-{{--       --}}
-{{--           <a class="nav-link " id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa fa-envelope mr-2"></i>Sending</a>--}}
-{{--       </li>--}}
+        <li class="nav-item mr-5 my-2 float-right">
+            <a class="navbar-brand  nav-link" data-toggle="pill" href="#pills-home" role="tab"><i class="fa fa-ticket"></i> Ticket </a>
+        </li>
 
-   </ul>
+    </ul>
+</head>
+<body style="background-image:url(./public/companylogo/logo.jpg);">
+
 {{--</nav>--}}
        <div class="container-fluid">
            <div class="tab-content" id="pills-tabContent">
-               <div class="tab-pane fade " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+               <div class="tab-pane fade text-center " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                    <h4 align="center" class="mt-5">
-                       Choose You Want to Send Company?
+                      Ticket Sending
                    </h4>
                    <div class="row">
                     @foreach($ticket_admin as $admin)
                         <div class="col-lg-2 col-sm-3 col-6">
                                 <a href="{{url("/ticket/create/".$admin->user->uuid)}}" style="text-decoration: none">
-                                    <div class="card  rounded shadow">
+                                    <div class="card  rounded shadow " style="background-color:#f2eeed">
                                         <div class="card-body text-center">
                                             @php
                                             $company=\App\company::where("id",$admin->employee->company_id)->where("is_admin_company",1)->first();
@@ -54,10 +51,10 @@
                     @endforeach
                     </div>
                 </div>
-                <div class="tab-pane fade offset-lg-1 show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="col-lg-4 col-sm-7 col-11 offset-lg-3  offset-sm-2">
+               <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="col-lg-4 col-sm-6 col-12 offset-lg-4 offset-sm-3 mt-5">
                         <h3 align="center">SIGN IN</h3>
-                        <div class="card col-12 border-dark ml-3">
+                        <div class="card col-12 border-dark">
                             <div class="text-center mt-3">
                             <img class="rounded-circle" src="{{url(asset("/companylogo/mainlogo.png"))}}" alt="" width="30%" height="30%;">
                             </div>

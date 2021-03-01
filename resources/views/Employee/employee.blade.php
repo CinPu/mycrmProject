@@ -5,6 +5,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <div class="page-wrapper">
         <!-- Page Content -->
+        @if($errors)
+            @foreach($errors->all() as $error)
+                <div class="alert alert-warning alert-dismissible fade show">
+                    <strong>Warning!</strong>{{$error}}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            @endforeach
+        @endif
         <div class="content container-fluid">
 
             <!-- Page Header -->
@@ -36,7 +44,7 @@
                                             {{ csrf_field() }}
                                             <input type="file" name="file" >
                                             <br>
-                                            <button class="btn btn-outline-success float-right"><i class="fa fa-upload mr-2"></i>Import Ticket</button>
+                                            <button class="btn btn-outline-success float-right"><i class="fa fa-upload mr-2"></i>Import Employee</button>
                                         </form>
                                     </div>
                                 </div>
@@ -191,7 +199,7 @@
                     </table>
                 </div>
             </div>
-            <!-- /Page Content -->
+            <!-- Page Content -->
 
             <!-- Add Employee Modal -->
             <div id="add_employee" class="modal custom-modal fade" role="dialog">
@@ -213,6 +221,7 @@
                                         <input type="file" accept="image/*" name="profile"  class="offset-md-1" onchange="loadFile(event)">
                                     </div>
                                 </div>
+                                <h4 align="center" class="mt-3">Employee ID: #{{$emp_id}}</h4>
                                 <div class="form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="name">Name</label>
@@ -239,6 +248,30 @@
                                         <input type="radio"name="gender" class="mr-3" value="Male" checked><label for="">Male</label>
                                         <input type="radio"name="gender" class="mr-3 ml-5" value="Female"><label for="">Female</label>
                                     </div>
+
+                                </div>
+                                <div class="form-group row mt-3">
+                                    <div class="col-md-6">
+                                        <label for="">NRC No.</label>
+                                        <input type="text" name="nrc" class="form-control @error('nrc') is-invalid @enderror" required>
+                                        @if ($errors->has('nrc'))
+                                            <span class="help-block">
+                                        <strong class="text-danger text-center">{{ $errors->first('nrc') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="">Nationality</label>
+                                        <input type="text" name="nationality" class="form-control @error('nationality') is-invalid @enderror" required>
+                                        @if ($errors->has('nationality'))
+                                            <span class="help-block">
+                                        <strong class="text-danger text-center">{{ $errors->first('nationality') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <input type="hidden" name="emp_id" class="form-control" value="{{$emp_id}}" required>
+                                <div class="form-group row mt-3">
                                     <div class="col-6">
                                         <label for="">Marital Status</label>
                                         <select name="marital_status" id="" class="form-control">
@@ -249,25 +282,14 @@
                                             <option value="Divorced">Divorced</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group row mt-3">
-                                    <div class="col-md-6">
-                                        <label for="">NRC No.</label>
-                                        <input type="text" name="nrc" class="form-control" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="">Nationality</label>
-                                        <input type="text" name="nationality" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="form-group row mt-3">
-                                    <div class="col-md-6">
-                                        <label for="">Employee ID</label>
-                                        <input type="text" name="emp_id" class="form-control" value="{{$emp_id}}" required>
-                                    </div>
                                     <div class="col-md-6">
                                         <label for="">Phone</label>
-                                        <input type="number" name="phone" min="0" oninput="validity.valid||(value='');" class="form-control" required placeholder="0 9 x x x x x x x x x">
+                                        <input type="number" name="phone" min="0" oninput="validity.valid||(value='');" class="form-control" required  placeholder="0 9 x x x x x x x x x">
+                                        @if ($errors->has('phone'))
+                                            <span class="help-block">
+                                        <strong class="text-danger text-center">{{ $errors->first('phone') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group row mt-3">
@@ -369,7 +391,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /Add Employee Modal -->
+            <!-- Add Employee Modal -->
             <!-- Delete Employee Modal -->
             <div class="modal custom-modal fade" id="delete_employee" role="dialog">
                 <div class="modal-dialog modal-dialog-centered">
@@ -393,7 +415,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /Delete Employee Modal -->
+            <!-- Delete Employee Modal -->
 
         </div>
         <!-- /Page Wrapper -->

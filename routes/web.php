@@ -96,6 +96,7 @@ Route::group(['middleware'=>'auth'],function () {
     Route::post("client/company/update/{id}","companyController@companyupdate");
     Route::get("/ticket/status/{status}","ticketController@dadbordCard");
     Route::post("/company/edit/{type}/{id}","companyController@update");
+    Route::post("/company/filter","companyController@filter");
     Route::post("client/company/import","companyController@import");
     Route::get("customer_company/delete/{id}","companyController@delete");
     Route::get("client","clientController@index");

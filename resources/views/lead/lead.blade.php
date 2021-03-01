@@ -1,5 +1,13 @@
 @extends('layouts.mainlayout')
 @section('content')
+    <style>
+        a[aria-expanded=true] .fa-chevron-circle-right {
+            display: none;
+        }
+        a[aria-expanded=false] .fa-chevron-circle-down {
+            display: none;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <script src="{{asset("/js/rating.js")}}"></script>
     <!-- Page Wrapper -->
@@ -18,7 +26,33 @@
                             <li class="breadcrumb-item active">Leads</li>
                         </ul>
                     </div>
+
                     <div class="col-auto float-right ml-auto">
+                        <button type="button" class="btn btn-outline-secondary mr-3" data-toggle="modal" data-target="#import">
+                            <i class="fa fa-upload mr-2"></i>Import
+                        </button>
+                        <!-- Button import modal -->
+                        <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Import Ticket</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{url("/ticket/import")}}" method="POST" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <input type="file" name="file" >
+                                            <br>
+                                            <button class="btn btn-outline-success float-right"><i class="fa fa-upload mr-2"></i>Import Ticket</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- import ticket -->
                         <a href="{{url("lead/create")}}" class="btn add-btn"><i class="fa fa-plus"></i> Add Lead</a>
                     </div>
                 </div>
@@ -29,9 +63,11 @@
                 <div class="col-md-12">
                     <div class="table-responsive">
                         <div class="mb-3">
-                            <span data-toggle="collapse" data-target="#search" >
-                            <input type="checkbox" name="login">
-                            </span><span >Search By</span>
+                            <a class="btn btn-outline-primary text-dark" data-toggle="collapse" data-target="#search" aria-expanded="false" aria-controls="collapseExample" style="text-decoration: none">
+                                <span class="mr-2">Search By</span>
+                             <i class="fa fa-chevron-circle-right"></i>
+                                <i class="fa fa-chevron-circle-down"></i>
+                            </a>
                         </div>
                         <div class="sub-menu collapse border mb-3" id="search">
                             <div class=" col-md-12 my-3">
@@ -76,31 +112,6 @@
                         <div style="overflow-x: auto">
                         <table id="lead" class="table  table-nowrap custom-table mb-0 ">
                             <thead>
-                            <button type="button" class="btn btn-outline-secondary my-2" data-toggle="modal" data-target="#import">
-                                <i class="fa fa-upload mr-2"></i>Import
-                            </button>
-                            <!-- Button import modal -->
-                            <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Import Ticket</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{url("/ticket/import")}}" method="POST" enctype="multipart/form-data">
-                                                {{ csrf_field() }}
-                                                <input type="file" name="file" >
-                                                <br>
-                                                <button class="btn btn-outline-success float-right"><i class="fa fa-upload mr-2"></i>Import Ticket</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- import ticket -->
                             <tr>
                                 <th>#</th>
                                 <th>Lead ID</th>
@@ -247,6 +258,12 @@
 
     </div>
     <script>
+        $("#lead_search").click(function(){
+            $(".col-xs-6 , .btn").toggleClass('animated slideOutDown');
+            $(".btn i").toggleClass('fa-chevron-up');
+            $(".btn i").toggleClass('fa-chevron-down');
+
+        });
         $(document).ready(function() {
             $('#lead').DataTable( {
                 dom: 'Bfrtip',

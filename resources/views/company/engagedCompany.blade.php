@@ -14,6 +14,7 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{url("/home")}}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Company</li>
+                            <li class="breadcrumb-item active">Filter</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
@@ -35,7 +36,7 @@
                                             {{ csrf_field() }}
                                             <input type="file" name="file" >
                                             <br>
-                                            <button class="btn btn-outline-success float-right"><i class="fa fa-upload mr-2"></i>Import Ticket</button>
+                                            <button class="btn btn-outline-success float-right"><i class="fa fa-upload mr-2"></i>Import Company</button>
                                         </form>
                                     </div>
                                 </div>
@@ -57,29 +58,32 @@
             <!-- /Page Header -->
 
             <!-- Content Starts -->
+            <form action="{{url("/company/filter")}}" method="POST">
+                {{csrf_field()}}
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="">Company ID</label>
-                        <input type="text" name="company_id" id="search_with_id" class="form-control">
+                        <input type="text" name="company_id" id="com_id" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="">Company Name</label>
-                        <input type="text" name="company_id" id="search_with_id" class="form-control">
+                        <input type="text" name="company_name" id="com_name" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="">Business</label>
-                        <input type="text" name="company_id" id="search_with_id" class="form-control">
+                        <input type="text" name="company_type" id="com_type" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-3 mt-2">
-                        <button class="btn btn-primary mt-4" id="search">Search</button>
+                        <button type="submit" class="btn btn-primary mt-4" id="search">Search</button>
                 </div>
             </div>
+            </form>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row staff-grid-row">
@@ -123,7 +127,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="overflow-x: auto">
-                    <table class="table" id="emp">
+                    <table class="table" id="company">
                         <thead>
                         <tr>
                             <th scope="col">Company ID</th>
@@ -282,5 +286,20 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         };
+        $(document).ready(function (){
+            $("#company").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+
+                    {
+                        extend: 'collection',
+                        text: '<i class="fa fa-download mr-2"></i>Export',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ]
+                    }
+                ],
+            });
+        });
     </script>
 @endsection

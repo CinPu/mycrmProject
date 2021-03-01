@@ -77,7 +77,9 @@ class employeeController extends Controller
 
             $validator = Validator::make($request->all(), [
                 "email" => "required|email|unique:employees",
-                "dept_head" => "required",
+                "name"=>"required",
+                "phone"=>"required|min:11",
+
             ]);
         if($validator->fails()) {
             return Redirect::back()->withErrors($validator);

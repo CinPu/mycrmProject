@@ -56,15 +56,15 @@
 
                 <div class="form-group mt-3">
                     <label for="name" class="mt-3">Customer Name</label><br>
-                    <input type="text" id="name" class="form-control" name="user_name" autocomplete="off">
+                    <input type="text" id="name" class="form-control" name="user_name" autocomplete="off" required>
                 </div>
             <div class="form-group mt-3">
                 <label for="email">Email</label><br>
-                <input type="email" id="email" class="form-control " name="email" autocomplete="off">
+                <input type="email" id="email" class="form-control " name="email" autocomplete="off" required>
             </div>
                 <div class="form-group mt-3">
                     <label for="phoneNumber">Phone Number</label><br>
-                    <input type="number" class="form-control" name="phone" id="phoneNumber" aria-describedby="emailHelp" required autocomplete="off">
+                    <input type="number" class="form-control" name="phone" min="0" oninput="validity.valid||(value='');" id="phoneNumber" aria-describedby="emailHelp" required autocomplete="off">
                 </div>
                 <label for="title" class="mt-3">Ticket Title</label>
                 <div class="form-group">

@@ -42,19 +42,34 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Customer Name</label>
-                                        <input class="form-control" name="name" type="text">
+                                        <input class="form-control @error('name') is-invalid @enderror" name="name" type="text">
+                                        @if ($errors->has('name'))
+                                            <span class="help-block">
+                                        <strong class="text-danger text-center">{{ $errors->first('name') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Phone <span class="text-danger">*</span></label>
-                                        <input class="form-control" name="phone" type="number">
+                                        <input class="form-control @error('phone') is-invalid @enderror" name="phone" min="0" oninput="validity.valid||(value='');" type="number">
+                                        @if ($errors->has('phone'))
+                                            <span class="help-block">
+                                        <strong class="text-danger text-center">{{ $errors->first('phone') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control floating" name="email" type="email">
+                                        <input class="form-control floating @error('email') is-invalid @enderror" name="email" type="email">
+                                        @if ($errors->has('email'))
+                                            <span class="help-block">
+                                        <strong class="text-danger text-center">{{ $errors->first('email') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12 col-sm-12">
@@ -88,13 +103,23 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Department<span class="text-danger">*</span></label>
-                                        <input class="form-control floating" name="department" type="text">
+                                        <input class="form-control floating @error('department') is-invalid @enderror" name="department" type="text">
+                                        @if ($errors->has('department'))
+                                            <span class="help-block">
+                                        <strong class="text-danger text-center">{{ $errors->first('department') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Report To </label>
-                                        <input type="text" class="form-control" name="report_to">
+                                        <input type="text" class="form-control @error('report_to') is-invalid @enderror" name="report_to">
+                                        @if ($errors->has('report_to'))
+                                            <span class="help-block">
+                                        <strong class="text-danger text-center">{{ $errors->first('report_to') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -199,6 +224,7 @@
 <script>
     $(document).ready(function() {
         $('#company').select2({
+                "language": {
                 "language": {
                 },
                 escapeMarkup: function (markup) {

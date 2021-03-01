@@ -185,4 +185,37 @@ class companyController extends Controller
         Excel::import(new companyimport(),request()->file('file'));
         return back();
     }
+    public function filter(Request $request){
+//        dd($request->all());
+        if($request->company_id!=null && $request->company_name!=null && $request->company_type!=null) {
+            $allcompany=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->where("company_id",$request->company_id)->orWhere("name",$request->company_name)->orWhere("type_of_business",$request->company_type)->get();
+//            dd($allcompany);
+        }elseif ($request->company_id==null && $request->company_name==null && $request->company_type==null){
+            return redirect()->back();
+        }
+        else{
+            if ($request->company_id==null && $request->company_name!=null && $request->company_type!=null){
+//                dd("name and type");
+                $allcompany=company::where("admin_id",Auth::user()->id)->where("company_id",$request->company_id)->orWhere("name",$request->company_name)->orWhere("type_of_business",$request->company_type)->get();
+//                dd($allcompany);
+            }elseif($request->company_id!=null && $request->company_name==null && $request->company_type!=null){
+                $allcompany=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->where("company_id",$request->company_id)->orWhere("type_of_business",$request->company_type)->get();
+//                dd($allcompany);
+
+            }elseif ( $request->company_id!=null && $request->company_name!=null && $request->company_type==null){
+                $allcompany=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->where("company_id",$request->company_id)->orWhere("name",$request->company_name)->get();
+//                dd($allcompany);
+            }elseif ( $request->company_id!=null && $request->company_name==null && $request->company_type==null){
+                $allcompany=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->where("company_id",$request->company_id)->get();
+//                dd($allcompany);
+            }elseif ( $request->company_id==null && $request->company_name!=null && $request->company_type==null){
+                $allcompany=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->where("name",$request->company_name)->get();
+//                dd($allcompany);
+            }elseif ( $request->company_id==null && $request->company_name==null && $request->company_type!=null){
+                $allcompany=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->where("type_of_business",$request->company_type)->get();
+//                dd($allcompany);
+            }
+        }
+        return view("company.filter",compact("allcompany"));
+    }
 }

@@ -9,6 +9,8 @@ use App\position;
 use App\user_employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class clientController extends Controller
 {
@@ -86,6 +88,16 @@ class clientController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            "name"=>"required",
+            "phone"=>"required|min:11",
+            "department"=>"required",
+            "report_to"=>"required",
+            "email" => "required|email|unique:customers",
+        ]);
+        if($validator->fails()) {
+            return Redirect::back()->withErrors($validator);
+        }
         $client=new customer();
         $image=$request->file("profile");
         if($image!=null) {
@@ -193,26 +205,32 @@ class clientController extends Controller
     }
     public function filter(Request $request)
     {
-//        dd($request->all());
-        if ($request->client_id != null) {
-            $filter_results=customer::with("customer_position", "customer_company")->where("customer_id",$request->client_id)->get();
-        }else{
-            if ($request->client_name == null || $request->client_name == ''){
-                $name = 'empty';
-            }else{
-                $name = $request->client_name;
+            if($request->client_id!=null && $request->client_name!=null && $request->company!="Select Company") {
+                $filter_results=customer::with("customer_position", "customer_company")->where("customer_id",$request->client_id)->orWhere("customer_name",$request->client_name)->orWhere("company_id",$request->company)->get();
+//            dd($filter_results);
+            }elseif ($request->client_id==null && $request->client_name==null && $request->company=="Select Company"){
+                return redirect()->back();
             }
-            if (Auth::user()->hasAnyRole("Admin")) {
-
-                $company = company::where("admin_id", Auth::user()->id)->first();
-                $filter_results = customer::with("customer_position", "customer_company")->where("admin_company_id",$company->id)->where("company_id","$request->company")->orWhere("customer_name","LIKE","%".$name."%")->get();
-            } else {
-                $emp=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
-                $company = company::where("admin_id",$emp->employee->admin_id)->first();
-//dd($request->client_name);
-                $filter_results = customer::with("customer_position", "customer_company")->where("admin_company_id",$company->id)->where("company_id","$request->company")->orWhere("customer_name","LIKE","%".$name."%")->get();
+            else{
+                if ($request->client_id==null && $request->client_name!=null && $request->company!="Select Company"){
+                 $filter_results=customer::with("customer_position", "customer_company")->orWhere("customer_name",$request->client_name)->orWhere("company_id",$request->company)->get();
+//            dd($filter_results);
+                }elseif($request->client_id!=null && $request->client_name==null && $request->company!="Select Company"){
+                    $filter_results=customer::with("customer_position", "customer_company")->where("customer_id",$request->client_id)->orWhere("company_id",$request->company)->get();
+//                    dd($filter_results);
+                }elseif ( $request->client_id!=null && $request->client_name!=null && $request->company=="Select Company"){
+                    $filter_results=customer::with("customer_position", "customer_company")->where("customer_id",$request->client_id)->orWhere("customer_name",$request->client_name)->get();
+//                    dd($filter_results);
+                }elseif ( $request->client_id!=null && $request->client_name==null && $request->company=="Select Company"){
+                    $filter_results=customer::with("customer_position", "customer_company")->where("customer_id",$request->client_id)->get();
+//                    dd($filter_results);
+                }elseif ( $request->client_id==null && $request->client_name!=null && $request->company=="Select Company"){
+                    $filter_results=customer::with("customer_position", "customer_company")->where("customer_name",$request->client_name)->get();
+//                    dd($filter_results);
+                }elseif ( $request->client_id==null && $request->client_name==null && $request->company!="Select Company"){
+                    $filter_results=customer::with("customer_position", "customer_company")->where("company_id",$request->company)->get();
+//                    dd($filter_results);
                 }
-
             }
         return view("client.filterResult",compact("filter_results"));
     }
