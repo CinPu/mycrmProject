@@ -176,17 +176,17 @@ class dealController extends Controller
             $allemployees = employee::where("admin_id", $authenticate_user->employee->admin_id)->get();
             $allcustomers = customer::where("admin_company_id", $admin_company->id)->get();
             $lastcustomer=customer::orderBy('id', 'desc')->where("admin_company_id",$admin_company->id)->first();
-            $companies=customerCompany::where("admin_id",$authenticate_user->employee->admin_id)->get();
+            $companies=company::where("admin_id",$authenticate_user->employee->admin_id)->where("is_admin_company",0)->get();
             $products=product::with("category","taxes")->where("company_id",$admin_company->id)->get();
         } else {
             $admin_company = company::where("admin_id", Auth::user()->id)->first();
             $allemployees = employee::where("admin_id", Auth::user()->id)->get();
             $allcustomers = customer::where("admin_company_id", $admin_company->id)->get();
-            $companies=customerCompany::where("admin_id",Auth::user()->id)->get();
+            $companies=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->get();
             $products=product::with("category","taxes")->where("company_id",$admin_company->id)->get();
             $lastcustomer=customer::orderBy('id', 'desc')->where("admin_company_id",$admin_company->id)->first();
         }
-        $lastcompany=customerCompany::orderBy('id', 'desc')->where("admin_id",Auth::user()->id)->first();
+        $lastcompany=company::orderBy('id', 'desc')->where("admin_id",Auth::user()->id)->where("is_admin_company",0)->first();
         if (isset($lastcompany)) {
             // Sum 1 + last id
             $lastcompany->company_id ++;
@@ -256,7 +256,9 @@ class dealController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deal=deal::where("id",$id)->first();
+        $deal->delete();
+        return redirect("deal")->with("message","$deal->name Delete Successful");
     }
     public function camping(Request $request){
         $camping=new camping_type();

@@ -81,7 +81,7 @@
                                 <a href="#"class="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v ml-2 mt-2" style="font-size: 18px;"></i></a>
                                 <div class="dropdown-menu">
                                     <a href="{{url("/deal/edit/$deal->id")}}" class="dropdown-item"><i class="fa fa-edit mr-2"></i>Edit</a>
-                                    <a href="{{url("$/deal/delete/$deal->id")}}" class="dropdown-item"><i class="fa fa-trash-o mr-2"></i>Delete</a>
+                                    <a href="{{url("/deal/delete/$deal->id")}}" class="dropdown-item"><i class="fa fa-trash-o mr-2"></i>Delete</a>
                                 </div>
                             </td>
                         </tr>
@@ -153,15 +153,15 @@
                                 <div class="kanban-list kanban-info">
                                     <div class="kanban-header">
                                         <span class="status-title">New</span>
-                                        <div class="dropdown kanban-action">
-                                            <a href="" data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_board">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
+{{--                                        <div class="dropdown kanban-action">--}}
+{{--                                            <a href="" data-toggle="dropdown">--}}
+{{--                                                <i class="fa fa-ellipsis-v"></i>--}}
+{{--                                            </a>--}}
+{{--                                            <div class="dropdown-menu dropdown-menu-right">--}}
+{{--                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_board">Edit</a>--}}
+{{--                                                <a class="dropdown-item" href="#">Delete</a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </div>
                                     <div class="kanban-wrap">
                                         @foreach($alldeals as $deal)
@@ -176,7 +176,7 @@
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-right">
                                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal{{$deal->id}}">Edit</a></li>
-                                                                    <a class="dropdown-item" href="#">Delete</a></li>
+                                                                    <a class="dropdown-item" href="{{url("/deal/delete/$deal->id")}}">Delete</a></li>
                                                                 </div>
                                                                 <div id="edit_task_modal{{$deal->id}}" class="modal custom-modal fade" role="dialog">
                                                                     <div class="modal-dialog">
@@ -238,15 +238,15 @@
                                 <div class="kanban-list kanban-danger">
                                     <div class="kanban-header">
                                         <span class="status-title">Qualified</span>
-                                        <div class="dropdown kanban-action">
-                                            <a href="" data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_board">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
+{{--                                        <div class="dropdown kanban-action">--}}
+{{--                                            <a href="" data-toggle="dropdown">--}}
+{{--                                                <i class="fa fa-ellipsis-v"></i>--}}
+{{--                                            </a>--}}
+{{--                                            <div class="dropdown-menu dropdown-menu-right">--}}
+{{--                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_board">Edit</a>--}}
+{{--                                                <a class="dropdown-item" href="#">Delete</a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </div>
                                     <div class="kanban-wrap">
                                         @foreach($alldeals as $deal)
@@ -261,7 +261,7 @@
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-right">
                                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal{{$deal->id}}">Edit</a></li>
-                                                                    <a class="dropdown-item" href="#">Delete</a></li>
+                                                                    <a class="dropdown-item" href="{{url("/deal/delete/$deal->id")}}">Delete</a></li>
                                                                 </div>
                                                                 <div id="edit_task_modal{{$deal->id}}" class="modal custom-modal fade" role="dialog">
                                                                     <div class="modal-dialog">
@@ -324,15 +324,15 @@
                                 <div class="kanban-list kanban-success">
                                     <div class="kanban-header">
                                     <span class="status-title">Quotation</span>
-                                        <div class="dropdown kanban-action">
-                                            <a href="" data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_board">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
+{{--                                        <div class="dropdown kanban-action">--}}
+{{--                                            <a href="" data-toggle="dropdown">--}}
+{{--                                                <i class="fa fa-ellipsis-v"></i>--}}
+{{--                                            </a>--}}
+{{--                                            <div class="dropdown-menu dropdown-menu-right">--}}
+{{--                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_board">Edit</a>--}}
+{{--                                                <a class="dropdown-item" href="#">Delete</a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </div>
                                     <div class="kanban-wrap ks-empty">
                                         @foreach($alldeals as $deal)
@@ -347,7 +347,7 @@
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-right">
                                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal{{$deal->id}}">Edit</a></li>
-                                                                    <a class="dropdown-item" href="#">Delete</a></li>
+                                                                    <a class="dropdown-item" href="{{url("/deal/delete/$deal->id")}}">Delete</a></li>
                                                                 </div>
                                                                 <div id="edit_task_modal{{$deal->id}}" class="modal custom-modal fade" role="dialog">
                                                                     <div class="modal-dialog">
@@ -410,15 +410,15 @@
                                 <div class="kanban-list kanban-warning">
                                     <div class="kanban-header">
                                         <span class="status-title">Invoicing</span>
-                                        <div class="dropdown kanban-action">
-                                            <a href="" data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
+{{--                                        <div class="dropdown kanban-action">--}}
+{{--                                            <a href="" data-toggle="dropdown">--}}
+{{--                                                <i class="fa fa-ellipsis-v"></i>--}}
+{{--                                            </a>--}}
+{{--                                            <div class="dropdown-menu dropdown-menu-right">--}}
+{{--                                                <a class="dropdown-item" href="#">Edit</a>--}}
+{{--                                                <a class="dropdown-item" href="#">Delete</a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </div>
                                     <div class="kanban-wrap">
                                         @foreach($alldeals as $deal)
@@ -433,7 +433,7 @@
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-right">
                                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal{{$deal->id}}">Edit</a></li>
-                                                                    <a class="dropdown-item" href="#">Delete</a></li>
+                                                                    <a class="dropdown-item" href="{{url("/deal/delete/$deal->id")}}">Delete</a></li>
                                                                 </div>
                                                                 <div id="edit_task_modal{{$deal->id}}" class="modal custom-modal fade" role="dialog">
                                                                     <div class="modal-dialog">
@@ -497,15 +497,15 @@
                                 <div class="kanban-list kanban-purple">
                                     <div class="kanban-header">
                                         <span class="status-title">Win</span>
-                                        <div class="dropdown kanban-action">
-                                            <a href="" data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_board">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
+{{--                                        <div class="dropdown kanban-action">--}}
+{{--                                            <a href="" data-toggle="dropdown">--}}
+{{--                                                <i class="fa fa-ellipsis-v"></i>--}}
+{{--                                            </a>--}}
+{{--                                            <div class="dropdown-menu dropdown-menu-right">--}}
+{{--                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_board">Edit</a>--}}
+{{--                                                <a class="dropdown-item" href="#">Delete</a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </div>
                                     <div class="kanban-wrap">
                                         @foreach($alldeals as $deal)
@@ -520,7 +520,7 @@
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-right">
                                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal{{$deal->id}}">Edit</a></li>
-                                                                    <a class="dropdown-item" href="#">Delete</a></li>
+                                                                    <a class="dropdown-item" href="{{url("/deal/delete/$deal->id")}}">Delete</a></li>
                                                                 </div>
                                                                 <div id="edit_task_modal{{$deal->id}}" class="modal custom-modal fade" role="dialog">
                                                                     <div class="modal-dialog">
@@ -583,15 +583,15 @@
                                 <div class="kanban-list kanban-primary">
                                     <div class="kanban-header">
                                         <span class="status-title">Lost</span>
-                                        <div class="dropdown kanban-action">
-                                            <a href="" data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_board">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
+{{--                                        <div class="dropdown kanban-action">--}}
+{{--                                            <a href="" data-toggle="dropdown">--}}
+{{--                                                <i class="fa fa-ellipsis-v"></i>--}}
+{{--                                            </a>--}}
+{{--                                            <div class="dropdown-menu dropdown-menu-right">--}}
+{{--                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_board">Edit</a>--}}
+{{--                                                <a class="dropdown-item" href="#">Delete</a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </div>
                                     <div class="kanban-wrap">
                                         @foreach($alldeals as $deal)
@@ -606,7 +606,7 @@
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-right">
                                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal{{$deal->id}}">Edit</a></li>
-                                                                    <a class="dropdown-item" href="#">Delete</a></li>
+                                                                    <a class="dropdown-item" href="{{url("/deal/delete/$deal->id")}}">Delete</a></li>
                                                                 </div>
                                                                 <div id="edit_task_modal{{$deal->id}}" class="modal custom-modal fade" role="dialog">
                                                                     <div class="modal-dialog">

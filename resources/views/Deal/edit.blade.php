@@ -18,6 +18,7 @@
                         <h3 class="page-title">Deal Edit</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item active"><a href="{{url("deal")}}">Deal</a></li>
                             <li class="breadcrumb-item active">Deal Edit</li>
                         </ul>
                     </div>
