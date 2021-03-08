@@ -12,6 +12,7 @@ use App\product;
 use App\product_category;
 use App\product_tax;
 use App\user_employee;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -109,7 +110,7 @@ class dealController extends Controller
            $deal->amount=$request->amount;
            $deal->unit=$request->currency;
            $deal->org_name=$request->org_name;
-           $deal->close_date=$request->close_date;
+           $deal->close_date=Carbon::create($request->close_date);
            $deal->pipeline=$request->pipeline;
            $deal->sale_stage=$request->sale_stage;
            $deal->assign_to=$request->assign_to;
