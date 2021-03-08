@@ -5,6 +5,12 @@
         #cke_15,#cke_66,#cke_75,#cke_77,#cke_78,#cke_79,#cke_81,#cke_82,#cke_83,#cke_84,#cke_86,#cke_88,#cke_23,#cke_21,#cke_35,#cke_26,#cke_27,#cke_36,#cke_28,#cke_29,#cke_30,#cke_32,#cke_47{
             visibility: hidden;
         }
+         a[aria-expanded=true] .fa-chevron-circle-right {
+             display: none;
+         }
+        a[aria-expanded=false] .fa-chevron-circle-down {
+            display: none;
+        }
     </style>
 
 {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>--}}
@@ -92,9 +98,12 @@
                        <textarea name="description" id="description"  rows="5" style="width:100%;" >
                     </textarea>
                        <div class="form-group mt-2">
-                          <span data-toggle="collapse" data-target="#next_plan" >
-                            <input type="checkbox" name="checked">
-                            </span><span for="">Next Plan</span>
+                           <a class="btn btn-primary" data-toggle="collapse" data-target="#next_plan" aria-expanded="false" aria-controls="collapseExample" >
+
+                               <span for="">Next Plan</span>
+                               <i class="fa fa-chevron-circle-right"></i>
+                               <i class="fa fa-chevron-circle-down"></i>
+                           </a>
                            <div class="sub-menu collapse border mt-3" id="next_plan">
                                <h3 align="center" class="mt-3">Next Plan </h3>
                                <div class="col-12 row mt-3">
