@@ -272,4 +272,10 @@ class dealController extends Controller
             'camp_add' => "success",
         ]);
     }
+    public function sale_stage_change(Request $request){
+       $deal=deal::where("id",$request->deal_id)->first();
+       $deal->sale_stage=$request->sale_stage;
+       $deal->update();
+       return redirect("/deal")->with("message","Sale stage change to $deal->sale_stage");
+    }
 }

@@ -1,6 +1,14 @@
 @extends("layouts.mainlayout")
 @section("title","Employee")
 @section("content")
+    <style>
+        a[aria-expanded=true] .fa-chevron-circle-right {
+            display: none;
+        }
+        a[aria-expanded=false] .fa-chevron-circle-down {
+            display: none;
+        }
+    </style>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <div class="page-wrapper">
@@ -270,11 +278,11 @@
                                         @endif
                                     </div>
                                 </div>
-                                <input type="hidden" name="emp_id" class="form-control" value="{{$emp_id}}" required>
+                                <input type="hidden" name="emp_id" class="form-control" value="{{$emp_id}}"  required >
                                 <div class="form-group row mt-3">
                                     <div class="col-6">
                                         <label for="">Marital Status</label>
-                                        <select name="marital_status" id="" class="form-control">
+                                        <select name="marital_status" id="marital_status" class="form-control" style="width: 100%">
                                             <option value="Single">Single</option>
                                             <option value="Married">Married</option>
                                             <option value="Widowed">Widowed</option>
@@ -295,7 +303,7 @@
                                 <div class="form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="">Company</label>
-                                        <select name="company" id="company" class="form-control">
+                                        <select name="company" id="company" class="form-control" style="width: 100%">
                                             <option value="{{$company->id}}">{{$company->name}}</option>
                                         </select>
                                     </div>
@@ -308,7 +316,7 @@
                                 <div class="form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="type">Department</label>
-                                        <select class="form-control" id="type" name="department">
+                                        <select class="form-control" id="type" name="department" style="width: 100%">
                                             <option value="item0">Choose Department</option>
                                             @foreach($depts as $dept)
                                                 <option value="{{$dept->id}}">{{$dept->dept_name}}</option>
@@ -317,7 +325,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="">Position</label>
-                                        <select name="position" class="form-control" id="">
+                                        <select name="position"  class="form-control" id="position" style="width: 100%;">
                                             @foreach($positions as $position)
                                                 <option value="{{$position->id}}">{{$position->emp_position}}</option>
                                             @endforeach
@@ -327,7 +335,7 @@
                                 <div class="form-group row mt-3">
                                     <div class="col-md-6">
                                         <label for="">Report To</label>
-                                        <select name="report_to" class="form-control" id="">
+                                        <select name="report_to" class="form-control" id="report_to" style="width: 100%">
                                             <option value="{{\Illuminate\Support\Facades\Auth::user()->id}}">{{\Illuminate\Support\Facades\Auth::user()->name}} (Admin)</option>
                                             @foreach($report_to as $report)
                                                 <option value="{{$report->user->id}}">{{$report->user->name}}</option>
@@ -336,7 +344,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="size">Department Head</label>
-                                        <select class="form-control @error('dept_head') is-invalid @enderror" name="dept_head" id="size">
+                                        <select class="form-control @error('dept_head') is-invalid @enderror" name="dept_head" id="size" style="width: 100%">
                                             <option></option>
                                         </select>
                                         @if ($errors->has('dept_head'))
@@ -347,9 +355,12 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <span data-toggle="collapse" data-target="#dept_head_info" >
-                            <input type="checkbox" name="login">
-                            </span><span for="">Log as In</span>
+                                <a class="btn btn-primary" data-toggle="collapse" data-target="#dept_head_info" aria-expanded="false" aria-controls="collapseExample" >
+
+                               <span for="">Log as In</span>
+                                <i class="fa fa-chevron-circle-right"></i>
+                                <i class="fa fa-chevron-circle-down"></i>
+                                </a>
 
                                 <div class="sub-menu collapse border mt-3" id="dept_head_info">
                                     <h5 align="center" class="mt-3">Log As In </h5>
@@ -372,7 +383,7 @@
                                     <div class="col-12 form-group row mt-3">
                                         <div class="col-md-6">
                                             <label for="">Role</label>
-                                            <select class="form-control" name="role" id="">
+                                            <select class="form-control" name="role" id="role" style="width: 100%">
                                                 @foreach($roles as $role)
                                                     <option value="{{$role->name}}">{{$role->name}}</option>
                                                 @endforeach
@@ -423,6 +434,18 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script>
+            $(document).ready(function() {
+                $('select').select2({
+                        "language": {
+                        },
+                        escapeMarkup: function (markup) {
+                            return markup;
+                        }
+                    }
+
+                );
+
+            });
             $(document).ready(function (){
                 $("#emp").DataTable({
                     dom: 'Bfrtip',

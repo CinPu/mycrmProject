@@ -22,7 +22,7 @@ Route::get('/',function (){
         }
     }
     return view('welcome',compact("ticket_admin"));
-});
+})->name('welcome');
 
 
 Auth::routes();
@@ -138,6 +138,7 @@ Route::group(['middleware'=>'auth'],function () {
     Route::get("/deal/edit/{id}","dealController@edit");
     Route::post("/deal/update/","dealController@update");
     Route::get("deal/show/{id}","dealController@show");
+    Route::post("/deal/status/change","dealController@sale_stage_change");
     Route::get('/chat', function () {
         return view('chat');
     });

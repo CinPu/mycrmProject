@@ -43,12 +43,14 @@
                                <span>{{$deal->customer_company->name}}</span>
                            </div>
                        </div>
+                       @if($deal->contact !=null)
                        <div class="card col-md-4">
                            <h5 class="my-2 card-header" >Contact Name</h5>
                            <div class="card-body">
-                            <span>{{$deal->customer->customer_name}}</span>
+                            <span>{{$deal->customer->name}}</span>
                            </div>
                        </div>
+                           @endif
                    </div>
                     <div class="card col-12 ml-1">
                         <div class="card-header">Description</div>
@@ -82,10 +84,16 @@
                                 <label for="">Organization Name</label>
                                 <input type="text" class="form-control" value="{{$deal->customer_company->name}}">
                             </div>
+
                             <div class="form-group">
                                 <label for="">Contact</label>
+                                @if($deal->contact !=null)
                                 <input type="text" class="form-control" value="{{$deal->customer->customer_name}}">
+                                @else
+                                    <input type="text" class="form-control" >
+                                @endif
                             </div>
+
                             <div class="form-group">
                                 <label for="">Expected Close Date</label>
                                 <input type="text" class="form-control" value="{{\Carbon\Carbon::parse($deal->close_date)->format('Y-m-d')}}">

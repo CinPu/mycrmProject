@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class deal extends Model
 {
     public function customer_company(){
-        return $this->belongsTo(customerCompany::class,"org_name","id");
+        return $this->belongsTo(company::class,"org_name","id");
     }
     public function customer(){
         return $this->belongsTo(customer::class,"contact","id");

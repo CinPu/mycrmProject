@@ -17,7 +17,8 @@
                     <div class="col-sm-12">
                         <h3 class="page-title">Deal Add</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{url("home")}}">Dashboard</a></li>
+                            <li class="breadcrumb-item active"><a href="{{url("/deal")}}">Deal</a></li>
                             <li class="breadcrumb-item active">Deal Add</li>
                         </ul>
                     </div>
@@ -56,10 +57,12 @@
 
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="row">
-                        <label for="" class="col-md-3 text-right">Expected Close Date</label>
-                        <input type="date" name="deal_name" id="close_date" class="col-md-6 form-control">
+                <div class="row">
+                    <label for="" class="col-md-3 text-right">Expected Close Date</label>
+                    <div class="form-group col-md-6">
+                        <div class="cal-icon">
+                            <input type="text" name="deal_name" id="close_date" class="form-control datetimepicker ">
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -74,15 +77,12 @@
                     <div class="row">
                         <label for="" class="col-md-3 text-right">Sale Stage</label>
                         <select name="deal_name" id="sale_stage" class="col-md-6 form-control">
-                            <option value="Ready To CLose">Ready To CLose</option>
                             <option value="New">New</option>
-                            <option value="Qualifying">Qualifying</option>
-                            <option value="Requirement Gathering">Requirement Gathering</option>
-                            <option value="Value Position">Value Position</option>
-                            <option value="Negotiation">Negotiation </option>
-                            <option value="Closed Won">Closed Won </option>
-                            <option value="Closed Lost">Closed Lost </option>
-                            <option value="Dormant">Dormant </option>
+                            <option value="Qualified">Qualified</option>
+                            <option value="Quotation">Quatation</option>
+                            <option value="Invoicing">Invoicing</option>
+                            <option value="Win">Negotiation </option>
+                            <option value="Lost">Lost</option>
                         </select>
                     </div>
                 </div>
@@ -211,15 +211,12 @@
                                     </div>
                                     <div class="col-md-4">
                                         <select name="sale_stage" id="full_sale_stage" class="form-control " style="width: 85%">
-                                            <option value="Ready To CLose">Ready To CLose</option>
                                             <option value="New">New</option>
-                                            <option value="Qualifying">Qualifying</option>
-                                            <option value="Requirement Gathering">Requirement Gathering</option>
-                                            <option value="Value Position">Value Position</option>
-                                            <option value="Negotiation">Negotiation </option>
-                                            <option value="Closed Won">Closed Won </option>
-                                            <option value="Closed Lost">Closed Lost </option>
-                                            <option value="Dormant">Dormant </option>
+                                            <option value="Qualified">Qualified</option>
+                                            <option value="Quotation">Quatation</option>
+                                            <option value="Invoicing">Invoicing</option>
+                                            <option value="Win">Negotiation </option>
+                                            <option value="Lost">Lost</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2 mt-3"><label for="">Assigned To
@@ -776,7 +773,7 @@
 {{--                                        <div class="col-lg-4 col-sm-4 col-12 ">--}}
 {{--                                            <label class="col-form-label"> Expected Response<span class="text-danger">*</span></label>--}}
 {{--                                        </div>--}}
-{{--                                        <div class="col-md-8 col-sm-8 col-12">--}}
+{{--                                        <div class="col-md-8z col-sm-8 col-12">--}}
 {{--                                            <select name="camp_type" id="camp_exp_response" class="form-control" style="width: 100%">--}}
 {{--                                                <option value="Excellent">Excellent</option>--}}
 {{--                                                <option value="Good">Good</option>--}}
@@ -886,9 +883,9 @@
         <!-- /Page Content -->
     </div>
     <!-- /Page Wrapper -->
-    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+{{--    <script src="https//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>--}}
     <script>
-        CKEDITOR.replace( 'description' );
+        // CKEDITOR.replace( 'description' );
 
         $(document).ready(function() {
                 $('select').select2({
