@@ -36,12 +36,12 @@
                     </li>
                     <li class="nav-item my-2">
                         <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Assigned Ticket
-                            <span class="badge badge-pill badge-danger ">{{$noOfassign}}</span>
+                            <span class="badge  badge-danger ">{{$noOfassign}}</span>
                         </a>
                     </li>
                     <li class="nav-item my-2">
                         <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#assigndept" role="tab" aria-controls="pills-profile" aria-selected="false">Assigned With Department
-                            <span class="badge badge-pill badge-danger ">{{$noOfassign_withdept}}</span>
+                            <span class="badge  badge-danger ">{{$noOfassign_withdept}}</span>
                         </a>
                     </li>
                 </ul>

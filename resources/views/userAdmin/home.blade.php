@@ -1,4 +1,5 @@
 @extends("layouts.mainlayout")
+@section("title","Admin Dashboard")
 @section("content")
     <!-- Page Wrapper -->
     <div class="page-wrapper">

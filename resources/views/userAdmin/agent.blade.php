@@ -69,7 +69,7 @@
             <tbody >
             @foreach($agents as $agent)
                 <tr>
-                    <td> <i class="fa fa-user mr-3"></i><span class="col-6"> {{$agent->user->name}}</span></td>
+                    <td> <i class="fa fa-user mr-3"></i><span class="col-6"><a href="{{url("/agent/detail/$agent->id")}}"> {{$agent->user->name}}</a></span></td>
                     <td>
                        {{$agent->dept->dept_name}}
 

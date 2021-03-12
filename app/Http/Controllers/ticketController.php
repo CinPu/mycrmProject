@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\agent;
 use App\assign_ticket;
-use App\assignwithdept;
 use App\case_type;
 use App\comment;
 use App\company;
 use App\countdown;
+use App\customer;
 use App\department;
 use App\employee;
 use App\Imports\ticket_import;
@@ -118,7 +118,7 @@ class ticketController extends Controller
 //        dd($request->all());
 //        var_dump($request->uuid);
         //user info store
-        $user_info = user_information::where("email", $request->email)->first();
+        $user_info = customer::where("email", $request->email)->first();
         if ($user_info == null) {
             $user_info = new user_information();
             $user_info->name = $request->user_name;
@@ -145,17 +145,17 @@ class ticketController extends Controller
         $ticket->message = $request->message;
         $ticket->user_id = $request->uuid;
         $ticket->case_type = $request->case_type;
-        if (Auth::check()) {
-               if (Auth::user()->hasAnyRole("Admin")) {
-                $company_name = company::where("admin_id", $name->id)->first();
-            } else {
-                  $auth_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
-                $company_name = company::where("admin_id", $auth_user->employee->admin_id)->first();
-            }
-
-        } else {
-            $company_name = company::where("id", $emp->employee->company_id)->where("is_admin_company",1)->first();
-        }
+//        if (Auth::check()) {
+//               if (Auth::user()->hasAnyRole("Admin")) {
+//                $company_name = company::where("admin_id", $name->id)->first();
+//            } else {
+//                  $auth_user=user_employee::with("employee")->where("user_id",Auth::user()->id)->first();
+//                $company_name = company::where("admin_id", $auth_user->employee->admin_id)->first();
+//            }
+//
+//        } else {
+//            $company_name = company::where("id", $emp->employee->company_id)->where("is_admin_company",1)->first();
+//        }
         $ticket->ticket_id = $request->ticket_id;
         $ticket->status = $request->status;
         $ticket->product = $request->product;

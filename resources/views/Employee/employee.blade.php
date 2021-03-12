@@ -89,11 +89,23 @@
                             <label class="focus-label">Employee Name</label>
                         </div>
                     </div>
+                    <div class="col-sm-4 col-lg-2">
+                        <div class="form-group form-focus select-focus focused">
+                            <input type="date" class=" form-control" name="start_date"  />
+                            <label class="focus-label">From Date</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-lg-2">
+                        <div class="form-group form-focus select-focus focused">
+                            <input type="date" class=" form-control" name="end_date"  />
+                            <label class="focus-label">To Date</label>
+                        </div>
+                    </div>
                     <div class="col-sm-4 col-lg-3">
                         <div class="form-group form-focus select-focus focused">
                             <div class="form-group form-focus select-focus">
-                                <select class="select floating" name="position">
-                                    <option>Select Designation</option>
+                                <select class="form-control floating" id="position" name="position">
+                                    <option value="empty">Select Designation</option>
                                     @foreach($positions as $position)
                                         <option value="{{$position->id}}">{{$position->emp_position}}</option>
                                     @endforeach
@@ -102,18 +114,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 col-lg-3">
-                        <div class="form-group form-focus select-focus focused">
-                            <input type="text" class="form-control" id="join_date" name="daterange"  />
-                            <label class="focus-label">Join Date</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 col-lg-2 ">
-                        <div class="form-group form-focus">
-                            <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fa fa-search mr-2"></i>Search</button>
-                        </div>
+                    <div class="col-lg-1">
+                        <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-search mr-2"></i></button>
                     </div>
                 </div>
+
             </form>
             <!-- Search Filter -->
             <div class="tab-content" id="myTabContent">
@@ -435,7 +440,7 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script>
             $(document).ready(function() {
-                $('select').select2({
+                $('#position').select2({
                         "language": {
                         },
                         escapeMarkup: function (markup) {

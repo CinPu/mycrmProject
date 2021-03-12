@@ -99,7 +99,7 @@ class admin_agentController extends Controller
         $assigndepts = [];
 
         $agentuser = User::whereId($agent->agent_id)->first();
-        $assign_by_depts = assignwithdept::where("dept_id", $agent->dept_id)->get();
+        $assign_by_depts = assign_ticket::where("dept_id", $agent->dept_id)->get();
         foreach ($assign_by_depts as $assign_by_dept) {
             $assign_dept = ticket::with("priority_type", "cases")->where("id", $assign_by_dept->ticket_id)->first();
             array_push($assigndepts, $assign_dept);

@@ -179,7 +179,14 @@ class HomeController extends Controller
             elseif (Auth::user()->hasAnyRole("Agent")) {
                 return view("Agent.home");
             }elseif (Auth::user()->hasAnyRole("Employee")){
-                return view("Employee.employee_home");
+                $emp_user=user_employee::where("user_id",Auth::user()->id)->first();
+                $admin=employee::where("id",$emp_user->id)->first();
+                $company=company::where("admin_id",$admin->admin_id)->first();
+                $allclients=count(customer::where("admin_company_id",$company->id)->get());
+                $followingTickets=ticketFollower::where("emp_id",Auth::user()->id)->get();
+                $allemp=employee::where("admin_id",$admin->admin_id)->get();
+                $customer_company=company::where("admin_id",$admin->admin_id)->where("is_admin_company",0)->get();
+                return view("Employee.employee_home",compact("followingTickets","allclients","customer_company","allemp"));
             } else{
                 return view("home");
             }

@@ -33,7 +33,14 @@ class employeeController extends Controller
     public function index()
     {
         $depts=department::with("department_head")->where("admin_uuid",Auth::user()->uuid)->get();
-        $employees=employee::with("report_to_user","department","company","position")->where("admin_id",Auth::user()->id)->get();
+       if(Auth::user()->hasAnyRole("Admin"))
+       {
+           $employees=employee::with("report_to_user","department","company","position")->where("admin_id",Auth::user()->id)->get();
+       }else{
+           $emp_user=user_employee::where("user_id",Auth::user()->id)->first();
+           $admin=employee::where("id",$emp_user->id)->first();
+           $employees=employee::with("report_to_user","department","company","position")->where("admin_id",$admin->admin_id)->get();
+       }
         $positions=position::all();
         $lastemployee        =   employee::orderBy('created_at', 'desc')->where("admin_id",Auth::user()->id)->first();
         $company=company::where("admin_id",Auth::user()->id)->where("is_admin_company",1)->first();
@@ -52,8 +59,12 @@ class employeeController extends Controller
                 array_push($report_to,$user_emp);
             }
         }
+if(Auth::user()->hasAnyRole("Admin")){
+    return view("Employee.employee",compact("positions","depts","company","employees","emp_id","roles","report_to"));
+}else{
+    return view("Employee.allemp",compact("employees","positions"));
+}
 
-        return view("Employee.employee",compact("positions","depts","company","employees","emp_id","roles","report_to"));
     }
 
     /**
@@ -262,11 +273,71 @@ class employeeController extends Controller
         return back();
     }
     public function filterResult(Request $request){
-        $date=explode("-",$request->daterange);
-        $start_date=Carbon::create($date[0]);
-        $end_date=Carbon::create($date[1]);
-        $employees=employee::with("position")->orWhere("emp_post",$request->position)->orWhere("employee_id",$request->employee_id)->orwhere('name', 'LIKE', "%$request->employee_name%")
-            ->orWhereBetween("join_date",[$start_date,$end_date])->get();
+//        dd($request->all());
+        $start_date=Carbon::create($request->start_date);
+        $end_date=Carbon::create($request->end_date);
+        if($request->position!="empty" && $request->employee_id!=null&& $request->employee_name!=null && $request->start_date!=null && $request->end_date!=null) {
+            $employees = employee::with("position")->where("emp_post", $request->position)->where("employee_id", $request->employee_id)->where('name', $request->employee_name)
+                ->whereBetween("join_date", [$start_date, $end_date])->get();
+
+            }elseif ($request->position=="empty" && $request->employee_id==null&& $request->employee_name==null && $request->start_date==null && $request->end_date==null){
+            return redirect()->back();
+        }else{
+            if ($request->position=="empty" && $request->employee_id!=null&& $request->employee_name!=null && $request->start_date!=null){
+//                    dd("search by id name and join_date");
+                $employees = employee::with("position")->where("employee_id", $request->employee_id)->where('name', $request->employee_name)
+                    ->whereBetween("join_date", [$start_date, $end_date])->get();
+            }elseif  ($request->position=="empty" && $request->employee_id==null&& $request->employee_name==null && $request->start_date!=null){
+//                dd("search by date");
+                $employees = employee::with("position")->whereBetween("join_date", [$start_date, $end_date])->get();
+            }elseif  ($request->position=="empty" && $request->employee_id==null&& $request->employee_name!=null && $request->start_date==null){
+//                dd("search name");
+                $employees = employee::with("position")->where('name', $request->employee_name)->get();
+            }elseif  ($request->position=="empty" && $request->employee_id!=null&& $request->employee_name==null && $request->start_date==null){
+//                dd("search by id");
+                $employees = employee::with("position")->where("employee_id", $request->employee_id)->get();
+            }elseif  ($request->position!="empty" && $request->employee_id==null&& $request->employee_name==null && $request->start_date==null){
+//                dd("search by position");
+                $employees = employee::with("position")->where("emp_post", $request->position)->get();
+            } elseif  ($request->position!="empty" && $request->employee_id==null&& $request->employee_name!=null && $request->start_date!=null){
+//           dd("search by position, name ,and join date");
+                $employees = employee::with("position")->where("emp_post", $request->position)->where('name', $request->employee_name)->whereBetween("join_date", [$start_date, $end_date])->get();
+            }elseif  ($request->position!="empty" && $request->employee_id!=null&& $request->employee_name==null && $request->start_date!=null){
+//                dd("search by position,id and join date");
+                $employees = employee::with("position")->where("emp_post", $request->position)->where("employee_id", $request->employee_id)->whereBetween("join_date", [$start_date, $end_date])->get();
+            }elseif  ($request->position!="empty" && $request->employee_id!=null&& $request->employee_name!=null && $request->start_date==null){
+//                dd("search by position ,id and name");
+                $employees = employee::with("position")->where("emp_post", $request->position)->where("employee_id", $request->employee_id)->where('name', $request->employee_name)->get();
+            }elseif  ($request->position=="empty" && $request->employee_id==null&& $request->employee_name!=null && $request->start_date!=null){
+//                dd("search by name and join date");
+                $employees = employee::with("position")->where('name', $request->employee_name)->whereBetween("join_date", [$start_date, $end_date])->get();
+            }elseif  ($request->position=="empty" && $request->employee_id!=null&& $request->employee_name==null && $request->start_date!=null){
+//                dd("search by id and join date");
+                $employees = employee::with("position")->where("employee_id", $request->employee_id)->whereBetween("join_date", [$start_date, $end_date])->get();
+            }elseif  ($request->position=="empty" && $request->employee_id!=null&& $request->employee_name!=null && $request->start_date==null){
+//                dd("search by id and name");
+                $employees = employee::with("position")->where("employee_id", $request->employee_id)->where('name', $request->employee_name)->get();
+            }elseif  ($request->position=="empty" && $request->employee_id==null&& $request->employee_name!=null && $request->start_date!=null){
+//                dd("name and join date");
+                $employees = employee::with("position")->where('name', $request->employee_name)->whereBetween("join_date", [$start_date, $end_date])->get();
+            }elseif  ($request->position!="empty" && $request->employee_id==null&& $request->employee_name==null && $request->start_date!=null){
+//                dd("date and position");
+                $employees = employee::with("position")->where("emp_post", $request->position)->whereBetween("join_date", [$start_date, $end_date])->get();
+            }elseif  ($request->position!="empty" && $request->employee_id==null&& $request->employee_name!=null && $request->start_date==null){
+//                dd("search by position and name");
+                $employees = employee::with("position")->where("emp_post", $request->position)->where('name', $request->employee_name)->get();
+            }elseif  ($request->position=="empty" && $request->employee_id!=null&& $request->employee_name==null && $request->start_date!=null){
+//                dd("search by id and date");
+                $employees = employee::with("position")->where("employee_id", $request->employee_id)->whereBetween("join_date", [$start_date, $end_date])->get();
+            }elseif  ($request->position!="empty" && $request->employee_id==null&& $request->employee_name==null && $request->start_date!=null){
+//                dd("position and date");
+                $employees = employee::with("position")->where("emp_post", $request->position)->whereBetween("join_date", [$start_date, $end_date])->get();
+            }elseif  ($request->position!="empty" && $request->employee_id!=null&& $request->employee_name==null && $request->start_date==null){
+//                dd("position and id");
+                $employees = employee::with("position")->where("emp_post", $request->position)->where("employee_id", $request->employee_id)->get();
+            }
+
+        }
         return view("Employee.employeeFilterResult",compact("employees"));
 
     }

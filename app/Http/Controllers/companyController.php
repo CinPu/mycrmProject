@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\company;
 use App\customer;
+use App\employee;
 use App\Imports\companyimport;
 use App\user_employee;
 use http\Env\Response;
@@ -56,7 +57,13 @@ class companyController extends Controller
         } else {
             $company_id="Company"."-00001";
         }
-        $allcompany=company::where("admin_id",Auth::user()->id)->where("is_admin_company",0)->get();
+        if(Auth::user()->hasAnyRole("Admin")) {
+            $allcompany = company::where("admin_id", Auth::user()->id)->where("is_admin_company", 0)->get();
+        }else{
+            $emp_user=user_employee::where("user_id",Auth::user()->id)->first();
+            $admin=employee::where("id",$emp_user->id)->first();
+            $allcompany = company::where("admin_id",$admin->admin_id)->where("is_admin_company", 0)->get();
+        }
         return view("company.engagedCompany",compact("allcompany","company_id"));
     }
     public function create(Request $request,$type){
@@ -192,8 +199,7 @@ class companyController extends Controller
 //            dd($allcompany);
         }elseif ($request->company_id==null && $request->company_name==null && $request->company_type==null){
             return redirect()->back();
-        }
-        else{
+        }else{
             if ($request->company_id==null && $request->company_name!=null && $request->company_type!=null){
 //                dd("name and type");
                 $allcompany=company::where("admin_id",Auth::user()->id)->where("company_id",$request->company_id)->orWhere("name",$request->company_name)->orWhere("type_of_business",$request->company_type)->get();
